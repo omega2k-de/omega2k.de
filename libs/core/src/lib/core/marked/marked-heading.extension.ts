@@ -1,5 +1,6 @@
 import { marked, TokensList } from 'marked';
 import { ContentHeading } from '../interfaces';
+import { renderMarkdownMath } from './markdown-math';
 
 export type MarkdownBlockKind = 'heading' | 'paragraph' | 'html';
 
@@ -121,9 +122,11 @@ export function renderMarkdownToBlocks(markdown: string | null | undefined): {
     return { blocks: [], headings: [] };
   }
 
+  const withMath = renderMarkdownMath(markdown);
+
   resetHeadingState();
 
-  const tokens: TokensList = marked.lexer(markdown);
+  const tokens: TokensList = marked.lexer(withMath);
   const blocks: MarkdownBlock[] = [];
 
   for (const token of tokens) {

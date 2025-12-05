@@ -29,3 +29,7 @@ router-outlet {
     color: inherit;
   }
 }
+
+.katex-display > .katex {
+  white-space: normal;
+}
