@@ -1,0 +1,182 @@
+[
+  {
+    "id": "a-way-out",
+    "slug": "a-way-out",
+    "route": "/content/a-way-out",
+    "title": "Eine Analyse des Threads vom 14. Sep. 2025 um 12:38 Uhr",
+    "description": "Der Thread beschreibt im Grunde ein vollständiges Umbauprogramm für eine Wirtschaft, die nicht durch einen großen Knall ersetzt werden soll, sondern durch eine zweite, klar geregelte Ebene ergänzt wird. Diese zweite Ebene heißt dort Zeit- und Gemeinwohlökonomie und wird über „Weighted Time Tokens“ (WT) organisiert. Die Idee ist sehr nüchtern: Wir behalten den Euro mit all seinen bestehenden Märkten, Verträgen und internationalen Verflechtungen, aber wir fügen daneben ein staatlich anerkanntes, nicht spekulatives Zeitsystem ein, das genau dort Werte schafft, wo der Euro heute systematisch zu wenig anbietet – Pflege, Bildung, kommunale Daseinsvorsorge, Klima- und Sanierungstätigkeiten. So entsteht nicht ein Ersatz, sondern eine Parallelordnung.",
+    "sourcePath": "content/a-way-out.page.html",
+    "bodyPath": "markdown/a-way-out.md"
+  },
+  {
+    "id": "beyond-capitalism",
+    "slug": "beyond-capitalism",
+    "route": "/content/beyond-capitalism",
+    "title": "Beyond Kapitalismus – Umsetzung in Etappen",
+    "description": "Wir leben in einer Überwohlstandsgesellschaft für einige wenige – enormer Reichtum hat sich in den Händen Weniger konzentriert, während viele andere ums Überleben kämpfen. Der heutige Kapitalismus fördert eine solche Ungleichverteilung: Kapital akkumuliert immer stärker, soziale Dienste werden vernachlässigt, und lebenswichtige Arbeit (Pflege, Bildung, Gesundheit) wird oft schlecht bezahlt. Um dies zu ändern, müssen wir dringend Abschied vom Kapitalismus nehmen und ein System schaffen, in dem alle am Fortschritt teilhaben können.",
+    "sourcePath": "content/beyond-capitalism.page.html",
+    "bodyPath": "markdown/beyond-capitalism.md"
+  },
+  {
+    "id": "beyond-capitalism-chapter-01-03",
+    "slug": "beyond-capitalism-chapter-01-03",
+    "route": "/content/beyond-capitalism/chapter01-03",
+    "title": "beyond-capitalism-chapter-01-03",
+    "description": "Der Übergang beginnt ohne abrupten Bruch: Statt den Euro-Kapitalismus sofort zu stürzen, ergänzen wir ihn um eine neue Zeit- und Gemeinwohlökonomie. Konkret bedeutet das: Zum Euro kommt als zweite Währung die Arbeitszeit-Währung (WT) hinzu. Gesellschaftlich prioritäre Arbeit – also Jobs, die für unser Gemeinwohl wichtig sind – wird in dieser neuen Währung vergütet. Jede tatsächlich geleistete und zertifizierte Arbeitsstunde in solchen Bereichen bringt zunächst 1 WT ein. Damit alle Stunden gleich viel Lebenszeit repräsentieren, gilt als Grundsatz: 1 Stunde Arbeit eines Menschen ist 1 Basiseinheit wert. Unterschiedliche Anforderungen werden dann über die genannten Faktoren abgebildet. So fließt mehr WT, wenn die Arbeit z.B. besonders anstrengend, gefährlich, qualifiziert oder dringend benötigt ist.",
+    "sourcePath": "content/beyond-capitalism/beyond-capitalism-chapter-01-03.html",
+    "bodyPath": "markdown/beyond-capitalism-chapter-01-03.md"
+  },
+  {
+    "id": "beyond-capitalism-chapter-04-06",
+    "slug": "beyond-capitalism-chapter-04-06",
+    "route": "/content/beyond-capitalism/chapter04-06",
+    "title": "beyond-capitalism-chapter-04-06",
+    "description": "Im Zeitraum 18 bis 36 Monate (also etwa 1,5 bis 3 Jahre nach Start) erfolgt die zweite Skalierungswelle. Nun werden neben den sozialen Kernberufen auch sekundäre Sektoren in das WT-System eingebunden – Bereiche, die ebenfalls dem Gemeinwohl dienen oder Engpässe beheben, aber bisher nicht einbezogen waren. Dazu zählen z.B.:",
+    "sourcePath": "content/beyond-capitalism/beyond-capitalism-chapter-04-06.html",
+    "bodyPath": "markdown/beyond-capitalism-chapter-04-06.md"
+  },
+  {
+    "id": "beyond-capitalism-chapter-07-10",
+    "slug": "beyond-capitalism-chapter-07-10",
+    "route": "/content/beyond-capitalism/chapter07-10",
+    "title": "beyond-capitalism-chapter-07-10",
+    "description": "In der langfristigen Perspektive (10 bis 20 Jahre nach Beginn) erfolgt der Tiefenumbau der Wirtschaft, der jedoch schon fast unauffällig verläuft, weil die Neuerungen inzwischen normal geworden sind. Die Prinzipien der WT-Logik werden selektiv noch weiter ausgedehnt auf Bereiche, die sich als gemeinwohlrelevant erweisen. Umgekehrt werden sie in Bereichen, wo sie nicht mehr nötig sind, wieder zurückgefahren. Das System ist also dynamisch anpassbar:",
+    "sourcePath": "content/beyond-capitalism/beyond-capitalism-chapter-07-10.html",
+    "bodyPath": "markdown/beyond-capitalism-chapter-07-10.md"
+  },
+  {
+    "id": "beyond-capitalism-chapter-11",
+    "slug": "beyond-capitalism-chapter-11",
+    "route": "/content/beyond-capitalism/chapter11",
+    "title": "beyond-capitalism-chapter-11",
+    "description": "Abschließend: Was würde Otto Normalbürger und die Gesellschaft konkret spüren, wenn dieses Konzept umgesetzt ist? Welche Veränderungen treten im Alltag ein? Hier einige der wichtigsten Verbesserungen, die für alle fühlbar wären:",
+    "sourcePath": "content/beyond-capitalism/beyond-capitalism-chapter-11.html",
+    "bodyPath": "markdown/beyond-capitalism-chapter-11.md"
+  },
+  {
+    "id": "capitalism-religion",
+    "slug": "capitalism-religion",
+    "route": "/content/capitalism-religion",
+    "title": "Die 10 Gebote des Kapitalismus – eine heitere Anatomie seiner Widersprüche",
+    "description": "Willkommen in der Kirche des Marktes. Eintritt frei, Austritt teuer. Hier predigen wir Effizienz, Wachstum und Eigenverantwortung – doch am Ende beten wir alle dasselbe goldene Kalb an. Der Kapitalismus ist keine Ideologie, er ist eine Religion mit Buchhaltung. Seine Gebote sind unausgesprochen, aber universell: Glaube an Profit, meide Sinn, und arbeite, bis du das System verstanden hast – und dann ist es zu spät.",
+    "sourcePath": "content/capitalism-religion.page.html",
+    "bodyPath": "markdown/capitalism-religion.md"
+  },
+  {
+    "id": "content-overview",
+    "slug": "content-overview",
+    "route": "/content",
+    "title": "content-overview",
+    "description": "",
+    "sourcePath": "content/content-overview.component.html",
+    "bodyPath": "markdown/content-overview.md"
+  },
+  {
+    "id": "crossroads",
+    "slug": "crossroads",
+    "route": "/content/crossroads",
+    "title": "Am Scheideweg: Demokratie zwischen Klimakrise, Kapitalismus und Rechtsruck",
+    "description": "Stellen wir uns die heutige Gesellschaft als ein großes Schiff vor, das in einen gewaltigen Sturm gerät. Dieser Sturm steht sinnbildlich für die Klimakrise, die immer stärker wird und das Schiff heftig durchrüttelt (www.ipcc.ch). Unter Deck brennt es bereits – ein Symbol für die sozialen Spannungen und die extreme Ungleichheit an Bord: Einige wenige haben sich fast alle Rettungsboote (Reichtum und Ressourcen) gesichert, während viele andere um ihr Überleben bangen (www.oxfam.org.tw). Auf der Kommandobrücke tobt ein Machtkampf: Demokratische Kräfte ringen darum, den Kurs zu halten, doch immer mehr autoritäre und rechtsextreme Akteure drängen ans Steuer (www.democracywithoutborders.org). Dieses Bild verdeutlicht die verflochtene Krise unserer Zeit – eine ökologische Bedrohung, soziale Ungerechtigkeit und politische Instabilität verstärken sich gegenseitig.",
+    "sourcePath": "content/crossroads.page.html",
+    "bodyPath": "markdown/crossroads.md"
+  },
+  {
+    "id": "democracy-superorganism",
+    "slug": "democracy-superorganism",
+    "route": "/content/manual-democracy-superorganism",
+    "title": "Handbuch: proto-Superorganismus Demokratie",
+    "description": "Wenn wir uns die Menschheit als einen einzigen, hochkomplexen Organismus vorstellen, in der jede Person eine individuelle Zelle darstellt, jede Institution ein Organ, jede Infrastruktur eine Ader, durch die Energie, Informationen und Güter fließen. Dieser proto-Superorganismus hat ein Herz (Wirtschaft), ein Nervensystem (Demokratie, Medien, Rechtsstaat), eine Haut (Ökosysteme, Klimasystem) und ein Immunsystem (Wissenschaft, kritische Öffentlichkeit, Zivilgesellschaft).",
+    "sourcePath": "content/democracy-superorganism.page.html",
+    "bodyPath": "markdown/democracy-superorganism.md"
+  },
+  {
+    "id": "appendix-a",
+    "slug": "appendix-a",
+    "route": "/content/manual-democracy-superorganism/appendix-a",
+    "title": "Anhang A: Systemwerkzeuge - Wie wir den „Superorganismus“ regulieren",
+    "description": "Das proto-Superorganismus-Modell verschiebt den Fokus weg von der Frage „Wer ist schuld?“ hin zur Frage „Wo ist der Fluss im gemeinsamen Organismus gestört und wie bringen wir ihn wieder ins Gleichgewicht?“.",
+    "sourcePath": "content/democracy-superorganism/appendix-a.page.html",
+    "bodyPath": "markdown/appendix-a.md"
+  },
+  {
+    "id": "appendix-b",
+    "slug": "appendix-b",
+    "route": "/content/manual-democracy-superorganism/appendix-b",
+    "title": "Anhang B: Vom Bild zur Struktur",
+    "description": "Die Rede von „Superorganismus“ ist historisch belastet: In der Gaia-Debatte wurde die Erde selbst teils als Lebewesen beschrieben – mit allen bekannten Problemen. Weder besitzt der Planet ein globales Genom noch reproduziert er sich oder reguliert aktiv seine Umwelt wie ein Warmblüter. Paläoklimatische Daten, Massenaussterben und geologische Umbrüche sprechen klar gegen ein wörtliches Bild eines stabilisierenden Erdorganismus.",
+    "sourcePath": "content/democracy-superorganism/appendix-b.page.html",
+    "bodyPath": "markdown/appendix-b.md"
+  },
+  {
+    "id": "injustice",
+    "slug": "injustice",
+    "route": "/content/injustice",
+    "title": "Eine Analyse des Threads vom 21. Sep. 2025 um 12:59 Uhr",
+    "description": "Der Kern des Threads ist eine kleine, aber ziemlich dichte Kausalformel: Wenn sich reale oder empfundene Ungerechtigkeit mit einem nationalistischen Deutungsrahmen verbindet, entsteht erst Empörung, dann das Bedürfnis nach einfachen Erklärungen und damit nach Sündenböcken – und genau aus dieser Dynamik wächst faschistisches Verhalten. Die Aussage zielt also weniger auf „Faschismus“ als fertige Ideologie, sondern auf Faschismus als Funktionsweise: nicht zuerst ein theoretisches Programm, sondern eine gesellschaftliche Reaktionskette, die sich immer wieder herstellen lässt, sobald die Ausgangsbedingungen stimmen. Faschismus erscheint dann nicht mehr als historischer Sonderfall der 1930er Jahre, sondern als reproduzierbares Muster, das dort andockt, wo Menschen sich benachteiligt, beschämt oder an den Rand gedrängt fühlen und zugleich erzählt bekommen, dass ihre „eigene“ Nation, Kultur oder Gruppe etwas „Eigentliches“ sei, das andere ihnen wegnehmen.",
+    "sourcePath": "content/injustice.page.html",
+    "bodyPath": "markdown/injustice.md"
+  },
+  {
+    "id": "intro",
+    "slug": "intro",
+    "route": "/content(aside:menu)",
+    "title": "Übersicht",
+    "description": "Der Text beschreibt den Kapitalismus als ein System voller struktureller Widersprüche, das Wachstum, Konkurrenz und Profit predigt, sich aber gleichzeitig selbst untergräbt. Er zeigt, wie Arbeit entwertet, Reichtum bevorteilt und Monopole gefördert werden, während die Mehrheit im Glauben gehalten wird, sie könne irgendwann „aufsteigen“. Viele Mechanismen funktionieren nur, solange genug Menschen verlieren, während Gewinne privatisiert und Verluste sozialisiert werden. Das System strebt nach unendlichem Wachstum, ignoriert physische Grenzen und erzeugt Überfluss, der seinen eigenen Profitbedarf zerstört. Die Pointe: Diese Widersprüche sind keine Fehler, sondern Funktionsweise – und ihre Erkenntnis könnte der Anfang eines besseren Alternativmodells sein.",
+    "sourcePath": "content/intro.page.html",
+    "bodyPath": "markdown/intro.md"
+  },
+  {
+    "id": "monopoly",
+    "slug": "monopoly",
+    "route": "/content/monopoly",
+    "title": "Eine Analyse des Threads vom 12. Sep. 2025 um 12:25 Uhr",
+    "description": "Der Thread dreht sich im Kern um die sehr einfache, aber politisch immer wieder verdrängte Beobachtung, dass Vermögen in Deutschland nicht in erster Linie durch Arbeit, sondern durch bereits vorhandenes Vermögen wächst. Wer viel besitzt, erbt in aller Regel auch viel und kann diesen Besitz mit heutigen Ausnahmeregeln, Verschonungstatbeständen und Unternehmensprivilegien weitgehend steuerarm oder sogar steuerfrei weitergeben. Wer wenig besitzt, bleibt dagegen stark vom laufenden Einkommen abhängig und hat kaum die Chance, über eine Generation hinweg aufzuschließen. Daraus entsteht der Eindruck, dass „die Reichen immer reicher“ werden, während alle anderen „auf der Stelle“ treten – nicht, weil sie nichts leisten, sondern weil der Startpunkt der einen und der anderen Gruppe strukturell unterschiedlich ist.",
+    "sourcePath": "content/monopoly.page.html",
+    "bodyPath": "markdown/monopoly.md"
+  },
+  {
+    "id": "renewables",
+    "slug": "renewables",
+    "route": "/content/renewables",
+    "title": "Erneuerbare Energien - Mythos und Realität",
+    "description": "Gerade weil die Sonne eben keine Rechnung stellt, verändert sich damit alles.",
+    "sourcePath": "content/renewables.page.html",
+    "bodyPath": "markdown/renewables.md"
+  },
+  {
+    "id": "renew-chapter1",
+    "slug": "renew-chapter1",
+    "route": "/content/renewables/chapter1",
+    "title": "Kapitel 1 – CO₂-Emissionen und Klima auf lange Sicht",
+    "description": "Die Menschheit hat in weniger als zweihundert Jahren das getan, wofür die Natur Millionen Jahre gebraucht hat: Sie hat gespeichertes Sonnenlicht in Form von Kohle, Öl und Gas wieder in die Atmosphäre entlassen. Seit Beginn der industriellen Revolution wurden über 1,5 Billionen Tonnen CO₂ freigesetzt. Das entspricht etwa hundert Millionen Jahren pflanzlicher Photosynthese, die innerhalb von zwei Jahrhunderten rückgängig gemacht wurden. Diese extreme Beschleunigung erklärt, warum sich das Erdklima so schnell verändert.",
+    "sourcePath": "content/renewables/renew-chapter1.page.html",
+    "bodyPath": "markdown/renew-chapter1.md"
+  },
+  {
+    "id": "renew-chapter2",
+    "slug": "renew-chapter2",
+    "route": "/content/renewables/chapter2",
+    "title": "Kapitel 2 – Der finanzielle und materielle Aufwand für die Menschheit auf lange Sicht",
+    "description": "Wenn man über die Transformation zu einer vollständig erneuerbaren Energiezivilisation spricht, klingt es oft, als sei sie unerschwinglich. Gigantische Zahlen kursieren: Billionenbeträge, Megatonnen Stahl, Kupfer, Silizium und Beton. Doch im größeren Maßstab – über Jahrzehnte, vielleicht Jahrhunderte – ist der Aufwand erstaunlich klein verglichen mit den Kosten des Unterlassens. Denn die Welt bezahlt bereits jetzt jedes Jahr einen gewaltigen Preis für das fossile Zeitalter: durch Stürme, Dürren, Überschwemmungen, Luftverschmutzung, Ernteausfälle und Krankheiten, die alle direkt oder indirekt auf die Verbrennung von Kohle, Öl und Gas zurückgehen.",
+    "sourcePath": "content/renewables/renew-chapter2.page.html",
+    "bodyPath": "markdown/renew-chapter2.md"
+  },
+  {
+    "id": "renew-chapter3",
+    "slug": "renew-chapter3",
+    "route": "/content/renewables/chapter3",
+    "title": "Kapitel 3 – Umwelt, Natur und die Analogie zur Photosynthese",
+    "description": "Wenn der Mensch eines Tages keine fossilen Brennstoffe mehr verbrennt, keine Abgase mehr in die Luft bläst und keine Abwässer mehr aus industriellen Prozessen in Flüsse leitet, dann verändert sich nicht nur das Klima – es verändert sich das gesamte Verhältnis zwischen Zivilisation und Biosphäre. Die Umwelt hört auf, ein Opfer des Fortschritts zu sein, und wird wieder das Fundament, auf dem Fortschritt ruht.",
+    "sourcePath": "content/renewables/renew-chapter3.page.html",
+    "bodyPath": "markdown/renew-chapter3.md"
+  },
+  {
+    "id": "renew-chapter4",
+    "slug": "renew-chapter4",
+    "route": "/content/renewables/chapter4",
+    "title": "Kapitel 4 – Gesellschaftliche Veränderungen in einer Welt unbegrenzter Energie",
+    "description": "Wenn die Sonne keine Rechnung stellt, verändert sich alles.",
+    "sourcePath": "content/renewables/renew-chapter4.page.html",
+    "bodyPath": "markdown/renew-chapter4.md"
+  }
+]

@@ -1,0 +1,37 @@
+@let cards = resolvedCards(); @if (cards?.length) {
+<section
+  role="complementary"
+  aria-label="horizontale Liste mit Scrollbar"
+  class="thought-pool-deck-wrapper">
+  <button
+    type="button"
+    uiVibrate
+    class="deck-nav deck-nav-left nm-button nm-raised nm-surface"
+    (click)="scrollByCard(-1)"
+    [disabled]="cards.length < 2"
+    uiIcon="keyboard_arrow_left"
+    size="xl"
+    aria-label="Vorherige Karte"></button>
+  <div
+    class="thought-pool-deck-scroller"
+    (scroll)="onUserScroll()"
+    #deckScroller
+    role="list"
+    aria-label="Gedanken-Pool">
+    <div class="thought-pool-deck">
+      @for (card of cards; track card.id; let i = $index) {
+      <ui-card [card]="card" />
+      }
+    </div>
+  </div>
+  <button
+    type="button"
+    uiVibrate
+    class="deck-nav deck-nav-right nm-button nm-raised nm-surface"
+    (click)="scrollByCard(1)"
+    [disabled]="cards.length < 2"
+    uiIcon="keyboard_arrow_right"
+    size="xl"
+    aria-label="Nächste Karte"></button>
+</section>
+}

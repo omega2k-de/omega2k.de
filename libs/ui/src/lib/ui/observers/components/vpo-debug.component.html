@@ -1,0 +1,33 @@
+@if (enabled()) {
+  <div class="floating area" animate.enter="show-floating-area" animate.leave="hide-floating-area">
+    @if (rootMargin()?.toObject(0); as data) {
+      <div class="background expand"></div>
+      <div class="margins expand">
+        <span class="rescale top-left">{{ refCount() }}</span>
+        <span class="rescale top">{{ data.top }}px</span>
+        <span class="rescale right">{{ data.right }}px</span>
+        <span class="rescale bottom">{{ data.bottom }}px</span>
+        <span class="rescale left">{{ data.left }}px</span>
+        <button
+          (pointerup)="vibrate()"
+          (click)="enabled.set(false)"
+          class="top-right rescale"
+          aria-label="close"
+          type="button"
+          uiIcon="close"
+          size="md"></button>
+      </div>
+    }
+  </div>
+} @else if (refCount()) {
+  <button
+    animate.enter="show-floating-button"
+    animate.leave="hide-floating-button"
+    (pointerup)="vibrate()"
+    (click)="enabled.set(true)"
+    class="floating rescale"
+    aria-label="toggle info"
+    type="button"
+    uiIcon="data_object"
+    size="md"></button>
+}

@@ -1,0 +1,66 @@
+@let msg = message();
+<span aria-hidden="true" class="icon pointer" [uiIcon]="msg.icon ?? null" size="md"></span>
+<span class="title pointer">{{ msg.title }}</span>
+@if (msg.applyIcon) {
+  <div class="apply pointer">
+    <button
+      uiVibrate
+      (click)="$event.stopImmediatePropagation(); msg.onApply()"
+      (keydown.enter)="$event.stopImmediatePropagation(); msg.onApply()"
+      class="nm-button"
+      type="button"
+      [uiIcon]="msg.applyIcon"
+      [attr.aria-label]="msg.applyTitle ?? 'apply'"
+      [title]="msg.applyTitle ?? 'apply'"
+      size="md"></button>
+  </div>
+}
+<div class="cancel pointer">
+  <button
+    uiProgressRing
+    uiVibrate
+    [progress]="msg.progress"
+    [config]="uiProgressRingConfig"
+    (click)="$event.stopImmediatePropagation(); msg.onCancel(true)"
+    (keydown.enter)="$event.stopImmediatePropagation(); msg.onCancel(true)"
+    class="nm-button"
+    type="button"
+    [uiIcon]="msg.cancelIcon ?? 'close'"
+    [attr.aria-label]="msg.cancelTitle ?? 'cancel'"
+    [title]="msg.cancelTitle ?? 'cancel'"
+    size="md"></button>
+</div>
+@switch (msg.type) {
+  @case ('health') {
+    <ui-health-renderer
+      (keydown.enter)="$event.stopImmediatePropagation()"
+      (click)="$event.stopImmediatePropagation()"
+      class="message"
+      [health]="msg.data" />
+  }
+  @default {
+    <div
+      tabindex="-1"
+      (keydown.enter)="$event.stopImmediatePropagation()"
+      (click)="$event.stopImmediatePropagation()"
+      class="message">
+      {{ msg.message }}
+    </div>
+  }
+}
+<div class="timestamp">
+  @let title = msg.date.format('DD.MM.YYYY HH:mm:ss [Uhr]');
+  <button
+    uiVibrate
+    (keydown.enter)="$event.stopImmediatePropagation()"
+    (click)="$event.stopImmediatePropagation()"
+    [tabindex]="expanded() ? '0' : '-1'"
+    [attr.aria-label]="title"
+    [title]="title"
+    class="tooltip"
+    type="button"
+    uiIcon="schedule"
+    size="md">
+    <span class="text">{{ title }}</span>
+  </button>
+</div>

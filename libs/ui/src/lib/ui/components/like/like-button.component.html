@@ -1,0 +1,12 @@
+@let c = count();
+@let label = c + ' Like' + (c !== 1 ? 's' : '');
+<button
+  uiVibrate
+  class="tag-pill nm-button nm-surface"
+  type="button"
+  [title]="label"
+  [attr.aria-label]="label"
+  (click)="toggle()"
+  [disabled]="loading()">
+  <span class="before" [class.fill]="liked()" size="md" uiIcon="favorite">{{ c }}</span>
+</button>

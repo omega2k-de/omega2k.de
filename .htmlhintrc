@@ -1,0 +1,23 @@
+{
+  "alt-require": true,
+  "attr-lowercase": false,
+  "attr-no-duplication": true,
+  "attr-value-double-quotes": true,
+  "button-type-require": true,
+  "doctype-first": true,
+  "doctype-html5": true,
+  "frame-title-require": true,
+  "h1-require": false,
+  "html-lang-require": true,
+  "id-unique": true,
+  "main-require": false,
+  "meta-charset-require": true,
+  "meta-description-require": false,
+  "meta-viewport-require": true,
+  "spec-char-escape": true,
+  "src-not-empty": true,
+  "tag-no-obsolete": true,
+  "tag-pair": true,
+  "tagname-lowercase": false,
+  "title-require": false
+}

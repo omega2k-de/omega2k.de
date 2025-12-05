@@ -1,0 +1,70 @@
+@if (card(); as card) {
+  @let labelId = 'dcl' + card.id;
+  @let descId = 'dcd' + card.id;
+
+  <a
+    tabindex="-1"
+    class="deck-card"
+    uiRouterLink
+    [routerLink]="[card.route]"
+    [routerLinkActiveOptions]="{ exact: true }"
+    routerLinkActive="active"
+    fragment="content"
+    [attr.aria-labelledby]="labelId"
+    [attr.aria-describedby]="descId">
+    <span class="deck-card-version nm-pressed">
+      <span aria-label="Version" title="Version: {{ card.version || 1 }}"
+        >v{{ card.version || 1 }}</span
+      >
+    </span>
+    <div class="deck-card-body">
+      <h2 [title]="card.title" class="deck-title" [id]="labelId">{{ card.title }}</h2>
+      <p aria-label="Beschreibung" class="deck-text" [id]="descId">{{ card.ogDescription }}</p>
+    </div>
+
+    <div class="deck-card-footer">
+      @let progress = p.progress() + '%';
+      <div
+        [uiReadingProgress]="card.id"
+        #p="instance"
+        [style.--reading-progress]="progress"
+        aria-label="Lesefortschritt numerisch"
+        class="deck-progress">
+        <span class="sr-only">{{ progress }}</span>
+        <span class="deck-progress-bar"></span>
+      </div>
+
+      <small aria-label="Lesefortschritt schriftlich" class="deck-status muted">
+        @switch (true) {
+          @case (p.progress() < 1) {
+            Kapitel noch ungelesen
+          }
+          @case (p.progress() < 33) {
+            Kapitel gerade angefangen
+          }
+          @case (p.progress() < 66) {
+            Kapitel zur Hälfte durch
+          }
+          @case (p.progress() < 95) {
+            Kapitel fast abgeschlossen
+          }
+          @default {
+            Kapitel abgeschlossen
+          }
+        }
+      </small>
+
+      <div class="deck-tags">
+        <span class="tag-pill before" uiIcon="person">
+          {{ card.authorSlug || 'omega2k' }}
+        </span>
+        <span class="tag-pill before" uiIcon="auto_stories">
+          {{ card.readingTimeMin || 0 }} min
+        </span>
+        <span class="tag-pill before" uiIcon="heart_check">
+          {{ dayjs(card.createdAt).format('DD.MM.YY') }}
+        </span>
+      </div>
+    </div>
+  </a>
+}

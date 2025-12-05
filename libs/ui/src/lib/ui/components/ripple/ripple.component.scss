@@ -1,0 +1,70 @@
+[shared-ui-ripple] {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+
+  &.disabled {
+    cursor: default;
+  }
+
+  i.ripple {
+    pointer-events: none;
+
+    position: absolute;
+    transform: scale(0);
+
+    display: block;
+
+    border-radius: 50%;
+
+    opacity: 0.5;
+    background-color: var(--color-brand-primary);
+
+    transition: background 400ms;
+    animation: ripple var(--animate-duration) linear;
+  }
+
+  &.brand-primary {
+    i.ripple {
+      background-color: var(--color-brand-white);
+    }
+  }
+
+  &.brand-green {
+    i.ripple {
+      background-color: var(--color-brand-primary);
+    }
+  }
+
+  &.brand-orange {
+    i.ripple {
+      background-color: var(--color-brand-orange);
+    }
+  }
+
+  &.brand-red {
+    i.ripple {
+      background-color: var(--color-brand-red);
+    }
+  }
+
+  &.brand-grey-dark {
+    i.ripple {
+      background-color: var(--color-brand-light-grey);
+    }
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+}
+
+:host-context(.without-pointer-events) {
+  > * {
+    pointer-events: none;
+  }
+}

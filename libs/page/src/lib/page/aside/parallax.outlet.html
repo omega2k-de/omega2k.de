@@ -1,0 +1,16 @@
+@if (config(); as c) {
+<a [routerLink]="['/content']" class="aside-parallax lift-anchor">
+  <div class="aside-parallax-container">
+    <img
+      class="aside-parallax-img"
+      priority="true"
+      [ngSrc]="c.src"
+      [attr.srcset]="c.srcset ?? null"
+      [attr.sizes]="c.sizes ?? null"
+      alt="{{c.alt ?? 'Parallaxhintergrund'}}"
+      decoding="async"
+      draggable="false"
+      fill />
+  </div>
+</a>
+}

@@ -1,0 +1,46 @@
+:host {
+  --chat-window-max-width: min(100vw - 3 * var(--margin-overlays), 35rem);
+  --animate-duration: 500ms;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes show-chat {
+  0% {
+    transform: translateX(-3rem) translateY(3rem) scale(0) skew(32deg, 13deg) rotateZ(45deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) scale(1) skew(0deg, 0deg) rotateZ(0);
+  }
+}
+
+@keyframes hide-chat {
+  0% {
+    transform: translateX(0) translateY(0) scale(1) skew(0deg, 0deg) rotateZ(0);
+  }
+  100% {
+    transform: translateX(-3rem) translateY(3rem) scale(0) skew(32deg, 13deg) rotateZ(45deg);
+  }
+}
+
+.show-chat {
+  transform-origin: right bottom;
+
+  animation-name: show-chat;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}
+
+.hide-chat {
+  transform-origin: right bottom;
+
+  animation-name: hide-chat;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}

@@ -1,0 +1,19 @@
+@let active = enabled();
+@let label = active ? 'aktiv' : 'inaktiv';
+<label aria-label="Benachrichtigungsstatus" tabindex="-1" [uiAutoId]="button" for>{{
+  label
+}}</label>
+<button
+  #button
+  type="button"
+  size="md"
+  uiVibrate
+  role="switch"
+  [attr.aria-checked]="active ? 'true' : 'false'"
+  [attr.aria-label]="'Benachrichtigungen ' + (active ? 'deaktivieren' : 'aktivieren')"
+  (click)="dns.toggle()"
+  (keydown.enter)="dns.toggle()"
+  [class.active]="active"
+  [class.inactive]="!active"
+  [title]="label"
+  [uiIcon]="active ? 'alarm_on' : 'alarm_off'"></button>

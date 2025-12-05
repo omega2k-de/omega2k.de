@@ -1,0 +1,25 @@
+.wrapper {
+  margin-block: -0.25rem;
+  margin-inline: -0.25rem;
+  border-radius: calc(var(--radius-md) * 1.2);
+}
+
+.options {
+  display: grid;
+  gap: var(--space-sm);
+
+  button {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    small {
+      font-size: var(--font-size-xs);
+    }
+  }
+}
+
+.nm-button {
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+}

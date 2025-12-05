@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+export APP_VERSION=0.42.82

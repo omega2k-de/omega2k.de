@@ -1,0 +1,22 @@
+<ui-goo class="app-background" />
+<ui-animated-backdrop [show]="showBackdrop()" />
+
+<ui-header />
+
+<router-outlet name="teaser" />
+
+<main class="app-main" role="main" aria-label="Inhalt">
+  <aside class="app-main-aside" aria-label="Inhaltsverzeichnis">
+    <router-outlet name="aside" />
+  </aside>
+  <section class="app-main-primary">
+    <router-outlet />
+  </section>
+  <aside class="app-main-extras" aria-label="Zusatzinformationen">
+    <router-outlet name="extras" />
+  </aside>
+</main>
+
+<router-outlet name="cards" />
+
+<ui-footer />

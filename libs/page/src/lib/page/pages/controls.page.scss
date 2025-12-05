@@ -1,0 +1,61 @@
+.header-container {
+  display: flex;
+}
+
+.headline {
+  flex-grow: 1;
+}
+
+.readable,
+.booklet {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.readable {
+  gap: var(--space-sm);
+}
+
+.deck-title {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-xs);
+  align-items: start;
+  justify-content: space-between;
+
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+
+  font-weight: 800;
+
+  a {
+    padding-inline: 0;
+  }
+}
+
+.booklet {
+  border-radius: var(--radius-lg);
+}
+
+.deck-tags {
+  transform: scale(0.9);
+  justify-self: end;
+  margin-bottom: 0.5rem;
+}
+
+.version {
+  justify-self: end;
+  padding: 0 0.75rem;
+}
+
+.deck-progress {
+  border-radius: 0;
+}
+
+.reset-button {
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  min-height: 2rem;
+  border-radius: var(--radius-lg);
+}

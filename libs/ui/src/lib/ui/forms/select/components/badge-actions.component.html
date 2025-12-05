@@ -1,0 +1,14 @@
+@if (isVisible()) {
+  <div
+    class="badge"
+    [class.flipped]="badgeFlipped()"
+    animate.enter="badge-show"
+    animate.leave="badge-hide">
+    <div class="coin">
+      <span data-action="delete" size="md" uiIcon="delete"></span>
+      <span data-action="counter" [attr.data-count]="count()"></span>
+      <span data-action="valid" size="md" uiIcon="check"></span>
+      <span data-action="invalid" size="md" uiIcon="close"></span>
+    </div>
+  </div>
+}

@@ -1,0 +1,124 @@
+:host {
+  pointer-events: visiblefill;
+  user-select: none;
+
+  display: grid;
+
+  max-width: var(--chat-window-max-width);
+
+  font-size: var(--font-size-sm);
+}
+
+.bubble {
+  --r: 1em;
+  --t: 1.5em;
+
+  display: grid;
+  gap: var(--gap-default);
+
+  padding: var(--gap-default);
+  border-inline: var(--t) solid transparent;
+  border-radius: calc(var(--r) + var(--t)) / var(--r);
+
+  color: var(--color-black);
+
+  background: linear-gradient(135deg, var(--nm-surface), var(--color-background-frosted)) border-box;
+  filter: var(--filter-drop-shadow-overlay);
+
+  mask:
+    radial-gradient(100% 100% at var(--_p) 0, #0000 99%, #000 102%) var(--_p) 100% / var(--t)
+      var(--t) no-repeat,
+    linear-gradient(#000 0 0) padding-box;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-default);
+
+  width: 100%;
+  padding: var(--gap-default);
+}
+
+.author {
+  font-weight: 400;
+  color: var(--color-white);
+  text-shadow: 1px 1px var(--color-black);
+}
+
+.receive {
+  .bubble,
+  .additional {
+    align-self: start;
+  }
+
+  .bubble {
+    --_p: 0%;
+
+    border-bottom-left-radius: 0 0;
+  }
+}
+
+.send {
+  .bubble,
+  .additional {
+    flex-direction: row-reverse;
+    align-self: end;
+  }
+
+  .bubble {
+    --_p: 100%;
+
+    border-bottom-right-radius: 0 0;
+    background: linear-gradient(45deg, var(--color-background-frosted), var(--nm-surface))
+      border-box;
+  }
+}
+
+.text {
+  width: 100%;
+
+  font-size: var(--font-size-default);
+  font-weight: 400;
+  word-break: auto-phrase;
+  white-space: break-spaces;
+
+  a[href] {
+    pointer-events: all;
+  }
+}
+
+.time {
+  width: min-content;
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.additional {
+  display: flex;
+  gap: var(--gap-default);
+}
+
+@media (prefers-color-scheme: dark) {
+  .bubble {
+    color: var(--color-white);
+    background: linear-gradient(
+        45deg,
+        var(--color-background-smoke-glass),
+        var(--color-background-smoke)
+      )
+      border-box;
+  }
+
+  .send {
+    .bubble {
+      background: linear-gradient(
+          45deg,
+          var(--color-background-smoke),
+          var(--color-background-smoke-glass)
+        )
+        border-box;
+    }
+  }
+}

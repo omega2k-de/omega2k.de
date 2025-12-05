@@ -1,0 +1,29 @@
+@let isOpen = dialogOpen();
+@let unreadLabel = unread() + ' ungelesene Nachrichten';
+@let title = isOpen ? 'Chat schließen' : 'Chat öffnen';
+<label tabindex="-1" [uiAutoId]="button" for>Chat</label>
+<button
+  #button
+  #trigger="cdkOverlayOrigin"
+  (click)="toggleDialog($event)"
+  cdkOverlayOrigin
+  type="button"
+  role="switch"
+  [attr.aria-checked]="isOpen ? 'true' : 'false'"
+  [title]="title"
+  [attr.aria-label]="title"
+  [uiIcon]="isOpen ? 'speaker_notes_off' : 'speaker_notes'"
+  size="md"
+  uiVibrate>
+  <div class="badge">
+    <span [attr.aria-label]="unreadLabel" [title]="unreadLabel">{{ unread() }}</span>
+  </div>
+</button>
+
+<ng-template
+  (detach)="dialogOpen.set(false)"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayOrigin]="trigger"
+  cdkConnectedOverlay>
+  <ui-chat-window animate.enter="show-chat" animate.leave="hide-chat"></ui-chat-window>
+</ng-template>

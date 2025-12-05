@@ -1,0 +1,78 @@
+:host {
+  --backdrop-diameter: max(150vw, 150vh);
+  --backdrop-color: rgba(0, 0, 0, 50%);
+  --backdrop-duration: 300ms;
+
+  pointer-events: none;
+
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  transform: translate3d(
+    calc((100vw - var(--backdrop-diameter)) / 2),
+    calc((100vh - var(--backdrop-diameter)) / 2),
+    0
+  );
+
+  overflow: visible;
+
+  width: 0;
+  height: 0;
+}
+
+@keyframes show-backdrop {
+  from {
+    scale: 0;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes hide-backdrop {
+  from {
+    scale: 1;
+    opacity: 1;
+  }
+  to {
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+.backdrop {
+  pointer-events: all;
+
+  z-index: 1;
+
+  width: var(--backdrop-diameter);
+  height: var(--backdrop-diameter);
+  border-radius: 100%;
+
+  background-color: var(--backdrop-color);
+  backdrop-filter: blur(2.79px);
+}
+
+.backdrop-show {
+  pointer-events: all;
+
+  animation-name: show-backdrop;
+  animation-duration: var(--backdrop-duration);
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+.backdrop-hide {
+  pointer-events: none;
+
+  animation-name: hide-backdrop;
+  animation-duration: var(--backdrop-duration);
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}

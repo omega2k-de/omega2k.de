@@ -1,0 +1,15 @@
+@if (health(); as health) {
+  @let hash = health.hash ? '@' + health.hash : '';
+  <dl aria-label="Serverdaten">
+    <dt>Cores</dt>
+    <dd aria-label="Kerne">{{ health.os.cpus }}</dd>
+    <dt>RAM free</dt>
+    <dd aria-label="Arbeitsspeicher frei">{{ freemem() }} GB</dd>
+    <dt>RAM total</dt>
+    <dd aria-label="Arbeitsspeicher gesamt">{{ totalmem() }} GB</dd>
+    <dt>Version</dt>
+    <dd aria-label="Version">{{ health.version }}{{ hash }}</dd>
+    <dt>Load AVG</dt>
+    <dd aria-label="LOAD 5/10/15">{{ health.loadAvg.join(', ') }}</dd>
+  </dl>
+}

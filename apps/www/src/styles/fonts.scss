@@ -1,0 +1,77 @@
+@use '@fontsource-utils/scss' as fontsource;
+
+@use '@fontsource-variable/figtree/scss' as figtree;
+
+@use '@fontsource-variable/open-sans/scss' as opensans;
+
+@use '@fontsource/quicksand/scss' as quicksand;
+
+@use '@fontsource-variable/caveat/scss' as caveat;
+
+@include fontsource.faces(
+  $family: 'Figtree',
+  $metadata: figtree.$metadata,
+  $subsets: (
+    latin,
+    greek,
+  ),
+  $weights: (
+    100,
+    300,
+    500,
+    600,
+    800,
+  ),
+  $styles: all
+);
+
+@include fontsource.faces(
+  $family: 'Open Sans',
+  $metadata: opensans.$metadata,
+  $subsets: (
+    latin,
+    greek,
+  ),
+  $weights: (
+    100,
+    300,
+    500,
+    600,
+    800,
+  ),
+  $styles: all
+);
+
+@include fontsource.faces(
+  $family: 'Quicksand',
+  $metadata: quicksand.$metadata,
+  $subsets: (
+    latin,
+    greek,
+  ),
+  $weights: (
+    300,
+    400,
+    500,
+    600,
+    700,
+  ),
+  $styles: all
+);
+
+@include fontsource.faces(
+  $family: 'Caveat',
+  $metadata: caveat.$metadata,
+  $subsets: (
+    latin,
+    greek,
+  ),
+  $weights: (
+    100,
+    300,
+    500,
+    600,
+    800,
+  ),
+  $styles: all
+);

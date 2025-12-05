@@ -1,0 +1,119 @@
+:host {
+  --chat-window-max-width: min(100vw - 3 * var(--margin-overlays), 35rem);
+
+  position: fixed;
+  right: var(--margin-overlays);
+  bottom: calc(var(--footer-height) + 2 * var(--margin-overlays));
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr;
+  grid-template-rows: [header] 2.5rem [messages] 1fr [input] 2.5rem;
+
+  width: 100%;
+  max-width: var(--chat-window-max-width);
+  height: 100%;
+  max-height: 50dvh;
+  border-radius: var(--border-radius-xl);
+
+  background-color: var(--color-background-frosted-glass);
+  filter: var(--filter-drop-shadow-overlay);
+  backdrop-filter: blur(7.2px);
+}
+
+.relative {
+  display: flex;
+  justify-content: center;
+}
+
+.chat {
+  border: 0 none;
+  border-radius: 0 0 0 var(--border-radius-xl);
+  outline-color: transparent;
+
+  &:focus,
+  &:focus-visible {
+    outline-color: var(--color-black);
+  }
+}
+
+.help[uiIcon] {
+  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  min-height: 2rem;
+}
+
+.header,
+.messages,
+.form {
+  filter: var(--filter-drop-shadow-polite);
+}
+
+.viewport {
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+.messages {
+  grid-row: messages;
+}
+
+.footer-spacer {
+  height: 1.75rem;
+}
+
+.header {
+  z-index: 1;
+
+  display: grid;
+  grid-row: header;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  grid-template-rows: 1fr;
+  align-items: center;
+
+  border-top-left-radius: var(--border-radius-xl);
+  border-top-right-radius: var(--border-radius-xl);
+
+  background-color: var(--nm-surface);
+  filter: drop-shadow(0.5rem 0.5rem 1rem var(--color-background-frosted-glass));
+}
+
+.form {
+  display: grid;
+  grid-row: input;
+  grid-template-columns: 1fr var(--button-min-width);
+  gap: var(--gap-xs);
+
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+
+  background-color: transparent;
+}
+
+.submit-button {
+  border-radius: 0 0 var(--border-radius-xl) 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    background-color: var(--color-background-smoke-glass);
+    filter: var(--filter-drop-shadow-overlay);
+  }
+
+  .header {
+    filter: var(--filter-drop-shadow-polite);
+
+    &.autoscroll {
+      filter: var(--filter-drop-shadow-hard);
+    }
+  }
+
+  .chat {
+    &:focus,
+    &:focus-visible {
+      outline-color: var(--color-white);
+    }
+  }
+}

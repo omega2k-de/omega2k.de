@@ -1,0 +1,137 @@
+<article id="article" class="article nm-surface nm-raised" role="article">
+  <header class="article-header">
+    <div class="article-header-tags">
+      <button
+        type="button"
+        role="link"
+        [routerLink]="['/controls']"
+        class="tag-pill nm-button before pull-left"
+        uiIcon="handyman">
+        Controls
+      </button>
+      <span class="tag-pill before" uiIcon="person">Patrick</span>
+      <span class="tag-pill before" uiIcon="auto_stories">~ 1 min</span>
+      <span class="tag-pill before" uiIcon="heart_check">
+        {{ dayjs(createdAt).format('DD.MM.YY') }}
+      </span>
+    </div>
+    <main aria-labelledby="privacy-title" class="article-header-inline-headline">
+      <span class="article-title"
+        ><h1 id="privacy-title">
+          <span aria-hidden="true">🔒</span> Datenschutz – klar, einfach, ohne Schnickschnack
+        </h1></span
+      >
+    </main>
+    <p class="article-lead nm-pressed">
+      Diese Anwendung ist so gebaut, dass sie möglichst wenige Daten verarbeitet – und vor allem:
+      keine personenbezogenen, die dich als Person identifizierbar machen. Es gibt kein Tracking,
+      keine Werbeprofile, keine externen Analysewerkzeuge. Die App funktioniert ohne
+      Drittanbieter-Cookies, ohne fremde Skripte und ohne versteckte Pixel.
+    </p>
+  </header>
+  <section class="article-body">
+    <h2>🧠 Was lokal gespeichert wird – und warum</h2>
+    <p>
+      Alles, was dauerhaft gespeichert wird, liegt ausschließlich in deinem Browser. Der Server
+      sieht diese Informationen nicht, kann sie nicht lesen, nicht auswerten und nicht mit anderen
+      Daten verknüpfen. Die Speicherung dient nur der Bedienbarkeit der Seite.
+    </p>
+    <p><strong>Aktuell (bzw. zukünftig in [] Klammern) werden lokal gespeichert:</strong></p>
+    <ul>
+      <li>Theme-Einstellung (Light/Dark)</li>
+      <li>Schriftgröße</li>
+      <li>Dein individueller Lesefortschritt pro Artikel</li>
+      <li>[Lesemodus / Darstellungsoptionen]</li>
+      <li>[Benachrichtigungseinstellungen]</li>
+    </ul>
+    <p>
+      Diese Daten verlassen dein Gerät nicht. Du kannst sie jederzeit über die Browser-Einstellungen
+      (z.B. „Website-Daten löschen“ bzw. „Local Storage / Site Data löschen“) entfernen.
+    </p>
+    <h2>📡 Was der Server technisch sieht</h2>
+    <p>
+      Wie bei praktisch jeder Website fallen aus technischen Gründen kurzfristig Server-Protokolle
+      an (z.B. IP-Adresse, Zeitpunkt des Aufrufs, aufgerufene URL, User-Agent). Diese Daten werden
+      nur verwendet, um den sicheren Betrieb der Seite sicherzustellen (z.B. Fehleranalyse,
+      Missbrauchsabwehr) und nicht dazu, Profile einzelner Personen zu erstellen.
+    </p>
+    <p>
+      Eine Weitergabe dieser technischen Daten an Dritte findet nicht statt, es sei denn, es besteht
+      eine rechtliche Verpflichtung (z.B. bei Angriffen auf die Infrastruktur).
+    </p>
+    <h2>🚫 Was <em>nicht</em> gespeichert oder getan wird</h2>
+    <ul>
+      <li>keine Tracking- oder Marketing-Cookies</li>
+      <li>kein Einsatz von Google Analytics, Meta/Facebook-Pixel o.ä.</li>
+      <li>keine Erstellung von Werbe- oder Nutzungsprofilen</li>
+      <li>keine Weitergabe von Nutzerdaten an Dritte zu Werbezwecken</li>
+      <li>keine Identifizierung einzelner Personen aus der Nutzung heraus</li>
+      <li>keine dauerhafte Verbindung deiner Nutzung mit deiner IP-Adresse</li>
+      <li>keine Einbindung externer Werbe- oder Social-Media-Skripte</li>
+    </ul>
+    <p>
+      Kurz: Ich möchte nicht wissen, <strong>wer</strong> du bist, sondern höchstens, ob das Projekt
+      insgesamt genutzt wird. Wenn du mich kontaktieren möchtest, findest du mehrere
+      Kontaktmöglichkeiten im <a uiVibrate [routerLink]="['/imprint']">Impressum</a>.
+    </p>
+    <h2>❤️ „Gefällt mir“-Button</h2>
+    <p>
+      Ich habe einen minimalistischen „Gefällt mir“-Button eingebaut, um zu sehen, welche Inhalte
+      besonders hilfreich oder interessant sind – ohne dich dabei als Person zu verfolgen. Das
+      Prinzip ist so einfach wie genial. Erst wenn Du aktiv abstimmst und ein Like abgibst oder
+      wieder zurücknimmst, dann bekommst Du sozusagen als Bon ein Cookie mit einer zufälligen
+      Nummer. Das war's. Mit diesem "Ticket" kannst Du jetzt alles machen wie ein normaler User
+      auch, aber eben der mit dem Ticket. Du kannst dieses "Ticket" jederzeit löschen (siehe
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://support.google.com/chrome/answer/95647?hl=de-de"
+        >Cookies im Browser löschen</a
+      >) und dann "theoretisch" und auch praktisch nochmal Liken.
+    </p>
+    <p>
+      Alle gespeicherten Daten von Dir, die der Server aus den Cookies bezieht, kannst Du hier
+      <a [routerLink]="['.']" fragment="cookies" (click)="load($event)">abfragen</a>.
+    </p>
+    @let list = cookies(); @if (list.length) {
+    <blockquote class="scrollable">
+      <pre class="force-wrap">{{ list | json }}</pre>
+    </blockquote>
+    }
+    <p>Die Umsetzung ist so, dass:</p>
+    <ul>
+      <li>keine personenbezogenen Daten gespeichert werden</li>
+      <li>kein Fingerprinting stattfindet</li>
+      <li>keine dauerhafte IP-Speicherung zur Profilbildung erfolgt</li>
+      <li>Mehrfachklicks technisch begrenzt werden</li>
+      <li>nur aggregierte Zählwerte (Anzahl der Likes pro Artikel) ausgewertet werden</li>
+    </ul>
+    <p>
+      Sollte sich das Konzept ändern oder zusätzliche Daten notwendig werden, wird diese
+      Datenschutzerklärung entsprechend aktualisiert, bevor neue Funktionen live gehen.
+    </p>
+    <h2>📜 Deine Rechte nach DSGVO</h2>
+    <p>
+      Auch wenn auf dieser Seite bewusst so wenig wie möglich personenbezogene Daten anfallen, hast
+      du selbstverständlich alle Rechte nach der DSGVO. Dazu gehören insbesondere:
+    </p>
+    <ul>
+      <li><strong>Auskunft</strong> darüber, welche Daten zu deiner Person gespeichert sind</li>
+      <li>
+        <strong>Löschung</strong> deiner personenbezogenen Daten, soweit keine Aufbewahrungspflicht
+        besteht
+      </li>
+      <li><strong>Berichtigung</strong> unrichtiger Daten</li>
+      <li><strong>Einschränkung der Verarbeitung</strong> in bestimmten Fällen</li>
+      <li>
+        <strong>Widerspruch</strong> gegen bestimmte Verarbeitungen, soweit sie auf einer
+        Interessenabwägung beruhen
+      </li>
+    </ul>
+    <p>
+      Wenn du Fragen zum Datenschutz, zu den technischen Protokollen oder zur konkreten Umsetzung
+      hast, kannst du mich über die im
+      <a uiVibrate [routerLink]="['/imprint']">Impressum</a> angegebenen Kontaktdaten erreichen.
+    </p>
+  </section>
+</article>

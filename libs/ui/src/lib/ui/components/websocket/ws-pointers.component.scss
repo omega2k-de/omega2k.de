@@ -1,0 +1,34 @@
+:host {
+  pointer-events: none;
+
+  position: fixed;
+  z-index: var(--z-index-pointers);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+i[uiIcon] {
+  position: absolute;
+
+  color: transparent;
+  text-shadow: 1px 1px 1px var(--color-primary-alpha50);
+
+  opacity: 0.8;
+  background-color: var(--color-primary);
+  background-clip: text;
+
+  &:after {
+    transform: translate(-8px, -2px);
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 100%));
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  i[uiIcon] {
+    text-shadow: 1px 1px 1px var(--color-primary-alpha50-dark);
+    background-color: var(--color-primary-dark);
+  }
+}

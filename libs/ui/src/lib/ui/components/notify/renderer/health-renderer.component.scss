@@ -1,0 +1,16 @@
+:host {
+  display: inline-grid;
+  min-width: 12rem;
+}
+
+dl,
+dt,
+dd {
+  font-size: inherit;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0 1rem;
+}

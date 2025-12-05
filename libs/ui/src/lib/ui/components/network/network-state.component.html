@@ -1,0 +1,21 @@
+@let online = isOnline();
+@let onlineLabel = online ? 'online (ping)' : 'offline';
+<label tabindex="-1" [uiAutoId]="button" for>{{ onlineLabel }}</label>
+<button
+  #button
+  type="button"
+  size="md"
+  uiVibrate
+  uiProgressRing
+  role="switch"
+  [attr.aria-checked]="isPinging() ? 'true' : 'false'"
+  [disabled]="!online || isPinging()"
+  [progress]="progress()"
+  [config]="uiProgressRingConfig"
+  (click)="debounceTimePing()"
+  (keydown.enter)="debounceTimePing()"
+  [class.online]="online"
+  [class.offline]="!online"
+  [attr.aria-label]="onlineLabel"
+  [title]="onlineLabel"
+  [uiIcon]="online ? 'wifi' : 'wifi_off'"></button>

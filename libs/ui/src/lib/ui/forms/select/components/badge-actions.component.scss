@@ -1,0 +1,219 @@
+@keyframes badge-show {
+  from {
+    scale: 0;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.coin,
+.badge {
+  cursor: pointer;
+  user-select: none;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--input-ui-height);
+  height: var(--input-ui-height);
+  border-radius: 50%;
+}
+
+.coin {
+  transform: rotateY(0);
+
+  font-size: var(--font-size-xs);
+  color: inherit;
+
+  background-color: var(--nm-surface);
+  filter: var(--filter-drop-shadow-polite);
+  outline-color: transparent;
+  outline-width: 0;
+
+  transition:
+    background-color 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2),
+    transform var(--coin-flip-duration-ms, 500ms) ease-in-out,
+    text-shadow var(--coin-flip-duration-ms, 500ms) ease-in-out;
+
+  > [data-action] {
+    pointer-events: none;
+
+    position: absolute;
+
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-weight: 100;
+
+    opacity: 0;
+
+    transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+  }
+
+  > [data-action='counter'] {
+    font-weight: 400;
+
+    &:after {
+      content: attr(data-count);
+    }
+  }
+}
+
+.badge {
+  position: absolute;
+  z-index: 2;
+  top: calc(-0.5 * var(--input-ui-height));
+  right: calc(-0.5 * var(--input-ui-height));
+  transform-origin: 25% 75%;
+
+  outline: 0 solid transparent;
+
+  &.badge-show {
+    animation: calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out badge-show;
+  }
+
+  &.badge-hide {
+    animation: calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out badge-show;
+    animation-direction: reverse;
+  }
+}
+
+:host {
+  &:focus-visible {
+    .coin {
+      outline-color: var(--color-black);
+      outline-width: var(--outline-width-default);
+    }
+  }
+
+  &:focus-visible,
+  &:hover {
+    .coin {
+      transform: rotateY(-180deg);
+      background-color: var(--nm-surface);
+      transition:
+        background-color 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2),
+        transform var(--coin-flip-duration-ms, 500ms) ease-in-out,
+        text-shadow var(--coin-flip-duration-ms, 500ms) ease-in-out;
+
+      > [data-action] {
+        opacity: 0 !important;
+        transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+      }
+
+      > [data-action='delete'] {
+        text-shadow:
+          0 0 0.5rem #f00,
+          0 0 0.75rem #f00,
+          0 0 1.5rem #f00;
+        opacity: 1 !important;
+        transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+      }
+    }
+  }
+}
+
+:host-context(ui-select.disabled) {
+  cursor: not-allowed;
+  color: var(--disabled-color);
+  opacity: var(--disabled-opacity);
+}
+
+:host-context(ui-select.ng-invalid) {
+  .coin {
+    background-color: var(--color-danger);
+
+    > [data-action='invalid'] {
+      opacity: 1;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+  }
+}
+
+:host-context(ui-select.ng-invalid:has(.multiple)) {
+  .coin {
+    > [data-action='invalid'] {
+      opacity: 0;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+  }
+}
+
+:host-context(ui-select.ng-valid) {
+  .coin {
+    background-color: var(--color-success);
+
+    > [data-action='valid'] {
+      opacity: 1;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+  }
+}
+
+:host-context(ui-select.ng-valid:has(.multiple)) {
+  .coin {
+    > [data-action='valid'] {
+      opacity: 0;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+  }
+}
+
+:host-context(ui-badge-actions.multiple) {
+  .coin {
+    > [data-action='counter'] {
+      opacity: 1;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+
+    > [data-action='valid'],
+    > [data-action='invalid'] {
+      opacity: 0;
+      transition: opacity 0ms calc(var(--coin-flip-duration-ms, 500ms) / 2) ease-in-out;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :host-context(ui-select.multiple) {
+    .coin {
+      background-color: var(--color-background-smoke-glass);
+      outline: var(--outline-width-default) solid var(--color-background-smoke-glass);
+    }
+  }
+
+  :host-context(ui-select.ng-invalid) {
+    .coin {
+      background-color: var(--color-danger-dark);
+    }
+  }
+
+  :host-context(ui-select.ng-valid) {
+    .coin {
+      background-color: var(--color-success-dark);
+    }
+  }
+
+  :host {
+    &:focus-visible {
+      .coin {
+        outline-color: var(--color-white);
+      }
+    }
+
+    &:focus-visible,
+    &:hover {
+      .coin {
+        background-color: var(--nm-surface);
+      }
+    }
+  }
+}

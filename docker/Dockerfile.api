@@ -1,0 +1,26 @@
+FROM node:22.18.0-alpine3.21
+
+RUN apk add --update curl wget && rm -rf /var/cache/apk/*
+
+WORKDIR /app/websocket
+
+COPY ./dist/apps/websocket /app/websocket
+
+RUN npm install -g pnpm
+RUN cd /app/websocket && pnpm install --ignore-scripts
+
+EXPOSE 80
+
+HEALTHCHECK --interval=15s --timeout=5s \
+  CMD curl \
+    --include \
+    --no-buffer \
+    --header "Connection: Upgrade" \
+    --header "Upgrade: websocket" \
+    --header "Host: http://127.0.0.1:80" \
+    --header "Origin: http://127.0.0.1:80" \
+    --header "Sec-WebSocket-Key: 0123456789abcdefgh==" \
+    --header "Sec-WebSocket-Version: 13" \
+    http://127.0.0.1:80 >/dev/null 2>&1
+
+CMD ["node", "/app/websocket/main.js"]

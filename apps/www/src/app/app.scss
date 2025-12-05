@@ -1,0 +1,161 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-md);
+
+  max-width: var(--app-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.app-background {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.app-main {
+  display: none;
+  grid-template-areas: 'aside primary';
+  grid-template-columns: var(--app-root-aside-width) minmax(0, 1fr);
+  flex: 1 0 auto;
+  gap: 1.5rem;
+  align-items: flex-start;
+
+  &:has(router-outlet[name='extas'] ~ *) {
+    grid-template-areas: 'aside primary extras';
+    grid-template-columns: var(--app-root-aside-width) minmax(0, 1fr) var(--app-root-aside-width);
+  }
+
+  &:has(.app-main-primary router-outlet ~ *),
+  &:has(router-outlet[name='extras'] ~ *),
+  &:has(router-outlet[name='aside'] ~ *) {
+    display: grid;
+  }
+}
+
+.app-main-aside {
+  position: sticky;
+  top: calc(var(--app-shell-height) + var(--space-lg));
+
+  display: none;
+  grid-area: aside;
+  align-self: flex-start;
+
+  opacity: 0;
+
+  transition: opacity var(--animate-duration) ease;
+
+  &:has(router-outlet[name='aside'] ~ *) {
+    display: block;
+    opacity: 1;
+    transition: opacity var(--animate-duration) ease;
+  }
+}
+
+.app-main-primary {
+  grid-area: primary;
+  min-width: 0;
+}
+
+.app-main-extras {
+  top: 5rem;
+
+  display: none;
+  grid-area: extras;
+  align-self: flex-start;
+
+  opacity: 0;
+
+  transition: opacity var(--animate-duration) ease;
+
+  &:has(router-outlet[name='extras'] ~ *) {
+    display: block;
+    opacity: 1;
+    transition: opacity var(--animate-duration) ease;
+  }
+}
+
+@media (max-width: 960px) {
+  .app-main {
+    grid-template-areas:
+      'primary'
+      'aside';
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: max-content;
+
+    &:has(router-outlet[name='extas'] ~ *) {
+      grid-template-areas:
+        'aside primary'
+        '. extras';
+      grid-template-columns: var(--app-root-aside-width) minmax(0, 1fr);
+    }
+  }
+
+  @keyframes slide-struct-in {
+    from {
+      transform: translate3d(-100vw, 0, 0);
+      opacity: 0;
+    }
+    to {
+      transform: translate3d(calc(-0.5 * var(--space-sm)), 0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-struct-out {
+    from {
+      transform: translate3d(calc(-1 * var(--space-xs)), 0, 0);
+      opacity: 1;
+    }
+    to {
+      transform: translate3d(-100vw, 0, 0);
+      opacity: 0;
+    }
+  }
+
+  .app-main-aside {
+    pointer-events: none;
+
+    position: fixed;
+    z-index: 2;
+    top: calc(var(--app-shell-height) + var(--space-lg));
+    transform: translate3d(-100vw, 0, 0);
+
+    max-width: calc(100vw - var(--space-lg));
+
+    opacity: 0;
+  }
+
+  :host-context([data-aside='true']) {
+    .app-main-aside {
+      pointer-events: auto;
+      animation: slide-struct-in var(--animate-duration) ease-out forwards;
+    }
+  }
+
+  :host-context([data-aside='false']) {
+    .app-main-aside {
+      pointer-events: none;
+      animation: slide-struct-out var(--animate-duration) ease-out forwards;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .app-main {
+    grid-template-areas:
+      'primary'
+      'aside';
+    grid-template-columns: minmax(0, 1fr);
+
+    &:has(router-outlet[name='extas'] ~ *) {
+      grid-template-areas:
+        'primary'
+        'aside'
+        'extras';
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}

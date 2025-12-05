@@ -1,0 +1,8 @@
+@let gauge = text() | gauge;
+<div class="item">
+  <div
+    class="background"
+    [style.background-color]="gauge.color"
+    [style.width.%]="gauge.percent"></div>
+  <span class="label">{{ gauge.display }}</span>
+</div>

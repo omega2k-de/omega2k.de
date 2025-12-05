@@ -1,0 +1,89 @@
+@if (page(); as page) {
+<article aria-label="Hauptinhalt" id="content" class="article nm-surface nm-raised">
+  <span class="article-version nm-pressed">
+    <span aria-label="Version" title="Version: {{ page.version || 1 }}"
+      >v{{ page.version || 1 }}</span
+    >
+  </span>
+  <header class="article-header">
+    <div class="article-header-tags">
+      <ui-like-button [articleId]="page.id" />
+      <span
+        aria-label="Autor"
+        title="Autor: {{ page.authorSlug || 'omega2k' }}"
+        class="tag-pill before"
+        uiIcon="person"
+        >{{ page.authorSlug || 'omega2k' }}</span
+      >
+      <span
+        aria-label="geschätzte Lesezeit"
+        title="geschätzte Lesezeit ca. {{ page.readingTimeMin || 0 }} min"
+        class="tag-pill before"
+        uiIcon="auto_stories"
+        >{{ page.readingTimeMin || 0 }} min</span
+      >
+      <span
+        aria-label="Dokument erstellt am"
+        title="Dokument erstellt am {{ dayjs(page.createdAt).format('DD.MM.YYYY') }}"
+        class="tag-pill before"
+        uiIcon="heart_check"
+        >{{ dayjs(page.createdAt).format('DD.MM.YY') }}</span
+      >
+    </div>
+    @if (page.title) {
+    <div class="article-header-inline-headline">
+      <span aria-label="Titel" class="article-title">{{ page.title }}</span>
+    </div>
+    <div aria-hidden="true" class="article-header-sticky-headline nm-surface nm-raised">
+      <span>{{ page.title }}</span>
+    </div>
+    } @if (page.description) {
+    <p aria-label="Beschreibung" class="article-lead nm-pressed">{{ page.description }}</p>
+    }
+  </header>
+
+  <section class="article-body">
+    @for (block of blocks(); track $index) { @if (block.kind === 'heading') { @if (block.level ===
+    1) {
+    <h1 [id]="block.id">
+      <a class="article-heading-anchor" [routerLink]="['.']" [fragment]="block.id">
+        @if (block.numbering) {
+        <span class="article-heading-number">{{ block.numbering }}</span>
+        }
+        <span class="article-heading-text" [innerHTML]="block.html | safeHtml"></span>
+      </a>
+    </h1>
+    } @else if (block.level === 2) {
+    <h2 [id]="block.id">
+      <a class="article-heading-anchor" [routerLink]="['.']" [fragment]="block.id">
+        @if (block.numbering) {
+        <span class="article-heading-number">{{ block.numbering }}</span>
+        }
+        <span class="article-heading-text" [innerHTML]="block.html | safeHtml"></span>
+      </a>
+    </h2>
+    } @else if (block.level === 3) {
+    <h3 [id]="block.id">
+      <a class="article-heading-anchor" [routerLink]="['.']" [fragment]="block.id">
+        @if (block.numbering) {
+        <span class="article-heading-number">{{ block.numbering }}</span>
+        }
+        <span class="article-heading-text" [innerHTML]="block.html | safeHtml"></span>
+      </a>
+    </h3>
+    } @else if (block.level === 4) {
+    <h4 [id]="block.id">
+      <span class="article-heading-text" [innerHTML]="block.html | safeHtml"></span>
+    </h4>
+    } @else {
+    <h5 [id]="block.id">
+      <span class="article-heading-text" [innerHTML]="block.html | safeHtml"></span>
+    </h5>
+    } } @else if (block.kind === 'paragraph') {
+    <p [innerHTML]="block.html | safeHtml"></p>
+    } @else {
+    <div class="article-block-html" [innerHTML]="block.html | safeHtml"></div>
+    } }
+  </section>
+</article>
+}

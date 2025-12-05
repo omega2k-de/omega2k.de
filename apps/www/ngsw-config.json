@@ -1,0 +1,48 @@
+{
+  "$schema": "../../node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon*.*",
+          "/index.csr.html",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/websocket.handler.js",
+          "/websocket.worker.js",
+          "/websocket.shared-worker.js",
+          "/icons/icon-*.webp",
+          "/fonts/*.min.woff2",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "urls": ["/likes/**"],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "1d",
+        "timeout": "5s",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "offline-content",
+      "urls": ["/cards/**", "/cards", "/content/**", "/content", "/navigation/**"],
+      "cacheConfig": {
+        "maxSize": 500,
+        "maxAge": "14d",
+        "timeout": "5s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}

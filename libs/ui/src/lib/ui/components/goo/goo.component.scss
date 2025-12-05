@@ -1,0 +1,324 @@
+:host {
+  --color-blob-a: var(--color-goo);
+  --color-blob-b: var(--color-goo);
+  --size-a: 32vmax;
+  --size-b: 36vmax;
+
+  pointer-events: none;
+
+  isolation: isolate;
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+
+  overflow: clip;
+
+  background:
+    radial-gradient(circle at top, var(--color-goo), transparent 60%),
+    radial-gradient(circle at bottom, var(--color-goo), transparent 60%);
+  filter: brightness(1.1) blur(7.2px);
+}
+
+.goo,
+.animated-glow,
+:host svg {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .goo,
+  .animated-glow,
+  :host svg {
+    display: block;
+  }
+
+  .animated-glow {
+    position: absolute;
+    top: -50vh;
+    left: -50vw;
+    transform-origin: center center;
+
+    width: 200vw;
+    height: 200vh;
+
+    background-image: radial-gradient(
+      circle,
+      rgba(2, 0, 36, 10%) 0%,
+      rgba(9, 9, 121, 10%) 35%,
+      rgba(0, 212, 255, 10%) 100%
+    );
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    filter: blur(42px);
+
+    animation: rotate-1turn 60s linear infinite;
+  }
+
+  @keyframes rotate-1turn {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :host {
+      --color-blob-a: var(--color-goo);
+      --color-blob-b: var(--color-goo);
+
+      filter: brightness(0.05) blur(7.2px);
+    }
+
+    .animated-glow {
+      background-image: radial-gradient(
+        circle,
+        rgba(2, 0, 36, 10%) 0%,
+        rgba(9, 9, 121, 10%) 35%,
+        rgba(0, 212, 255, 10%) 100%
+      );
+    }
+  }
+
+  .goo {
+    will-change: filter;
+
+    position: absolute;
+    inset: -12vmax;
+
+    filter: blur(20px) contrast(2);
+    filter: url(#goo);
+  }
+
+  .blob {
+    will-change: transform;
+
+    position: absolute;
+
+    aspect-ratio: 1;
+    border-radius: 50%;
+
+    opacity: 1;
+    background: currentColor radial-gradient(closest-side, #fff2 0%, #0000 70%);
+  }
+
+  .blob.a {
+    color: var(--color-blob-a);
+  }
+
+  .blob.b {
+    color: var(--color-blob-b);
+  }
+
+  .a1 {
+    top: 2%;
+    left: 8%;
+    width: var(--size-a);
+    animation: lava-a 138s ease-in-out infinite alternate;
+  }
+
+  .a2 {
+    top: 10%;
+    left: 62%;
+    width: var(--size-a);
+    animation: lava-b 144s ease-in-out infinite alternate-reverse;
+  }
+
+  .a3 {
+    top: 68%;
+    left: 18%;
+    width: calc(var(--size-a) * 0.85);
+    animation: lava-c 152s ease-in-out infinite alternate;
+  }
+
+  .a4 {
+    top: 70%;
+    left: 52%;
+    width: calc(var(--size-a) * 0.9);
+    animation: lava-d 146s ease-in-out infinite alternate-reverse;
+  }
+
+  .b1 {
+    top: 22%;
+    right: 6%;
+    width: var(--size-b);
+    animation: lava-e 140s ease-in-out infinite alternate;
+  }
+
+  .b2 {
+    top: 28%;
+    left: 28%;
+    width: var(--size-b);
+    animation: lava-f 136s ease-in-out infinite alternate-reverse;
+  }
+
+  .b3 {
+    top: 36%;
+    left: 44%;
+    width: calc(var(--size-b) * 1.05);
+    animation: lava-g 148s ease-in-out infinite alternate;
+  }
+
+  .b4 {
+    top: 64%;
+    left: 74%;
+    width: calc(var(--size-b) * 0.95);
+    animation: lava-h 142s ease-in-out infinite alternate-reverse;
+  }
+}
+
+@keyframes lava-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(6vw, -5vh, 0) scale(0.93);
+  }
+  50% {
+    transform: translate3d(-4vw, 7vh, 0) scale(1.08);
+  }
+  75% {
+    transform: translate3d(8vw, 3vh, 0) scale(0.97);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-8vw, 4vh, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(5vw, -7vh, 0) scale(0.92);
+  }
+  75% {
+    transform: translate3d(-3vw, 6vh, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(10vw, -3vh, 0) scale(0.95);
+  }
+  50% {
+    transform: translate3d(-6vw, 5vh, 0) scale(1.07);
+  }
+  75% {
+    transform: translate3d(4vw, -6vh, 0) scale(0.94);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-d {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-7vw, 7vh, 0) scale(1.09);
+  }
+  50% {
+    transform: translate3d(8vw, -4vh, 0) scale(0.93);
+  }
+  75% {
+    transform: translate3d(-5vw, -5vh, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-e {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(7vw, 6vh, 0) scale(0.94);
+  }
+  50% {
+    transform: translate3d(-9vw, -3vh, 0) scale(1.08);
+  }
+  75% {
+    transform: translate3d(5vw, 8vh, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-f {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-5vw, 8vh, 0) scale(1.06);
+  }
+  50% {
+    transform: translate3d(6vw, -6vh, 0) scale(0.92);
+  }
+  75% {
+    transform: translate3d(-4vw, 4vh, 0) scale(1.01);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-g {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(9vw, -5vh, 0) scale(0.96);
+  }
+  50% {
+    transform: translate3d(-7vw, 6vh, 0) scale(1.07);
+  }
+  75% {
+    transform: translate3d(3vw, -7vh, 0) scale(0.95);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lava-h {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(-6vw, 7vh, 0) scale(1.08);
+  }
+  50% {
+    transform: translate3d(7vw, -5vh, 0) scale(0.93);
+  }
+  75% {
+    transform: translate3d(-3vw, -6vh, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .animated-glow {
+    transform: none;
+    animation: none !important;
+  }
+}
+
+@media print {
+  :host {
+    display: none !important;
+  }
+}

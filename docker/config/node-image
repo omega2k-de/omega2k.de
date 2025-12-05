@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export REGISTRY=registry.omega2k.de
+export NODE_IMAGE=${REGISTRY}/omega2k.de/node

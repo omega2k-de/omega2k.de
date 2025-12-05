@@ -1,0 +1,23 @@
+<div
+  uiScrollIntoView
+  [marginTop]="100"
+  #wrapper
+  class="content"
+  data-focus="wrapper"
+  [tabindex]="configS.disabled() ? '-1' : '0'">
+  <ui-badge-actions
+    data-focus="badge"
+    (pressed)="badgePressed($event)"
+    [class.multiple]="configS.isMultiple()" />
+  <ui-input #input />
+  <ui-focus-trap [disabled]="focusS.isFocusTrapDisabled()" [target]="wrapper" />
+</div>
+@if (isDropdownOpen()) {
+  <div class="drop-down">
+    @if (configS.type() === 'password') {
+      <ui-entropy-dropdown (touched)="callOnTouched()" class="list" [text]="searchString()" />
+    } @else {
+      <ui-list-dropdown (touched)="callOnTouched()" class="list" [searchString]="searchString()" />
+    }
+  </div>
+}

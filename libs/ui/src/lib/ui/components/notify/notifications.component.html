@@ -1,0 +1,64 @@
+@let _messages = messages();
+<ui-overlay class="widget">
+  @let count = _messages.length;
+  @let dialogExpanded = minimized() ? 'false' : 'true';
+  <div
+    role="dialog"
+    class="drawer nm-surface nm-raised"
+    aria-label="Dropdown-Dialog für Benachrichtigungen"
+    aria-haspopup="true"
+    aria-live="polite"
+    [attr.aria-expanded]="dialogExpanded"
+    [class.has-messages]="count > 0">
+    @if (!minimized()) {
+      <div class="messages" animate.enter="grow-messages" animate.leave="shrink-messages">
+        <div role="list" aria-label="Benachrichtigungen" class="wrapper">
+          @for (message of _messages; track message.id) {
+            <ui-growl
+              role="listitem"
+              tabindex="0"
+              [attr.aria-label]="message.title"
+              [message]="message"
+              animate.enter="show-message"
+              animate.leave="hide-message" />
+          }
+        </div>
+      </div>
+    }
+    @if (count > 0) {
+      <div class="handle">
+        @let badgeLabel = count + ' neue Nachricht' + (count !== 1 ? 'en' : '');
+        <button
+          tabindex="0"
+          type="button"
+          class="toggle nm-button"
+          uiVibrate
+          (click)="toggleMinimize()"
+          [uiIcon]="minimized() ? 'keyboard_arrow_down' : 'keyboard_arrow_up'"
+          [attr.aria-label]="
+            minimized() ? 'Benachrichtigungen öffnen' : 'Benachrichtigungen schließen'
+          "
+          [title]="minimized() ? 'öffnen' : 'schließen'"
+          size="md"></button>
+        <button
+          tabindex="-1"
+          type="button"
+          class="notify-badge"
+          [attr.aria-label]="badgeLabel"
+          [title]="badgeLabel">
+          {{ count }}
+        </button>
+        <button
+          tabindex="0"
+          type="button"
+          class="batch nm-button"
+          uiVibrate
+          (click)="cancelAll()"
+          uiIcon="clear_all"
+          aria-label="alle Nachrichten löschen"
+          title="alle löschen"
+          size="md"></button>
+      </div>
+    }
+  </div>
+</ui-overlay>

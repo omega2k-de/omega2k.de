@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "importHelpers": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2022", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@o2k/core": ["./libs/core/src/index.ts"],
+      "@o2k/core/*": ["libs/core/src/lib/*"],
+      "@o2k/page": ["./libs/page/src/index.ts"],
+      "@o2k/page/*": ["./libs/page/src/lib/*"],
+      "@o2k/ui": ["./libs/ui/src/index.ts"],
+      "@o2k/ui/*": ["./libs/ui/src/lib/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

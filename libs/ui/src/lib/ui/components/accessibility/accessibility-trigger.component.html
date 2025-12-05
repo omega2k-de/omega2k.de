@@ -1,0 +1,17 @@
+@let active = enabled();
+@let label = active ? 'aktiv' : 'inaktiv';
+<label aria-label="große Schrift" tabindex="-1" [uiAutoId]="button" for>{{ label }}</label>
+<button
+  #button
+  type="button"
+  size="md"
+  uiVibrate
+  role="switch"
+  [attr.aria-checked]="active ? 'true' : 'false'"
+  [attr.aria-label]="'große Schrift ' + (active ? 'deaktivieren' : 'aktivieren')"
+  (click)="toggle()"
+  (keydown.enter)="toggle()"
+  [class.active]="active"
+  [class.inactive]="!active"
+  [title]="label"
+  [uiIcon]="active ? 'text_increase' : 'text_decrease'"></button>

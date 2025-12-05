@@ -1,0 +1,120 @@
+{
+  "name": "www",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/www/src",
+  "tags": ["ssr", "serverside-rendering", "scope:app"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/www",
+        "browser": "apps/www/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/www/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/www/public"
+          }
+        ],
+        "styles": ["apps/www/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["apps/www/src/styles", "./node_modules"]
+        },
+        "crossOrigin": "anonymous",
+        "server": "apps/www/src/main.server.ts",
+        "ssr": {
+          "entry": "apps/www/src/server.ts"
+        },
+        "outputMode": "server",
+        "webWorkerTsConfig": "apps/www/tsconfig.worker.json"
+      },
+      "configurations": {
+        "production": {
+          "sourceMap": true,
+          "allowedCommonJsDependencies": [
+            "crypto-js",
+            "dayjs",
+            "file-saver",
+            "object-hash",
+            "ts-md5",
+            "uuid",
+            "ws"
+          ],
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "4mb",
+              "maximumError": "8mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "8kb",
+              "maximumError": "16kb"
+            }
+          ],
+          "outputHashing": "all",
+          "serviceWorker": "apps/www/ngsw-config.json"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "www:build:production"
+        },
+        "development": {
+          "buildTarget": "www:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "dependsOn": ["websocket:serve"],
+      "options": {
+        "proxyConfig": "apps/www/proxy.conf.mjs",
+        "host": "www.omega2k.de.o2k",
+        "ssl": true,
+        "sslKey": "./ssl/sslKey.pem",
+        "sslCert": "./ssl/sslCert.pem"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "www:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/apps/www",
+        "webWorkerTsConfig": "apps/www/tsconfig.worker.json"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "www:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/www/browser",
+        "spa": true
+      }
+    }
+  }
+}

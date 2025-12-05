@@ -1,0 +1,37 @@
+FROM node:22.18.0
+
+ENV NPM_CONFIG_LOGLEVEL info
+
+RUN set -ex \
+    && apt-get update && apt-get install -y \
+    git \
+    npm \
+    lsof \
+    ffmpeg \
+    rsync \
+    fonttools \
+    mkcert \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    # smoke test
+    && npm --version \
+    && rm -rf /tmp/*
+
+RUN mkdir -p /builds/developers/omega2k.de/scripts
+
+WORKDIR /builds/developers/omega2k.de
+
+COPY ./scripts/*.sh ./scripts/
+RUN chmod +x ./scripts/*.sh
+
+RUN npm set progress=false
+RUN npm i -g pnpm
+RUN npm i -g playwright
+
+RUN pnpx playwright install --force firefox
+RUN pnpx playwright install --force chromium
+RUN pnpx playwright install --force webkit
+RUN pnpx playwright install --force msedge
+RUN pnpx playwright install --force chrome
+RUN pnpx playwright install --with-deps

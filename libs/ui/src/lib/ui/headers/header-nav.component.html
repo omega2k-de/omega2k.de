@@ -1,0 +1,14 @@
+@if (items(); as items) {
+  <nav class="app-shell-nav" aria-label="Hauptnavigation">
+    @for (item of items; track item.id) {
+      <a
+        class="nav-chip"
+        uiRouterLink
+        routerLinkActive="nav-chip-active"
+        [routerLink]="[item.route || '/']"
+        [routerLinkActiveOptions]="{ exact: $index === 0 }"
+        ><span class="app-shell-nav-chip-label">{{ item.label }}</span></a
+      >
+    }
+  </nav>
+}

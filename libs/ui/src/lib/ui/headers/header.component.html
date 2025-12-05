@@ -1,0 +1,84 @@
+<div class="app-shell-progress">
+  <div class="reading-progress"></div>
+</div>
+<div class="app-shell-backdrop"></div>
+<div class="app-shell-left">
+  <button
+    uiVibrate
+    type="button"
+    class="logo-badge nm-button nm-surface power-button"
+    [class.nm-active]="isNavOpen()"
+    [attr.aria-label]="navToggleLabel()"
+    [title]="navToggleLabel()"
+    aria-controls="navDropdown"
+    (click)="toggleNav()">
+    <span>Ω</span>
+  </button>
+  <button
+    uiVibrate
+    type="button"
+    class="toggle-aside icon-pill nm-button nm-surface"
+    [class.nm-active]="isAsideOpen()"
+    uiIcon="menu_book"
+    [title]="asideToggleLabel()"
+    [attr.aria-label]="asideToggleLabel()"
+    (click)="toggleAside()"></button>
+  <ui-header-nav-dropdown id="navDropdown" />
+</div>
+@if (clientCount(); as clientCount) {
+  <div class="user-count">
+    <span>{{ clientCount }}</span
+    ><span>online</span>
+  </div>
+}
+<div class="app-shell-fade-right"></div>
+<div class="app-shell-right">
+  @let size = fontSizePx();
+  @let sizeUpLabel = 'Schriftgröße erhöhen (' + size + 'px)';
+  @let sizeDownLabel = 'Schriftgröße verringern (' + size + 'px)';
+  <button
+    uiVibrate
+    type="button"
+    class="icon-pill nm-button nm-surface"
+    [attr.data-size]="size"
+    [title]="sizeUpLabel"
+    [attr.aria-label]="sizeUpLabel"
+    (click)="changeFontSize('up')">
+    <span class="flex" size="md" uiIcon="text_increase"></span>
+  </button>
+  <button
+    uiVibrate
+    type="button"
+    class="icon-pill nm-button nm-surface"
+    [attr.data-size]="size"
+    [title]="sizeDownLabel"
+    [attr.aria-label]="sizeDownLabel"
+    (click)="changeFontSize('down')">
+    <span class="flex" size="md" uiIcon="text_decrease"></span>
+  </button>
+  <button
+    uiVibrate
+    type="button"
+    role="switch"
+    [attr.aria-checked]="isNotificationEnabled() ? 'true' : 'false'"
+    class="icon-pill nm-button nm-surface"
+    [class.grayscale]="!isNotificationEnabled()"
+    (click)="toggleNotifications()"
+    [title]="notificationToggleLabel()"
+    [attr.aria-label]="notificationToggleLabel()">
+    <span>🔔</span>
+  </button>
+
+  @let darkModeLabel = theme() === 'light' ? 'Darkmode einschalten' : 'Darkmode ausschalten';
+  <button
+    uiVibrate
+    type="button"
+    class="icon-pill nm-button nm-surface"
+    [attr.data-theme]="theme()"
+    [title]="darkModeLabel"
+    [attr.aria-label]="darkModeLabel"
+    (click)="toggleTheme()">
+    <span>{{ themeIcon() }}</span>
+  </button>
+</div>
+<ui-notifications />

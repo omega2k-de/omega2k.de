@@ -1,0 +1,23 @@
+@use 'styles/reset';
+
+@use 'styles/fonts';
+
+@use 'styles/icons';
+
+@use 'styles/root';
+
+/* =========================================================
+         extend basic setup with consistent style
+========================================================= */
+
+@use 'styles/buttons';
+
+@use 'styles/articles';
+
+@use 'styles/cards';
+
+@use 'styles/structure-aside';
+
+@use 'styles/typography';
+
+@use 'styles/scrollbars';

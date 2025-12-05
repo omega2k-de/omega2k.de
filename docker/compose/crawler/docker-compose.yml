@@ -1,0 +1,25 @@
+services:
+  crawler:
+    image: mcr.microsoft.com/playwright:v1.49.0-jammy
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      ORIGIN: 'https://www.omega2k.de'
+      MAX_DEPTH: '10'
+      OUTPUT_FILE: 'crawl-report.json'
+      HEADLESS: 'true'
+      RECORD_VIDEO: 'false'
+    command: bash -lc "npm ci && npm run crawl"
+
+  random-walker:
+    image: mcr.microsoft.com/playwright:v1.49.0-jammy
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      ORIGIN: 'https://www.omega2k.de'
+      DURATION_SECONDS: '1800'
+      HEADLESS: 'true'
+      RECORD_VIDEO: 'true'
+    command: bash -lc "npm ci && npm run random-walk"

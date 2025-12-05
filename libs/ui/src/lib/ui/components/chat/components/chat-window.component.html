@@ -1,0 +1,44 @@
+@let messageCounter = messageCount();
+<div class="header frosted-glass" [class.autoscroll]="autoscroll()">
+  <i data-no-scale uiIcon="message"></i>
+  <span class="ellipsis">{{ messageCounter }} Nachricht{{ messageCounter !== 1 ? 'en' : '' }}</span>
+  <div class="relative">
+    <label tabindex="-1" [uiAutoId]="button" for>Hilfe</label>
+    <button type="button" #button class="help" uiIcon="help" aria-label="Hilfe"></button>
+  </div>
+</div>
+<div cdkVirtualScrollingElement class="viewport messages inset" data-message-list>
+  @let list = messages();
+  <cdk-virtual-scroll-viewport [messages]="list" orientation="vertical" uiDynamicVirtualScroll>
+    <ui-chat-message
+      *cdkVirtualFor="let message of list"
+      [attr.data-uuid]="message.uuid"
+      [message]="message" />
+    <div class="footer-spacer"></div>
+  </cdk-virtual-scroll-viewport>
+</div>
+<form
+  (submit)="send($event)"
+  [formGroup]="form"
+  autocomplete="off"
+  class="form ui-input frosted-glass">
+  <label tabindex="-1" class="message-label" [uiAutoId]="message" [length]="16" for
+    >Deine Nachricht</label
+  >
+  <textarea
+    #message
+    (keydown)="keydownHandler($event)"
+    class="chat"
+    formControlName="message"
+    placeholder="Deine Nachricht"></textarea>
+  <div class="relative">
+    <label tabindex="-1" [uiAutoId]="button" for>Senden</label>
+    <button
+      #button
+      [disabled]="form.invalid"
+      aria-label="Senden"
+      class="submit-button metal ellipsis"
+      type="submit"
+      uiIcon="send"></button>
+  </div>
+</form>

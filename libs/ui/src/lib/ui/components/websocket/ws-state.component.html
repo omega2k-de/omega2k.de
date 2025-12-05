@@ -1,0 +1,26 @@
+@let clientCount = clients() + ' verbunden';
+@let connected = state() === 'network_node';
+@let label = connected ? clients() + ' online (ping)' : 'offline';
+<label tabindex="-1" [uiAutoId]="button" for>{{ label }}</label>
+<button
+  #button
+  type="button"
+  size="md"
+  uiVibrate
+  uiProgressRing
+  role="switch"
+  [attr.aria-checked]="isPinging() ? 'true' : 'false'"
+  [disabled]="!connected || isPinging()"
+  [progress]="progress()"
+  [config]="uiProgressRingConfig"
+  (click)="debounceTimePing()"
+  (keydown.enter)="debounceTimePing()"
+  [class.connected]="connected"
+  [class.disconnected]="!connected"
+  [attr.aria-label]="label"
+  [title]="label"
+  [uiIcon]="state()">
+  <div class="badge">
+    <span [attr.aria-label]="clientCount" [title]="clientCount">{{ clients() }}</span>
+  </div>
+</button>

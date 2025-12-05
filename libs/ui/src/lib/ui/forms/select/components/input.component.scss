@@ -1,0 +1,117 @@
+:host {
+  position: relative;
+  border-radius: var(--border-radius-default);
+}
+
+label {
+  &:focus-visible {
+    outline: transparent none;
+  }
+}
+
+.trap {
+  cursor: pointer;
+  user-select: none;
+
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-radius: var(--border-radius-default);
+
+  background-color: transparent;
+}
+
+input {
+  z-index: 1;
+
+  display: grid;
+
+  width: 100%;
+  height: var(--touch-ui-min-height);
+  border-radius: var(--border-radius-default);
+
+  line-height: var(--touch-ui-min-height);
+  color: var(--color-black);
+
+  -moz-appearance: textfield;
+  appearance: textfield;
+  background-color: var(--nm-surface);
+
+  &::spelling-error {
+    color: inherit;
+    background-color: inherit;
+  }
+
+  &::selection {
+    text-shadow: none;
+    background-color: var(--color-primary-alpha75);
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &[disabled],
+  &[disabled]::placeholder {
+    color: var(--disabled-color);
+    filter: var(--disabled-filter);
+  }
+
+  &::-ms-clear,
+  &::-ms-reveal {
+    display: none;
+  }
+
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button,
+  &[type='search']::-webkit-search-cancel-button,
+  &[type='search']::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+:host-context(ui-select.disabled) {
+  &,
+  input,
+  label,
+  input::placeholder {
+    cursor: not-allowed;
+    color: var(--disabled-color);
+  }
+
+  input {
+    opacity: var(--disabled-opacity);
+    filter: var(--disabled-filter);
+  }
+}
+
+:host-context(ui-select.select) {
+  &,
+  input {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  input {
+    padding-right: var(--touch-ui-min-height);
+    text-overflow: ellipsis;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  input {
+    color: var(--color-white);
+    color-scheme: dark;
+    background-color: var(--color-darkgrey);
+
+    &::selection {
+      text-shadow: none;
+      background-color: var(--color-primary-alpha75-dark);
+    }
+  }
+}

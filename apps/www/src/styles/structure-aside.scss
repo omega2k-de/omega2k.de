@@ -1,0 +1,12 @@
+.toggle-aside {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  body:has(page-structure-outlet),
+  body:has(page-controls-outlet) {
+    .toggle-aside {
+      display: block;
+    }
+  }
+}

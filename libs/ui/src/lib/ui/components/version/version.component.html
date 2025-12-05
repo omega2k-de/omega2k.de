@@ -1,0 +1,8 @@
+@if (data(); as config) {
+  @if (config?.version) {
+    <span aria-label="Version" class="version">{{ config.version }}</span>
+  }
+  @if (config?.hash) {
+    <span aria-label="Hashwert" class="hash">{{ config.hash }}</span>
+  }
+}

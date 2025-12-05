@@ -1,0 +1,56 @@
+<article id="article" class="article nm-surface nm-raised">
+  <section>
+    <header class="header-container">
+      <h2 class="headline">Lesefortschritt</h2>
+      <button
+        uiVibrate
+        type="button"
+        title="kompletten Fortschritt zurücksetzen"
+        aria-label="kompletten Fortschritt zurücksetzen"
+        class="tag-pill nm-button nm-surface"
+        (click)="resetAllProgressImmediate()"
+        uiIcon="refresh"></button>
+    </header>
+    <div class="readable">
+      @for (card of cards(); track card.id) {
+      <div class="card">
+        <div class="booklet nm-pressed">
+          <header [title]="card.title" class="deck-title">
+            <a [routerLink]="[card.route]">{{ card.title }}</a>
+            <ui-like-button [state]="likes().get(card.id) ?? null" [articleId]="card.id" />
+            <button
+              uiVibrate
+              type="button"
+              title="Fortschritt zurücksetzen"
+              aria-label="Fortschritt zurücksetzen"
+              class="tag-pill nm-button nm-surface"
+              (click)="resetProgressImmediate(card.id)"
+              uiIcon="refresh"></button>
+          </header>
+          <span class="version" title="Version: {{ card.version || 1 }}" aria-label="Version"
+            >Version {{ card.version || 1 }}</span
+          >
+          <div
+            [uiReadingProgress]="card.id"
+            #p="instance"
+            [style.--reading-progress]="p.progress() + '%'"
+            class="deck-progress">
+            <span class="deck-progress-bar"></span>
+          </div>
+          <div class="deck-tags">
+            <span class="tag-pill before" uiIcon="person">
+              {{ card.authorSlug || 'omega2k' }}
+            </span>
+            <span class="tag-pill before" uiIcon="auto_stories">
+              {{ card.readingTimeMin || 0 }} min
+            </span>
+            <span class="tag-pill before" uiIcon="heart_check">
+              {{ dayjs(card.createdAt).format('DD.MM.YY') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </section>
+</article>

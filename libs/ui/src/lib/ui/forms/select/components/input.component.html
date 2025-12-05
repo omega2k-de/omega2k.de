@@ -1,0 +1,21 @@
+@let placeholder = configS.label();
+@let mode = configS.mode();
+<label tabindex="-1" data-focus="label" #labelElement [uiAutoId]="inputElement" for>
+  <span>{{ placeholder }}</span>
+</label>
+<input
+  #inputElement
+  uiVibrate
+  spellcheck="false"
+  data-focus="input"
+  [attr.inert]="mode === 'select' ? '' : null"
+  (select)="onSelect($event)"
+  [tabindex]="inputTabindex()"
+  [name]="configS.name()"
+  [autocomplete]="configS.attrAutocomplete()"
+  [formControl]="textInput"
+  [placeholder]="placeholder"
+  [type]="configS.type()" />
+@if (mode === 'select') {
+  <div tabindex="-1" (focusin)="focusS.focus = 'label'" class="trap"></div>
+}

@@ -1,0 +1,17 @@
+<div class="wrapper" uiProgressRing [progress]="progress()" [config]="uiProgressRingConfig">
+  <article class="article nm-surface nm-raised">
+    <section>
+      <div class="control">
+        <header>
+          <h2>Einstellungen</h2>
+        </header>
+        <div class="options">
+          <button type="button" class="nm-button" (click)="prefetchAll()">
+            <span>Alles vorladen</span>
+            <small>(~ 2MB)</small>
+          </button>
+        </div>
+      </div>
+    </section>
+  </article>
+</div>

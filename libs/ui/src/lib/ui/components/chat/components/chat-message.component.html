@@ -1,0 +1,12 @@
+@let msg = message();
+@if (msg.message) {
+  <div class="message" [class]="msg.direction">
+    <div class="content bubble">
+      <span class="text" [innerHTML]="msg.message | linkify"></span>
+      <span class="time">{{ msg.created.format('HH:mm') }}</span>
+    </div>
+    <div class="additional">
+      <span class="author">{{ msg.author.name ?? msg.author.uuid }}</span>
+    </div>
+  </div>
+}

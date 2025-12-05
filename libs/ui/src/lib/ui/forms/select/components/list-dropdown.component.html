@@ -1,0 +1,41 @@
+@let options = items();
+@if (options.length) {
+  @let itemSize = configS.itemHeightPx();
+  @let visibleOptions = configS.displayItems();
+  <cdk-virtual-scroll-viewport
+    [style]="viewportRootVars()"
+    #cdkVirtualScrollViewport
+    class="viewport"
+    [itemSize]="itemSize"
+    animate.enter="extend"
+    data-focus="list"
+    (scrolledIndexChange)="scrolledIndex = $event"
+    [maxBufferPx]="visibleOptions * itemSize"
+    [minBufferPx]="visibleOptions * itemSize"
+    tabindex="-1">
+    <div
+      *cdkVirtualFor="let option of options; trackBy: trackBy"
+      uiVibrate
+      tabindex="-1"
+      class="item"
+      data-focus="option"
+      [class.cursor]="isCursor(option)"
+      [attr.aria-label]="option.label"
+      [attr.aria-selected]="option.selected ? 'true' : 'false'"
+      [class.selected]="option.selected"
+      (click)="selectOption($event, option)"
+      (mouseenter)="itemsS.current = option"
+      (pointerdown)="cdkVirtualScrollViewport.elementRef.nativeElement.focus()"
+      (keydown.enter)="selectOption($event, option)"
+      (keydown.space)="selectOption($event, option)">
+      <div class="option">
+        <span
+          class="label"
+          [innerHTML]="option.label | wrapWords: trimmedSearchString() : ' '"></span>
+        @if (option.created) {
+          <span size="lg" uiIcon="add_circle"></span>
+        }
+      </div>
+    </div>
+  </cdk-virtual-scroll-viewport>
+}

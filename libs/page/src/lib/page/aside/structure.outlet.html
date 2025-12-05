@@ -1,0 +1,43 @@
+@let headings = context.headings(); @if (headings.length) {
+<div class="nm-surface nm-raised aside-panel-wrapper">
+  <section class="relative aside-panel">
+    <div class="share-buttons">
+      <ui-share-on-bluesky class="nm-button share-button" />
+      <ui-share-on-twitter class="nm-button share-button" />
+      <button
+        uiVibrate
+        type="button"
+        class="icon-pill nm-button nm-surface toggle-aside"
+        aria-label="Inhaltsverzeichnis ausblenden"
+        title="Inhaltsverzeichnis ausblenden"
+        uiIcon="close"
+        (click)="closeStructure()"></button>
+    </div>
+    <div class="toc-title before" uiIcon="menu_book">Inhalt</div>
+    <nav class="toc-nav">
+      <ol class="toc-list">
+        <li class="toc-item toc-item-level-1">
+          <a class="toc-anchor" (click)="closeStructure()" [routerLink]="['.']" fragment="content">
+            <span class="article-heading-number">0.</span>
+            <span class="article-heading-text">Einleitung</span>
+          </a>
+        </li>
+        @for (heading of headings; track heading.id) {
+        <li class="toc-item toc-item-level-{{ heading.level }}">
+          <a
+            class="toc-anchor"
+            (click)="closeStructure()"
+            [routerLink]="['.']"
+            [fragment]="heading.id">
+            @if (heading.numbering) {
+            <span class="article-heading-number">{{ heading.numbering }}</span>
+            }
+            <span class="article-heading-text" [innerHTML]="heading.html | safeHtml"></span>
+          </a>
+        </li>
+        }
+      </ol>
+    </nav>
+  </section>
+</div>
+}

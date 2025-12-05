@@ -1,0 +1,121 @@
+@if (tree(); as tree) {
+  @let open = coordinator.isNavigationOpen();
+  <nav class="nav-dropdown" role="navigation" aria-label="Hauptnavigation">
+    <ul role="menu" class="basic-tree">
+      <a
+        [tabindex]="open ? '0' : '-1'"
+        uiVibrate
+        type="button"
+        class="nm-button nav-dropdown-item"
+        role="menuitem"
+        title="Startseite"
+        aria-label="Startseite"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="nm-active fill"
+        routerLink="/">
+        <span class="before nav-title" size="lg" uiIcon="home">Startseite</span>
+      </a>
+      <ng-template
+        [ngTemplateOutlet]="treeNodes"
+        [ngTemplateOutletContext]="{ children: tree.children, parent: tree.parent }" />
+      <a
+        [tabindex]="open ? '0' : '-1'"
+        uiVibrate
+        type="button"
+        class="nm-button nav-dropdown-item"
+        role="menuitem"
+        title="Einstellungen"
+        aria-label="Einstellungen"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="nm-active fill"
+        routerLink="/controls">
+        <span class="before nav-title" size="lg" uiIcon="handyman">Einstellungen</span>
+      </a>
+    </ul>
+  </nav>
+
+  <ng-template #treeNodes let-children="children" let-parent="parent">
+    @for (child of children; track child.page.id) {
+      @if (child.children?.length) {
+        <div class="nav-group">
+          <div
+            role="button"
+            [tabindex]="open ? '0' : '-1'"
+            uiVibrate
+            [attr.data-id]="child.page.id"
+            class="nm-button nav-dropdown-toggle nm-has-active"
+            [attr.aria-expanded]="isExpanded(child.page.id) ? 'true' : 'false'"
+            [attr.aria-label]="child.page.title">
+            <div class="toggle-wrapper">
+              <span
+                size="lg"
+                uiIcon="keyboard_arrow_down"
+                class="after nav-toggle-icon"
+                [attr.data-open]="isExpanded(child.page.id) ? 'true' : 'false'">
+              </span>
+              <span class="before nav-prefix" size="lg">
+                {{ groupLabel(child.page.title) }}
+              </span>
+              @if (child.page.isNew) {
+                <div class="relative">
+                  <span class="is-new fill" uiIcon="stat_3"></span>
+                </div>
+              }
+            </div>
+            @if (isExpanded(child.page.id)) {
+              <ul role="group">
+                <a
+                  [tabindex]="open ? '0' : '-1'"
+                  uiVibrate
+                  type="button"
+                  class="nm-button nav-dropdown-item before"
+                  role="menuitem"
+                  size="lg"
+                  [title]="child.page.title + (child.page.isNew ? ' (update)' : '')"
+                  [attr.aria-label]="child.page.title + (child.page.isNew ? ' (update)' : '')"
+                  routerLinkActive="nm-active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [routerLink]="child.page.route || '/'">
+                  <span uiIcon="book_2" class="before nav-title" size="lg">
+                    {{ child.parent ? removeLabel(child.page.title) : child.page.title }}
+                  </span>
+                  @if (child.page.isNew) {
+                    <div class="relative">
+                      <span class="is-new fill" uiIcon="stat_3"></span>
+                    </div>
+                  }
+                </a>
+
+                <ng-template
+                  [ngTemplateOutlet]="treeNodes"
+                  [ngTemplateOutletContext]="{ children: child.children, parent: child.parent }" />
+              </ul>
+            }
+          </div>
+        </div>
+      } @else {
+        <a
+          [tabindex]="open ? '0' : '-1'"
+          uiVibrate
+          type="button"
+          class="nm-button nav-dropdown-item before"
+          role="menuitem"
+          size="lg"
+          [title]="child.page.title + (child.page.isNew ? ' (update)' : '')"
+          [attr.aria-label]="child.page.title + (child.page.isNew ? ' (update)' : '')"
+          routerLinkActive="nm-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="child.page.route || '/'">
+          <span uiIcon="book_2" class="before nav-title" size="lg">
+            {{ child.parent ? removeLabel(child.page.title) : child.page.title }}
+          </span>
+          @if (child.page.isNew) {
+            <div class="relative">
+              <span class="is-new fill" uiIcon="stat_3"></span>
+            </div>
+          }
+        </a>
+      }
+    }
+  </ng-template>
+}

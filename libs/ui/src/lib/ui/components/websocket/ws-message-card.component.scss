@@ -1,0 +1,99 @@
+:host {
+  font-size: var(--font-size-sm);
+}
+
+span {
+  &:after {
+    content: ': ';
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+pre {
+  font-family: monospace;
+}
+
+details,
+summary,
+pre {
+  word-break: auto-phrase;
+  white-space: break-spaces;
+}
+
+details {
+  &,
+  &[open] > article {
+    position: relative;
+
+    font-size: var(--font-size-sm);
+    color: var(--color-black);
+
+    background-color: var(--nm-surface);
+    box-shadow: rgba(0, 0, 0, 20%) 0 0 var(--gap-sm) 1px;
+  }
+
+  &[open] > article {
+    position: static;
+    z-index: 1;
+    top: 56px;
+
+    overscroll-behavior: contain;
+
+    width: 100%;
+    height: fit-content;
+    max-height: 10rem;
+    padding: 0;
+
+    background-color: var(--color-background-frosted-glass);
+    filter: var(--filter-drop-shadow-polite);
+    backdrop-filter: blur(7.2px);
+  }
+}
+
+summary {
+  cursor: pointer;
+
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  grid-template-rows: auto auto;
+
+  min-height: var(--button-min-height);
+  padding: var(--gap-sm);
+
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 80%);
+  list-style-type: none;
+
+  &:focus,
+  &:focus-visible {
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 60%);
+    background-color: var(--color-lightgrey);
+    box-shadow: inset rgba(0, 0, 0, 40%) 0 0 0.25rem 1px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  details {
+    &,
+    &[open] > article {
+      color: var(--color-white);
+      background-color: var(--color-darkgrey);
+    }
+
+    &[open] > article {
+      background-color: var(--color-background-smoke-glass);
+    }
+  }
+
+  summary {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 80%);
+
+    &:focus,
+    &:focus-visible {
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 60%);
+      background-color: var(--color-background-smoke);
+    }
+  }
+}

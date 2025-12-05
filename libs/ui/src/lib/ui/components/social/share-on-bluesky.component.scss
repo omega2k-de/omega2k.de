@@ -1,0 +1,63 @@
+:host {
+  transform: scale(0.9);
+
+  overflow: visible;
+  display: grid;
+
+  width: fit-content;
+
+  white-space: nowrap;
+
+  &.nm-button:not(:disabled):active {
+    transform: translateY(1px) scale(0.9);
+  }
+}
+
+.bs-logo {
+  width: auto;
+  height: 100%;
+  max-height: var(--font-size-default);
+  margin-right: 0.25rem;
+
+  fill: var(--color-white);
+}
+
+.button {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 2rem;
+  padding: 0.25rem;
+  border-radius: inherit;
+
+  color: var(--color-white);
+
+  background-color: var(--color-black);
+}
+
+a {
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 0 0 var(--padding-md);
+  padding: 0.125rem 0.25rem;
+
+  text-decoration: none;
+
+  &,
+  &:focus,
+  &:hover,
+  &:focus-within,
+  &:active,
+  &:visited {
+    color: var(--color-white);
+  }
+
+  &:after {
+    display: none;
+  }
+}

@@ -1,0 +1,133 @@
+:host {
+  --deck-card-height: 20rem;
+
+  display: block;
+  height: var(--deck-card-height);
+  border-radius: var(--radius-md);
+
+  &:has(.active) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+.deck-card {
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-xs);
+
+  height: 100%;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border-thin);
+  border-radius: var(--radius-md);
+}
+
+.deck-card-version {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 var(--space-xs);
+  border-radius: 0 var(--radius-md) 0 var(--radius-md);
+
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  text-shadow: 4px 2px 2px var(--nm-dark);
+}
+
+.deck-card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-xs);
+
+  min-height: 0;
+}
+
+.deck-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  min-height: 4.75rem;
+  margin: 0;
+  padding-right: var(--space-sm);
+
+  font-size: var(--font-size-lg);
+  line-height: 1.2;
+}
+
+.deck-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+
+  margin: 0;
+  padding-inline: 1rem;
+
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.deck-card-footer {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin-top: 0.25rem;
+}
+
+.deck-progress {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 999px;
+
+  background: var(--color-shadow-dark);
+}
+
+.deck-status {
+  font-size: 0.8rem;
+}
+
+.deck-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  :host {
+    --deck-card-height: 22rem;
+  }
+
+  .deck-text {
+    -webkit-line-clamp: 6;
+  }
+}
+
+@media (min-width: 1200px) {
+  :host {
+    --deck-card-height: 24rem;
+  }
+
+  .deck-text {
+    -webkit-line-clamp: 7;
+  }
+}

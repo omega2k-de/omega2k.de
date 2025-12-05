@@ -1,0 +1,130 @@
+%round-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border-radius: 999px;
+}
+
+%pill-button {
+  cursor: pointer;
+
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+
+  font-size: 0.86rem;
+
+  transition: all var(--animate-duration) ease;
+}
+
+.logo-badge {
+
+  @extend %round-circle;
+
+  cursor: pointer;
+  user-select: none;
+
+  aspect-ratio: 1 / 1;
+  inline-size: var(--app-shell-height);
+  block-size: var(--app-shell-height);
+
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  transition: all var(--animate-duration) ease;
+}
+
+.icon-pill {
+
+  @extend %round-circle;
+
+  cursor: pointer;
+
+  aspect-ratio: 1 / 1;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: none;
+
+  font-size: 0.9rem;
+  color: var(--color-text-main);
+
+  background: var(--nm-bg);
+}
+
+.nm-button {
+  cursor: pointer;
+
+  border: 1px solid transparent;
+
+  color: var(--color-text-main);
+  text-decoration: none;
+
+  background-color: var(--nm-bg);
+
+  span {
+    line-height: 1;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:not(:disabled) {
+    transition: all var(--animate-duration) ease;
+
+    &:hover {
+      transform: translateY(-1px);
+
+      border-color: var(--color-border-thin);
+
+      color: var(--color-accent);
+
+      box-shadow:
+        2px 2px 4px var(--nm-dark),
+        -2px -2px 4px var(--nm-light);
+
+      transition: all var(--animate-duration) ease;
+    }
+
+    &:active,
+    &.nm-active {
+      transform: translateY(1px);
+
+      border-color: var(--color-border-thin);
+
+      color: var(--color-accent);
+
+      box-shadow:
+        inset 4px 4px 4px var(--nm-dark),
+        inset -4px -4px 4px var(--nm-light);
+
+      transition: all var(--animate-duration) ease;
+    }
+  }
+}
+
+.nm-soft-button {
+  &:disabled {
+    cursor: default;
+  }
+
+  &:not(:disabled) {
+    transition: all var(--animate-duration) ease;
+
+    &:hover {
+      box-shadow:
+        14px 14px 32px var(--nm-dark),
+        -12px -12px 30px var(--nm-light);
+      transition: all var(--animate-duration) ease;
+    }
+
+    &:active {
+      box-shadow:
+        inset 6px 6px 18px var(--nm-dark),
+        inset -6px -6px 18px var(--nm-light);
+      transition: all var(--animate-duration) ease;
+    }
+  }
+}

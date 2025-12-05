@@ -1,0 +1,42 @@
+@if (config(); as conf) {
+  <figure tabindex="0" class="no-outline">
+    @if (conf.legend || conf.details) {
+      <div class="caption-wrapper">
+        <figcaption>
+          @if (conf.legend) {
+            <legend>{{ conf.legend }}</legend>
+          }
+          @if (conf.details; as details) {
+            <details>
+              <summary uiVibrate>
+                <span>{{ details.summary }}</span>
+              </summary>
+              <p>{{ details.content }}</p>
+            </details>
+          }
+        </figcaption>
+      </div>
+    }
+    @if (conf.full) {
+      <div class="popout-wrapper">
+        <img
+          tabindex="-1"
+          class="popout no-outline"
+          [ngSrc]="conf.full.path ?? conf.image.path"
+          [priority]="false"
+          [width]="conf.full.width ?? conf.image.width"
+          [height]="conf.full.height ?? conf.image.height"
+          alt="{{ conf.full.alt ?? conf.image.alt }}" />
+      </div>
+    }
+    <img
+      uiVibrate
+      tabindex="-1"
+      class="responsive"
+      [ngSrc]="conf.image.path"
+      [priority]="true"
+      [width]="conf.image.width"
+      [height]="conf.image.height"
+      alt="{{ conf.image.alt }}" />
+  </figure>
+}

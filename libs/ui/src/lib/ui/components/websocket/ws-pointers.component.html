@@ -1,0 +1,16 @@
+@for (pointer of pointers(); track pointer.uuid) {
+  @if (pointer.mouse) {
+    <i
+      uiIcon="arrow_selector_tool"
+      [attr.data-uuid]="pointer.uuid"
+      [attr.style]="'transform:translate3d(' + pointer.mouse.x + 'px,' + pointer.mouse.y + 'px,0);'"></i>
+  }
+  @if (pointer.fingers; as fingers) {
+    @for (finger of fingers; track finger.x + 'x' + finger.y) {
+      <i
+        uiIcon="touch_app"
+        [attr.data-uuid]="pointer.uuid"
+        [attr.style]="'transform:translate3d(' + finger.x + 'px,' + finger.y + 'px,0);'"></i>
+    }
+  }
+}

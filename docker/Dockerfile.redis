@@ -1,0 +1,14 @@
+FROM redis:7-alpine
+
+WORKDIR /usr/local/etc/redis
+
+COPY ./docker/redis/redis.conf /usr/local/etc/redis/redis.conf
+COPY ./docker/redis/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+VOLUME ["/data"]
+EXPOSE 6379
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]

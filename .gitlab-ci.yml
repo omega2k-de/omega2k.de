@@ -1,0 +1,472 @@
+stages:
+  - prepare
+  - test
+  - build
+  - deploy
+  - cleanup
+
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+    on_job_failure: all
+
+variables:
+  CI: true
+  APP_VERSION: 0.42.82
+  DOCKER_DRIVER: overlay2
+  REGISTRY: 'registry.omega2k.de'
+  NODE_IMAGE: '${REGISTRY}/omega2k.de/node'
+  DOCKER_IMAGE: docker:28-cli
+  GIT_DEPTH: 50
+  DOCKER_TLS_CERTDIR: ''
+  DOCKER_PREVIEW_TOKEN: 'BEjEh3SF0uswoiu3WV7vXG7H36Q='
+  NX_DAEMON: false
+  NX_CACHE_DIRECTORY: .nx/cache
+
+  COMPOSE_LOGGER: 'INFO'
+  COMPOSE_IMAGE_TAG: '${CI_COMMIT_SHORT_SHA}'
+
+  COMPOSE_HOSTNAME: 'webservice-${CI_COMMIT_SHORT_SHA}'
+  COMPOSE_PROJECT_NAME: 'webservice-${CI_COMMIT_SHORT_SHA}'
+
+  COMPOSE_DOMAIN_SSR: '${CI_COMMIT_SHORT_SHA}-www.omega2k.de'
+  COMPOSE_DOMAIN_API: '${CI_COMMIT_SHORT_SHA}-api.omega2k.de'
+  COMPOSE_DOMAIN_REDIS: '${CI_COMMIT_SHORT_SHA}-redis.omega2k.de'
+
+  COMPOSE_CONTAINER_NAME_SSR: 'webservice-ssr-${CI_COMMIT_SHORT_SHA}'
+  COMPOSE_CONTAINER_NAME_API: 'webservice-api-${CI_COMMIT_SHORT_SHA}'
+  COMPOSE_CONTAINER_NAME_REDIS: 'webservice-redis-${CI_COMMIT_SHORT_SHA}'
+
+  COMPOSE_WSS_PING: '60_000'
+  COMPOSE_WSS_HEARTBEAT: '120_000'
+  COMPOSE_WSS_HEALTH: '600_000'
+  COMPOSE_WSS_FPS: '15'
+
+  COMPOSE_PORT_SSR: 80
+  COMPOSE_PORT_API: 80
+  COMPOSE_PORT_REDIS: 26379
+
+  COMPOSE_REDIS_USERNAME: app
+  COMPOSE_REDIS_PASSWORD: 4kZteHvV1mknVvenxW0XbkHcTTnYsFxtAR5ekbtPNZ8fs
+  REDIS: redis://${COMPOSE_REDIS_USERNAME}:${COMPOSE_REDIS_PASSWORD}@webservice-redis:6379/0
+
+  COMPOSE_SOCKET: wss://${COMPOSE_DOMAIN_API}
+  COMPOSE_API: https://${COMPOSE_DOMAIN_API}
+  COMPOSE_URL: https://${COMPOSE_DOMAIN_SSR}
+  COMPOSE_REDIS: redis://app:4kZteHvV1mknVvenxW0XbkHcTTnYsFxtAR5ekbtPNZ8fs@${COMPOSE_DOMAIN_REDIS}:${COMPOSE_PORT_REDIS}
+
+  COMPOSE_PORT_START: 31000
+  COMPOSE_PORT_END: 33000
+
+default:
+  image: ${NODE_IMAGE}:${APP_VERSION}
+
+cache:
+  key: '${CI_COMMIT_SHORT_SHA}'
+  paths:
+    - .nx/cache/
+    - .angular/cache/
+    - node_modules/
+
+.standard-rules:
+  interruptible: true
+  tags:
+    - docker
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+# lint stage
+
+run lint all:
+  extends:
+    - .standard-rules
+  interruptible: false
+  image: node:22.18.0-alpine3.21
+  stage: prepare
+  before_script:
+    - npm install -g pnpm
+    - pnpm install --ignore-scripts
+  script:
+    - pnpm ci:lint
+    - pnpm ci:eslint
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+      allow_failure: false
+
+check testing image:
+  interruptible: false
+  extends:
+    - .standard-rules
+  image: ${IMAGE_DOCKER}
+  stage: prepare
+  before_script:
+    - echo "check testing image ${NODE_IMAGE}:${APP_VERSION}"
+  script: |
+    export REBUILD_NODE_IMAGE=$(docker pull ${NODE_IMAGE}:${APP_VERSION} >/dev/null 2>&1 && echo false || echo true)
+    echo "REBUILD_NODE_IMAGE=${REBUILD_NODE_IMAGE}"
+    echo "REBUILD_NODE_IMAGE=${REBUILD_NODE_IMAGE}" >> build.env
+    if [[ "${REBUILD_NODE_IMAGE}" == "true" ]]; then
+      echo "check testing image ${NODE_IMAGE}:${APP_VERSION}"
+      docker system prune -a --filter "until=1h" -f
+      docker pull ${NODE_IMAGE}:latest || true
+      docker build --file ./docker/Dockerfile.node --compress --rm --no-cache --tag ${NODE_IMAGE}:${APP_VERSION} .
+      docker image tag ${NODE_IMAGE}:${APP_VERSION} ${NODE_IMAGE}:latest
+      docker image push --quiet --all-tags ${NODE_IMAGE}
+    else
+      echo "no build needed..."
+    fi
+  artifacts:
+    reports:
+      dotenv: build.env
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+      allow_failure: false
+
+prune all previews:
+  interruptible: false
+  extends:
+    - .standard-rules
+  image: ${DOCKER_IMAGE}
+  stage: prepare
+  before_script:
+    - chmod +x ./docker/scripts/prune-all-dev.sh
+  script:
+    - sh ./docker/scripts/prune-all-dev.sh
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /.*#(purge|prune|clear).*/i && $CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
+
+# test stage
+
+ci:test:
+  extends:
+    - .standard-rules
+  needs:
+    - check testing image
+    - run lint all
+  stage: test
+  before_script:
+    - pnpm install --ignore-scripts
+  script:
+    - pnpm ci:test
+  artifacts:
+    when: always
+    paths:
+      - coverage/
+    reports:
+      junit: test-results/**/junit-report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/**/clover.xml
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+      allow_failure: false
+
+ci:www-e2e:
+  extends:
+    - .standard-rules
+  needs:
+    - check testing image
+    - run lint all
+  stage: test
+  variables:
+    SSL: true
+    COMPOSE_DOMAIN_SSR: 'localhost'
+    COMPOSE_PORT_SSR: 4203
+    COMPOSE_DOMAIN_API: 'localhost'
+    COMPOSE_PORT_API: 42081
+    COMPOSE_LOGGER: 'OFF'
+    COMPOSE_SOCKET: 'wss://localhost:42081'
+    COMPOSE_URL: 'https://localhost:4203'
+    COMPOSE_API: 'https://localhost:42081'
+  before_script:
+    - chmod +x ./scripts/create-config.sh
+    - sh ./scripts/create-config.sh
+    - pnpm install --ignore-scripts
+    - pnpx playwright install --with-deps
+  script:
+    - pnpm ci:www-e2e
+  artifacts:
+    paths:
+      - dist
+      - apps/www/src/app/app.config-params.ts
+      - apps/websocket/src/config/app.config-params.ts
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+      allow_failure: false
+
+ci:websocket-e2e:
+  extends:
+    - .standard-rules
+  needs:
+    - check testing image
+    - run lint all
+  stage: test
+  variables:
+    SSL: true
+    COMPOSE_DOMAIN_SSR: 'localhost'
+    COMPOSE_PORT_SSR: 4201
+    COMPOSE_DOMAIN_API: 'localhost'
+    COMPOSE_PORT_API: 42081
+    COMPOSE_LOGGER: 'OFF'
+    COMPOSE_SOCKET: 'wss://localhost:42081'
+    COMPOSE_URL: 'https://localhost:4201'
+    COMPOSE_API: 'https://localhost:42081'
+  before_script:
+    - chmod +x ./scripts/create-config.sh
+    - sh ./scripts/create-config.sh
+    - pnpm install --ignore-scripts
+    - pnpx playwright install --with-deps
+  script:
+    - pnpm ci:websocket-e2e
+  artifacts:
+    paths:
+      - dist
+      - apps/www/src/app/app.config-params.ts
+      - apps/websocket/src/config/app.config-params.ts
+    expire_in: 1 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+      allow_failure: false
+
+# build stage
+
+pack project artifacts:
+  extends:
+    - .standard-rules
+  needs:
+    - run lint all
+    - ci:www-e2e
+    - ci:websocket-e2e
+    - ci:test
+    - check testing image
+  stage: build
+  before_script:
+    - pnpm install --ignore-scripts
+  script:
+    - pnpm pack
+  artifacts:
+    paths:
+      - '*.tgz'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+
+build dist preview:
+  extends:
+    - .standard-rules
+  needs:
+    - run lint all
+    - ci:test
+    - check testing image
+  stage: build
+  variables:
+    ENV_FILE: '.env'
+  before_script:
+    - chmod +x ./scripts/create-config.sh
+    - sh ./scripts/create-config.sh
+    - pnpm install --ignore-scripts
+  script:
+    - pnpm ci:build
+    - pnpm ci:copy:db
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+build dist live:
+  extends:
+    - .standard-rules
+  needs:
+    - check testing image
+    - run lint all
+  stage: build
+  variables:
+    COMPOSE_HOSTNAME: 'de-omega2k-www'
+    COMPOSE_PROJECT_NAME: 'de-omega2k-www'
+    COMPOSE_DOMAIN_SSR: 'www.omega2k.de'
+    COMPOSE_DOMAIN_API: 'api.omega2k.de'
+    COMPOSE_DOMAIN_REDIS: 'redis.omega2k.de'
+    COMPOSE_LOGGER: 'ERROR'
+    COMPOSE_SOCKET: 'wss://api.omega2k.de'
+    COMPOSE_URL: 'https://www.omega2k.de'
+    COMPOSE_API: 'https://api.omega2k.de'
+    COMPOSE_CONTAINER_NAME_SSR: 'de-omega2k-www'
+    COMPOSE_CONTAINER_NAME_API: 'de-omega2k-api'
+    COMPOSE_CONTAINER_NAME_REDIS: 'de-omega2k-redis'
+    ENV_FILE: '.env'
+  before_script:
+    - chmod +x ./scripts/create-config.sh
+    - sh ./scripts/create-config.sh
+    - pnpm install --ignore-scripts
+  script:
+    - pnpm ci:build
+    - pnpm ci:copy:db
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 4 week
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+
+# deploy stage
+
+run html tests:
+  extends:
+    - .standard-rules
+  needs:
+    - build dist preview
+    - check testing image
+  stage: deploy
+  before_script:
+    - pnpm install --ignore-scripts
+    - pnpx htmlhint --version
+  dependencies:
+    - build dist preview
+  script:
+    - pnpm ci:htmlhint
+    - find dist -empty
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME != "main"'
+      allow_failure: true
+
+deploy preview:
+  interruptible: false
+  extends:
+    - .standard-rules
+  image: ${DOCKER_IMAGE}
+  needs:
+    - job: build dist preview
+      artifacts: true
+  dependencies:
+    - build dist preview
+  stage: deploy
+  before_script:
+    - if command -v apk >/dev/null 2>&1; then apk add --no-cache netcat-openbsd >/dev/null; fi
+    - chmod +x ./docker/scripts/deploy-dev.sh
+    - chmod +x ./docker/scripts/allocate-ports.sh
+    - . ./docker/scripts/allocate-ports.sh
+  script:
+    - sh ./docker/scripts/deploy-dev.sh
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /.*#deploy.*/i && ($CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event")'
+      when: always
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
+  artifacts:
+    reports:
+      dotenv: build.env
+
+deploy live:
+  extends:
+    - .standard-rules
+  interruptible: false
+  image: ${DOCKER_IMAGE}
+  needs:
+    - job: build dist live
+      artifacts: true
+  dependencies:
+    - build dist live
+  stage: deploy
+  variables:
+    COMPOSE_HOSTNAME: 'de-omega2k-www'
+    COMPOSE_PROJECT_NAME: 'de-omega2k-www'
+    COMPOSE_DOMAIN_SSR: 'www.omega2k.de'
+    COMPOSE_DOMAIN_API: 'api.omega2k.de'
+    COMPOSE_DOMAIN_REDIS: 'redis.omega2k.de'
+    COMPOSE_LOGGER: 'ERROR'
+    COMPOSE_SOCKET: 'wss://api.omega2k.de'
+    COMPOSE_URL: 'https://www.omega2k.de'
+    COMPOSE_API: 'https://api.omega2k.de'
+    COMPOSE_CONTAINER_NAME_SSR: 'de-omega2k-www'
+    COMPOSE_CONTAINER_NAME_API: 'de-omega2k-api'
+    COMPOSE_CONTAINER_NAME_REDIS: 'de-omega2k-redis'
+    COMPOSE_PORT_SSR: 42000
+    COMPOSE_PORT_API: 42001
+  before_script:
+    - chmod +x ./docker/scripts/deploy-prod.sh
+  script:
+    - sh ./docker/scripts/deploy-prod.sh
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: true
+
+publish to github:
+  interruptible: false
+  extends:
+    - .standard-rules
+  stage: deploy
+  image: ${NODE_IMAGE}
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+  before_script:
+    - chmod +x ./scripts/git-push-github.sh
+  script:
+    - GITHUB_REPO="https://$GITHUB_TOKEN@github.com/omega2k-de/omega2k.de.git"
+    - git clone "$GITHUB_REPO" /tmp/public
+    - sh ./scripts/git-push-github.sh
+
+# cleanup stage
+
+update dev domains:
+  interruptible: true
+  extends:
+    - .standard-rules
+  image: ${DOCKER_IMAGE}
+  stage: cleanup
+  before_script:
+    - chmod +x ./docker/scripts/update-dev-domains.sh
+  script:
+    - sh ./docker/scripts/update-dev-domains.sh
+
+remove preview:
+  interruptible: false
+  extends:
+    - .standard-rules
+  image: ${DOCKER_IMAGE}
+  needs:
+    - deploy preview
+  stage: cleanup
+  before_script:
+    - chmod +x ./docker/scripts/prune-dev.sh
+  script:
+    - sh ./docker/scripts/prune-dev.sh
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true

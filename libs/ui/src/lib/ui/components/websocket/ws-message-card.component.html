@@ -1,0 +1,15 @@
+@if (message(); as message) {
+  <section>
+    <details name=".">
+      <summary>
+        <span>from</span>
+        <strong class="ellipsis">{{ message.author?.uuid }}</strong>
+        <span>message</span>
+        <strong>{{ message.message ?? 'null' }}</strong>
+      </summary>
+      <article class="scrollable">
+        <pre>{{ message | json }}</pre>
+      </article>
+    </details>
+  </section>
+}

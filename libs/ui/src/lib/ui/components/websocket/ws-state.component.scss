@@ -1,0 +1,15 @@
+:host {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  border: 3px solid transparent;
+
+  .badge {
+    top: -0.7rem;
+    right: -0.7rem;
+  }
+}

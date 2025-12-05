@@ -1,0 +1,32 @@
+:host {
+  overflow: visible;
+
+  button {
+    cursor: pointer;
+
+    display: flex;
+
+    border-radius: 999px;
+
+    color: var(--color-text);
+
+    outline-offset: 2px;
+
+    &[disabled] {
+      cursor: default;
+    }
+  }
+
+  &:has([disabled]) {
+    opacity: 0.6;
+  }
+
+  span {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .fill.before::before {
+    color: #e81224;
+  }
+}

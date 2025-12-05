@@ -1,0 +1,7 @@
+{
+  "*.{ts,tsx,js,jsx}": ["pnpx prettier --write", "pnpx eslint --max-warnings=3 --fix"],
+  "*.{css,scss}": ["pnpx prettier --write", "pnpx stylelint --fix"],
+  "*": ["pnpx prettier --ignore-unknown --write"],
+  "*.{flow,json,less,html,gql,graphql,md,yml,yaml}": ["pnpx prettier --write"],
+  "*.{png,jpeg,jpg,gif,svg}": ["node ./scripts/compress-image.js"]
+}

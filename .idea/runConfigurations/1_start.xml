@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="start" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="start" />
+    </scripts>
+    <arguments value="--no-tui" />
+    <node-interpreter value="$USER_HOME$/.nvm/versions/node/v22.17.0/bin/node" />
+    <package-manager value="$PROJECT_DIR$/node_modules/.bin/pnpm" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>
