@@ -12,11 +12,11 @@ workflow:
 
 variables:
   CI: true
-  APP_VERSION: 0.42.82
+  APP_VERSION: 0.42.83
   DOCKER_DRIVER: overlay2
   REGISTRY: 'registry.omega2k.de'
   NODE_IMAGE: '${REGISTRY}/omega2k.de/node'
-  DOCKER_IMAGE: docker:28-cli
+  DOCKER_IMAGE: registry.omega2k.de/library/docker:28-cli
   GIT_DEPTH: 50
   DOCKER_TLS_CERTDIR: ''
   DOCKER_PREVIEW_TOKEN: 'BEjEh3SF0uswoiu3WV7vXG7H36Q='
@@ -81,7 +81,7 @@ run lint all:
   extends:
     - .standard-rules
   interruptible: false
-  image: node:22.18.0-alpine3.21
+  image: registry.omega2k.de/library/node:22.18.0-alpine3.21
   stage: prepare
   before_script:
     - npm install -g pnpm
@@ -104,7 +104,7 @@ check testing image:
   interruptible: false
   extends:
     - .standard-rules
-  image: ${IMAGE_DOCKER}
+  image: ${DOCKER_IMAGE}
   stage: prepare
   before_script:
     - echo "check testing image ${NODE_IMAGE}:${APP_VERSION}"
@@ -422,7 +422,7 @@ deploy live:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
       when: always
-      allow_failure: true
+      allow_failure: false
 
 publish to github:
   interruptible: false
@@ -437,8 +437,6 @@ publish to github:
   before_script:
     - chmod +x ./scripts/git-push-github.sh
   script:
-    - GITHUB_REPO="https://$GITHUB_TOKEN@github.com/omega2k-de/omega2k.de.git"
-    - git clone "$GITHUB_REPO" /tmp/public
     - sh ./scripts/git-push-github.sh
 
 # cleanup stage
