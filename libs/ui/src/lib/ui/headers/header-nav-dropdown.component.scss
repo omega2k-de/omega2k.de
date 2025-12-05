@@ -65,6 +65,7 @@
 
   overflow-x: clip;
   overflow-y: auto;
+  overscroll-behavior: contain;
 
   max-width: min(calc(var(--app-max-width) - (2 * var(--space-lg))), 90vw);
   max-height: var(--navigation-max-height);

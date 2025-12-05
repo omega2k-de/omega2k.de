@@ -4,6 +4,7 @@ slug: 'license'
 topic: 'license'
 route: '/content/license'
 title: 'CC0 1.0 Universal'
+description: 'Information zur Lizenz CC0 1.0 Universal (Public Domain Dedication) und was sie für Nutzung, Weiterverwendung und Remix der Inhalte bedeutet.'
 ogTitle: 'CC0 1.0 Universal'
 createdAt: '2025-12-05T06:10:00.000Z'
 ---
@@ -13,6 +14,25 @@ createdAt: '2025-12-05T06:10:00.000Z'
 > The Creative Commons CC0 Public Domain Dedication waives copyright interest in a work you've created and dedicates it to the world-wide
 > public domain. Use CC0 to opt out of copyright entirely and ensure your work has the widest reach. As with the Unlicense and typical
 > software licenses, CC0 disclaims warranties. CC0 is very similar to the Unlicense.
+
+## Kurzfassung auf Deutsch
+
+CC0 1.0 Universal ist eine „Public Domain Dedication“. Wer ein Werk unter CC0 veröffentlicht, erklärt im rechtlich maximal möglichen Umfang:
+
+- auf Urheber- und verwandte Schutzrechte zu verzichten,
+- das Werk der Allgemeinheit weltweit zur freien Nutzung zu widmen,
+- dass das Werk von allen für **jedweden Zweck** genutzt, kopiert, verändert, kombiniert und weiterverbreitet werden darf – auch
+  kommerziell,
+- ohne Pflicht zur Namensnennung, ohne Lizenzgebühren und ohne gesonderte Einwilligung.
+
+Gleichzeitig gilt:
+
+- Es werden **keine Garantien oder Gewährleistungen** für das Werk übernommen (z.B. Fehlerfreiheit, Eignung für einen bestimmten Zweck).
+- Marken-, Patent-, Persönlichkeits- und Datenschutzrechte Dritter bleiben unberührt und müssen weiterhin beachtet werden.
+- Creative Commons selbst ist **nicht** Vertragspartei und übernimmt keine Haftung.
+
+Wer Inhalte unter CC0 nutzt, darf sie also sehr frei verwenden – trägt aber selbst die Verantwortung, weitere mögliche Rechte (z.B. Marken,
+abgebildete Personen, Daten) zu prüfen.
 
 ## CC0 1.0 Universal
 

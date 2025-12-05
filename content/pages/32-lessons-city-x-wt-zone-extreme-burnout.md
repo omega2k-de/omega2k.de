@@ -1,5 +1,5 @@
 ---
-id: '31'
+id: '32'
 parent: '30'
 slug: 'lessons-city-x-wt-zone-extreme-burnout'
 topic: 'lessons'

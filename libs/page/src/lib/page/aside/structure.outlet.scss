@@ -45,6 +45,7 @@
 
 .toc-nav {
   overflow: auto;
+  overscroll-behavior: contain;
   max-height: calc(100vh - 10rem);
   padding-right: 0.2rem;
 }

@@ -1,11 +1,36 @@
 :host {
   position: relative;
   display: inline-block;
-  margin-inline: calc(var(--space-md) * -1);
+  margin-inline: calc(var(--space-sm) * -1);
 
   &:empty {
     display: none;
   }
+}
+
+.header {
+  margin: var(--space-sm) var(--space-sm) 0 var(--space-sm);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border-thin);
+  text-shadow: 6px 3px 4px var(--color-black);
+
+  h2 {
+    color: var(--color-white);
+    text-shadow: 6px 3px 4px var(--color-black);
+  }
+}
+
+.rainbow {
+  background:
+    radial-gradient(circle at 30% 10%, rgb(255 255 255 / 82%), transparent 60%),
+    linear-gradient(145deg, var(--color-accent-1), var(--color-accent-2), var(--color-accent));
+}
+
+.headline {
+  margin: 0;
+  padding: var(--space-sm);
+  font-size: calc(var(--font-size-xl));
+  line-height: 1.25;
 }
 
 .thought-pool-deck-wrapper {
@@ -39,11 +64,10 @@
 
   overflow-x: auto;
   overflow-y: hidden;
-  overscroll-behavior: contain;
 
   padding-right: 0;
   padding-left: var(--deck-edge-padding);
-  padding-block: calc(var(--space-xl) + var(--space-md)) var(--space-xl);
+  padding-block: var(--space-xl);
 
   mask-image: linear-gradient(
     90deg,
