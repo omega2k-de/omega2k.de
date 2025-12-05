@@ -25,16 +25,15 @@
     }
   }
 
-  ul,
-  li {
+  div[role='group'] {
+    display: grid;
+    gap: var(--space-sm);
     margin: 0;
     padding: 0;
-  }
 
-  ul {
-    display: grid;
-    gap: var(--space-xs);
-    padding: var(--space-xs);
+    &.basic-tree {
+      padding-top: var(--space-sm);
+    }
 
     &[role='group']:last-child {
       margin-bottom: calc(var(--space-xs) / 2);

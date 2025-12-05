@@ -1,13 +1,11 @@
 @if (tree(); as tree) {
   @let open = coordinator.isNavigationOpen();
   <nav class="nav-dropdown" role="navigation" aria-label="Hauptnavigation">
-    <ul role="menu" class="basic-tree">
+    <div role="group" class="basic-tree">
       <a
         [tabindex]="open ? '0' : '-1'"
         uiVibrate
-        type="button"
         class="nm-button nav-dropdown-item"
-        role="menuitem"
         title="Startseite"
         aria-label="Startseite"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -21,9 +19,7 @@
       <a
         [tabindex]="open ? '0' : '-1'"
         uiVibrate
-        type="button"
         class="nm-button nav-dropdown-item"
-        role="menuitem"
         title="Einstellungen"
         aria-label="Einstellungen"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -31,7 +27,7 @@
         routerLink="/controls">
         <span class="before nav-title" size="lg" uiIcon="handyman">Einstellungen</span>
       </a>
-    </ul>
+    </div>
   </nav>
 
   <ng-template #treeNodes let-children="children" let-parent="parent">
@@ -63,13 +59,11 @@
               }
             </div>
             @if (isExpanded(child.page.id)) {
-              <ul role="group">
+              <div role="group">
                 <a
                   [tabindex]="open ? '0' : '-1'"
                   uiVibrate
-                  type="button"
                   class="nm-button nav-dropdown-item before"
-                  role="menuitem"
                   size="lg"
                   [title]="child.page.title + (child.page.isNew ? ' (update)' : '')"
                   [attr.aria-label]="child.page.title + (child.page.isNew ? ' (update)' : '')"
@@ -89,7 +83,7 @@
                 <ng-template
                   [ngTemplateOutlet]="treeNodes"
                   [ngTemplateOutletContext]="{ children: child.children, parent: child.parent }" />
-              </ul>
+              </div>
             }
           </div>
         </div>
@@ -97,9 +91,7 @@
         <a
           [tabindex]="open ? '0' : '-1'"
           uiVibrate
-          type="button"
           class="nm-button nav-dropdown-item before"
-          role="menuitem"
           size="lg"
           [title]="child.page.title + (child.page.isNew ? ' (update)' : '')"
           [attr.aria-label]="child.page.title + (child.page.isNew ? ' (update)' : '')"

@@ -136,4 +136,7 @@ this CC0 or use of the Work.
 
 ## Additional links
 
-* https://opensource.guide/legal
+* [The Legal Side of Open Source](https://opensource.guide/legal)
+* [PageSpeed Insights](https://pagespeed.web.dev/analysis?url=https://www.omega2k.de)
+* source: https://github.com/omega2k-de/omega2k.de (github)
+* source: https://gitlab.omega2k.de/developers/omega2k.de (self-hosted)
