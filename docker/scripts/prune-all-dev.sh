@@ -8,7 +8,6 @@ fi
 
 WEBSERVICE_WWW="$(docker ps --no-trunc --format '{{.Names}}' --filter 'name=webservice-www-')"
 WEBSERVICE_API="$(docker ps --no-trunc --format '{{.Names}}' --filter 'name=webservice-api-')"
-WEBSERVICE_REDIS="$(docker ps --no-trunc --format '{{.Names}}' --filter 'name=webservice-redis-')"
 
 if [ -n "$WEBSERVICE_WWW" ]; then
   docker stop $(docker ps -a -q --filter "name=webservice-www-") || true
@@ -20,11 +19,6 @@ if [ -n "$WEBSERVICE_API" ]; then
   docker rm $(docker ps -a -q --filter "name=webservice-api-") || true
 fi
 
-if [ -n "$WEBSERVICE_REDIS" ]; then
-  docker stop $(docker ps -a -q --filter "name=webservice-redis-") || true
-  docker rm $(docker ps -a -q --filter "name=webservice-redis-") || true
-fi
-
 if [ -n "$WEBSERVICE_WWW" ]; then
   for CONTAINER in $WEBSERVICE_WWW; do
     wget "--header=User-Agent:${DOCKER_PREVIEW_TOKEN}" -O- "http://172.16.32.4/pihole-domains/remove/$(echo $CONTAINER | cut -d '-' -f3)-www.omega2k.de"
@@ -34,11 +28,5 @@ fi
 if [ -n "$WEBSERVICE_API" ]; then
   for CONTAINER in $WEBSERVICE_API; do
     wget "--header=User-Agent:${DOCKER_PREVIEW_TOKEN}" -O- "http://172.16.32.4/pihole-domains/remove/$(echo $CONTAINER | cut -d '-' -f3)-api.omega2k.de"
-  done
-fi
-
-if [ -n "$WEBSERVICE_REDIS" ]; then
-  for CONTAINER in $WEBSERVICE_REDIS; do
-    wget "--header=User-Agent:${DOCKER_PREVIEW_TOKEN}" -O- "http://172.16.32.4/pihole-domains/remove/$(echo $CONTAINER | cut -d '-' -f3)-redis.omega2k.de"
   done
 fi

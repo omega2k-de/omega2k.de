@@ -13,13 +13,10 @@ DEFAULT_SSR_PORT="4200"
 DEFAULT_SSR_HOST="www.omega2k.de.o2k"
 DEFAULT_API_PORT="42080"
 DEFAULT_API_HOST="api.omega2k.de.o2k"
-DEFAULT_REDIS_PORT="46379"
-DEFAULT_REDIS_HOST="redis.omega2k.de.o2k"
 DEFAULT_LOGGER="DEBUG"
 DEFAULT_SOCKET="wss://api.omega2k.de.o2k:42080"
 DEFAULT_API="https://api.omega2k.de.o2k:42080"
 DEFAULT_URL="https://www.omega2k.de.o2k:4200"
-DEFAULT_REDIS="redis://app:app@redis.omega2k.de.o2k:46379"
 
 DEFAULT_WSS_PING="1_000"
 DEFAULT_WSS_HEARTBEAT="5_000"
@@ -53,13 +50,10 @@ printf "export const APP_CONFIG: ConfigInterface = {
   ssr_host: '%s',
   api_port: %s,
   api_host: '%s',
-  redis_port: %s,
-  redis_host: '%s',
   logger: '%s',
   socket: '%s',
   api: '%s',
   url: '%s',
-  redis: '%s',
   hash: %s,
   nonce: %s,
   wsServer: {
@@ -76,13 +70,10 @@ printf "export const APP_CONFIG: ConfigInterface = {
   "${COMPOSE_DOMAIN_SSR:-${DEFAULT_SSR_HOST}}" \
   "${COMPOSE_PORT_API:-${DEFAULT_API_PORT}}" \
   "${COMPOSE_DOMAIN_API:-${DEFAULT_API_HOST}}" \
-  "${COMPOSE_PORT_REDIS:-${DEFAULT_REDIS_PORT}}" \
-  "${COMPOSE_DOMAIN_REDIS:-${DEFAULT_REDIS_HOST}}" \
   "${COMPOSE_LOGGER:-${DEFAULT_LOGGER}}" \
   "${COMPOSE_SOCKET:-${DEFAULT_SOCKET}}" \
   "${COMPOSE_API:-${DEFAULT_API}}" \
   "${COMPOSE_URL:-${DEFAULT_URL}}" \
-  "${COMPOSE_REDIS:-${DEFAULT_REDIS}}" \
   "${HASH}" \
   "${NONCE}" \
   "${COMPOSE_WSS_PING:-${DEFAULT_WSS_PING}}" \
@@ -96,13 +87,10 @@ echo "SSR_PORT=${COMPOSE_PORT_SSR:-${DEFAULT_SSR_PORT}}" >> "${CONFIG_ENV}"
 echo "SSR_HOST=${COMPOSE_DOMAIN_SSR:-${DEFAULT_SSR_HOST}}" >> "${CONFIG_ENV}"
 echo "API_PORT=${COMPOSE_PORT_API:-${DEFAULT_API_PORT}}" >> "${CONFIG_ENV}"
 echo "API_HOST=${COMPOSE_DOMAIN_API:-${DEFAULT_API_HOST}}" >> "${CONFIG_ENV}"
-echo "REDIS_PORT=${COMPOSE_PORT_REDIS:-${DEFAULT_REDIS_PORT}}" >> "${CONFIG_ENV}"
-echo "REDIS_HOST=${COMPOSE_DOMAIN_REDIS:-${DEFAULT_REDIS_HOST}}" >> "${CONFIG_ENV}"
 echo "LOGGER=${COMPOSE_LOGGER:-${DEFAULT_LOGGER}}" >> "${CONFIG_ENV}"
 echo "SOCKET=${COMPOSE_SOCKET:-${DEFAULT_SOCKET}}" >> "${CONFIG_ENV}"
 echo "API=${COMPOSE_API:-${DEFAULT_API}}" >> "${CONFIG_ENV}"
 echo "URL=${COMPOSE_URL:-${DEFAULT_URL}}" >> "${CONFIG_ENV}"
-echo "REDIS=${COMPOSE_REDIS:-${DEFAULT_REDIS}}" >> "${CONFIG_ENV}"
 echo "WSS_PING=${COMPOSE_WSS_PING:-${DEFAULT_WSS_PING}}" >> "${CONFIG_ENV}"
 echo "WSS_HEARTBEAT=${COMPOSE_WSS_HEARTBEAT:-${DEFAULT_WSS_HEARTBEAT}}" >> "${CONFIG_ENV}"
 echo "WSS_HEALTH=${COMPOSE_WSS_HEALTH:-${DEFAULT_WSS_HEALTH}}" >> "${CONFIG_ENV}"

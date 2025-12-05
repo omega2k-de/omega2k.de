@@ -5,7 +5,6 @@ NGINX_CONF_D=/etc/nginx/conf.d
 APP_PATH=/var/lib/pihole-domains
 CONF_FILE1=$APP_PATH/www-preview-map-ssr.conf
 CONF_FILE2=$APP_PATH/www-preview-map-api.conf
-CONF_FILE3=$APP_PATH/www-preview-map-redis.conf
 CONF_NGINX=$APP_PATH/${NGINX_CONF_FILE}
 
 echo "map \$http_host \$www_preview_ssr_port {" > $CONF_FILE1
@@ -18,12 +17,7 @@ echo "default 443;" >> $CONF_FILE2
 docker ps -a --format "table {{.Names}} {{.Ports}}" --filter "name=webservice" | grep "webservice-api" | grep "/tcp" | sed -E "s/webservice-api-([0-9a-f]{8})[^:]*:([0-9]+)-.*/\1-api.omega2k.de \2;/g" >> $CONF_FILE2
 echo "}" >> $CONF_FILE2
 
-echo "map \$http_host \$www_preview_redis_port {" > $CONF_FILE3
-echo "default 443;" >> $CONF_FILE3
-docker ps -a --format "table {{.Names}} {{.Ports}}" --filter "name=webservice" | grep "webservice-redis" | grep "/tcp" | sed -E "s/webservice-redis-([0-9a-f]{8})[^:]*:([0-9]+)-.*/\1-redis.omega2k.de \2;/g" >> $CONF_FILE3
-echo "}" >> $CONF_FILE3
-
-cat ${CONF_FILE1} ${CONF_FILE2} ${CONF_FILE3} > ${CONF_NGINX}
+cat ${CONF_FILE1} ${CONF_FILE2} > ${CONF_NGINX}
 cp ${NGINX_CONF_D}/${NGINX_CONF_FILE} ${APP_PATH}/${NGINX_CONF_FILE}.backup
 cp ${CONF_NGINX} ${NGINX_CONF_D}/${NGINX_CONF_FILE}
 

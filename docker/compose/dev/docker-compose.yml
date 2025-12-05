@@ -47,14 +47,8 @@ services:
       - likes:/app/likes
     ports:
       - '${COMPOSE_PORT_API:-31003}:80'
-    #    depends_on:
-    #      webservice-redis:
-    #        condition: service_healthy
     environment:
       LIKES_DB_PATH: /app/likes/likes.db
-      REDIS_USERNAME: ${COMPOSE_REDIS_USERNAME:?set COMPOSE_REDIS_USERNAME}
-      REDIS_PASSWORD: ${COMPOSE_REDIS_PASSWORD:?set COMPOSE_REDIS_PASSWORD}
-      REDIS: redis://${COMPOSE_REDIS_USERNAME}:${COMPOSE_REDIS_PASSWORD}@webservice-redis:6379/0
     deploy:
       resources:
         limits:
@@ -67,36 +61,3 @@ services:
         condition: on-failure
         max_attempts: 30
     networks: [o2k]
-#  webservice-redis:
-#    hostname: '${COMPOSE_DOMAIN_REDIS:-redis.omega2k.de.o2k}'
-#    container_name: 'webservice-redis-${COMPOSE_IMAGE_TAG:-latest}-${APP_VERSION:-0.0.0}'
-#    build:
-#      context: ../../..
-#      dockerfile: ./docker/Dockerfile.redis
-#    image: '${REGISTRY:-registry.omega2k.de}/www/redis:${COMPOSE_IMAGE_TAG:-latest}'
-#    restart: always
-#    environment:
-#      REDIS_USERNAME: ${COMPOSE_REDIS_USERNAME:?set COMPOSE_REDIS_USERNAME}
-#      REDIS_PASSWORD: ${COMPOSE_REDIS_PASSWORD:?set COMPOSE_REDIS_PASSWORD}
-#      REDIS: redis://${COMPOSE_REDIS_USERNAME}:${COMPOSE_REDIS_PASSWORD}@webservice-redis:6379/0
-#    healthcheck:
-#      test:
-#        [
-#          'CMD-SHELL',
-#          'redis-cli -u redis://$${REDIS_USERNAME}:$${REDIS_PASSWORD}@127.0.0.1:6379 PING | grep PONG',
-#        ]
-#      interval: 5s
-#      timeout: 3s
-#      retries: 20
-#      start_period: 5s
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.50'
-#          memory: 256M
-#        reservations:
-#          memory: 128M
-#      restart_policy:
-#        condition: on-failure
-#        max_attempts: 10
-#    networks: [o2k]

@@ -19,7 +19,7 @@ rm -rf .tmp >/dev/null 2>&1
 HOSTS_ENTRY="${1:-0.0.0.0}"
 HOSTS_ENTRY="$HOSTS_ENTRY omega2k.de.o2k"
 
-for subdomain in www wss api cdn vite redis
+for subdomain in www wss api cdn vite
 do
   HOSTS_ENTRY="$HOSTS_ENTRY $subdomain.omega2k.de.o2k"
 done

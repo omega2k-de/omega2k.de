@@ -31,11 +31,9 @@ variables:
 
   COMPOSE_DOMAIN_SSR: '${CI_COMMIT_SHORT_SHA}-www.omega2k.de'
   COMPOSE_DOMAIN_API: '${CI_COMMIT_SHORT_SHA}-api.omega2k.de'
-  COMPOSE_DOMAIN_REDIS: '${CI_COMMIT_SHORT_SHA}-redis.omega2k.de'
 
   COMPOSE_CONTAINER_NAME_SSR: 'webservice-ssr-${CI_COMMIT_SHORT_SHA}'
   COMPOSE_CONTAINER_NAME_API: 'webservice-api-${CI_COMMIT_SHORT_SHA}'
-  COMPOSE_CONTAINER_NAME_REDIS: 'webservice-redis-${CI_COMMIT_SHORT_SHA}'
 
   COMPOSE_WSS_PING: '60_000'
   COMPOSE_WSS_HEARTBEAT: '120_000'
@@ -44,16 +42,10 @@ variables:
 
   COMPOSE_PORT_SSR: 80
   COMPOSE_PORT_API: 80
-  COMPOSE_PORT_REDIS: 26379
-
-  COMPOSE_REDIS_USERNAME: app
-  COMPOSE_REDIS_PASSWORD: 4kZteHvV1mknVvenxW0XbkHcTTnYsFxtAR5ekbtPNZ8fs
-  REDIS: redis://${COMPOSE_REDIS_USERNAME}:${COMPOSE_REDIS_PASSWORD}@webservice-redis:6379/0
 
   COMPOSE_SOCKET: wss://${COMPOSE_DOMAIN_API}
   COMPOSE_API: https://${COMPOSE_DOMAIN_API}
   COMPOSE_URL: https://${COMPOSE_DOMAIN_SSR}
-  COMPOSE_REDIS: redis://app:4kZteHvV1mknVvenxW0XbkHcTTnYsFxtAR5ekbtPNZ8fs@${COMPOSE_DOMAIN_REDIS}:${COMPOSE_PORT_REDIS}
 
   COMPOSE_PORT_START: 31000
   COMPOSE_PORT_END: 33000
@@ -259,27 +251,27 @@ ci:websocket-e2e:
 
 # build stage
 
-pack project artifacts:
-  extends:
-    - .standard-rules
-  needs:
-    - run lint all
-    - ci:www-e2e
-    - ci:websocket-e2e
-    - ci:test
-    - check testing image
-  stage: build
-  before_script:
-    - pnpm install --ignore-scripts
-  script:
-    - pnpm pack
-  artifacts:
-    paths:
-      - '*.tgz'
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
-      when: always
-      allow_failure: false
+#pack project artifacts:
+#  extends:
+#    - .standard-rules
+#  needs:
+#    - run lint all
+#    - ci:www-e2e
+#    - ci:websocket-e2e
+#    - ci:test
+#    - check testing image
+#  stage: build
+#  before_script:
+#    - pnpm install --ignore-scripts
+#  script:
+#    - pnpm pack
+#  artifacts:
+#    paths:
+#      - '*.tgz'
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+#      when: always
+#      allow_failure: false
 
 build dist preview:
   extends:
@@ -315,14 +307,12 @@ build dist live:
     COMPOSE_PROJECT_NAME: 'de-omega2k-www'
     COMPOSE_DOMAIN_SSR: 'www.omega2k.de'
     COMPOSE_DOMAIN_API: 'api.omega2k.de'
-    COMPOSE_DOMAIN_REDIS: 'redis.omega2k.de'
     COMPOSE_LOGGER: 'ERROR'
     COMPOSE_SOCKET: 'wss://api.omega2k.de'
     COMPOSE_URL: 'https://www.omega2k.de'
     COMPOSE_API: 'https://api.omega2k.de'
     COMPOSE_CONTAINER_NAME_SSR: 'de-omega2k-www'
     COMPOSE_CONTAINER_NAME_API: 'de-omega2k-api'
-    COMPOSE_CONTAINER_NAME_REDIS: 'de-omega2k-redis'
     ENV_FILE: '.env'
   before_script:
     - chmod +x ./scripts/create-config.sh
@@ -339,6 +329,21 @@ build dist live:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
       when: always
       allow_failure: false
+
+publish to github:
+  interruptible: false
+  extends:
+    - .standard-rules
+  stage: build
+  image: ${NODE_IMAGE}
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+      when: always
+      allow_failure: false
+  before_script:
+    - chmod +x ./scripts/git-push-github.sh
+  script:
+    - sh ./scripts/git-push-github.sh
 
 # deploy stage
 
@@ -405,14 +410,12 @@ deploy live:
     COMPOSE_PROJECT_NAME: 'de-omega2k-www'
     COMPOSE_DOMAIN_SSR: 'www.omega2k.de'
     COMPOSE_DOMAIN_API: 'api.omega2k.de'
-    COMPOSE_DOMAIN_REDIS: 'redis.omega2k.de'
     COMPOSE_LOGGER: 'ERROR'
     COMPOSE_SOCKET: 'wss://api.omega2k.de'
     COMPOSE_URL: 'https://www.omega2k.de'
     COMPOSE_API: 'https://api.omega2k.de'
     COMPOSE_CONTAINER_NAME_SSR: 'de-omega2k-www'
     COMPOSE_CONTAINER_NAME_API: 'de-omega2k-api'
-    COMPOSE_CONTAINER_NAME_REDIS: 'de-omega2k-redis'
     COMPOSE_PORT_SSR: 42000
     COMPOSE_PORT_API: 42001
   before_script:
@@ -423,21 +426,6 @@ deploy live:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
       when: always
       allow_failure: false
-
-publish to github:
-  interruptible: false
-  extends:
-    - .standard-rules
-  stage: deploy
-  image: ${NODE_IMAGE}
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
-      when: always
-      allow_failure: false
-  before_script:
-    - chmod +x ./scripts/git-push-github.sh
-  script:
-    - sh ./scripts/git-push-github.sh
 
 # cleanup stage
 

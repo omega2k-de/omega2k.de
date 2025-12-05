@@ -10,9 +10,6 @@ wget "--header=User-Agent:${DOCKER_PREVIEW_TOKEN}" -O- http://172.16.32.4/pihole
 wget "--header=User-Agent:${DOCKER_PREVIEW_TOKEN}" -O- http://172.16.32.4/pihole-domains/add/${COMPOSE_DOMAIN_API}
 
 echo "================================================================="
-echo " REDIS"
-echo " ➔ redis://${COMPOSE_REDIS_USERNAME}:${COMPOSE_REDIS_PASSWORD}@${COMPOSE_DOMAIN_REDIS}:${COMPOSE_PORT_REDIS}"
-echo "================================================================="
 echo " DYNDNS"
 echo " ➔ http://172.16.32.4/pihole-domains/add/${COMPOSE_DOMAIN_SSR}"
 echo " ➔ http://172.16.32.4/pihole-domains/add/${COMPOSE_DOMAIN_API}"
