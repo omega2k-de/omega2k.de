@@ -2,20 +2,21 @@
 id: '30'
 parent: '1'
 slug: 'lessons-learned'
-topic: 'lessons'
-route: '/content/lessons'
+topic: 'lessons-learned'
+route: '/content/lessons-learned'
 title: 'Lessons learned: Szenarienlabor für den proto-Superorganismus 2.0'
 description: 'Das Lessons-Learned-Labor dokumentiert, wie konkrete Szenarien für den proto-Superorganismus 2.0 modelliert, simuliert, korrigiert und ausgewertet werden – inklusive WT-Ökonomie, Pflegepilot Stadt X und künftige Experimente.'
 keywords: 'superorganismus 2.0, weighted time, wt-ökonomie, stadt x, pflegepilot, burnout, lessons learned, szenarienlabor, simulationsmodell, zeitwährung, charta, feedbackschleifen'
 version: 1
 createdAt: '2025-12-05T20:31:11.758Z'
+author: 'Me & GPT'
 ---
 
 # Lessons learned: Am Beispiel lernen
 
 ## Kontext und Ziel der Rubrik
 
-Der proto-Superorganismus 2.0 ist bewusst **hypothesengetrieben** angelegt.  
+Der [proto-Superorganismus 2.0](/content/superorganism-2-0#content) ist bewusst **hypothesengetrieben** angelegt.  
 Teil I–V und die Charta beschreiben Diagnose, Metapher, Rechte/Grenzen, Lösungsräume und Prüfschema des Systems.
 
 Was dort fehlt, sind durchgerechnete **Szenarien**, an denen sichtbar wird:
@@ -27,7 +28,9 @@ Was dort fehlt, sind durchgerechnete **Szenarien**, an denen sichtbar wird:
 Diese Rubrik versteht sich als **Szenarienlabor / Lessons-Learned-Logbuch**:
 
 - Wir wählen einen **Teilaspekt** des proto-Superorganismus (z.B. Pflegesektor in „Stadt X“).
+
 > _siehe [Grok mit Runde 1: Analyse des Burnout-Szenarios](https://x.com/grok/status/1996964318315987162?s=20)_
+
 - Wir formulieren eine **explizite Hypothese** (z.B. WT-Zonen mit Extrem-Zone C).
 - Wir **simulieren, rechnen, justieren** – und dokumentieren, wo das Modell scheitert oder tragfähig bleibt.
 - Wir destillieren daraus **Lessons learned** und definieren offene Fragen für die nächste Iteration.
@@ -116,8 +119,10 @@ Eine entsprechende Prompt-Struktur für solche Simulationen wird separat dokumen
 [Stadt X – WT-Zonen und Extrem-Burnout](/content/lessons/city-x-wt-zone-extreme-burnout)
 
 - **Thema:** WT-Zonen (Normal/Hoch/Extrem) im Pflegesektor von „Stadt X“.
-- **Forschungsfrage:** Wie weit trägt ein Zonenmodell mit Extrem-Zone C, bevor es zu Burnout, neuer Ungleichheit und systemischer Schieflage führt?
-- **Kern-Lessons:** Extrem-Zonen taugen nicht als Dauerkarriere, Zeitboden muss für alle Zonen fair erreichbar sein, unsichtbare Care-Arbeit muss mitgedacht werden, und sektorale Optimierung ohne Gesamtbilanz des Stadt-Superorganismus ist systemisch instabil.
+- **Forschungsfrage:** Wie weit trägt ein Zonenmodell mit Extrem-Zone C, bevor es zu Burnout, neuer Ungleichheit und systemischer Schieflage
+  führt?
+- **Kern-Lessons:** Extrem-Zonen taugen nicht als Dauerkarriere, Zeitboden muss für alle Zonen fair erreichbar sein, unsichtbare Care-Arbeit
+  muss mitgedacht werden, und sektorale Optimierung ohne Gesamtbilanz des Stadt-Superorganismus ist systemisch instabil.
 
 Weitere Beispiele (Energie, Bildung, ÖPNV, Müll, digitale Commons etc.) können nach demselben Schema ergänzt werden:
 
@@ -125,4 +130,5 @@ Weitere Beispiele (Energie, Bildung, ÖPNV, Müll, digitale Commons etc.) könne
 - `/content/lessons/example-education-timebudget-y`
 - …
 
-Jeder neue Eintrag sollte klar angeben, **welche Teile des Handbuchs** er testet, und mit ihnen verlinkt sein (z.B. Teil III, Teil V, Charta A).
+Jeder neue Eintrag sollte klar angeben, **welche Teile des Handbuchs** er testet, und mit ihnen verlinkt sein (z.B. Teil III, Teil V, Charta
+A).

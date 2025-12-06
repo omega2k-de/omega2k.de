@@ -10,7 +10,7 @@
 
 .header {
   margin: var(--space-sm) var(--space-sm) 0 var(--space-sm);
-  padding: var(--space-lg);
+  padding: var(--space-sm);
   border: 1px solid var(--color-border-thin);
   text-shadow: 6px 3px 4px var(--color-black);
 
@@ -28,7 +28,7 @@
 
 .headline {
   margin: 0;
-  padding: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   font-size: calc(var(--font-size-xl));
   line-height: 1.25;
 }

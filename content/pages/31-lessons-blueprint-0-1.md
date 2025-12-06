@@ -2,13 +2,14 @@
 id: '31'
 parent: '30'
 slug: 'lessons-blueprint-0-1'
-topic: 'lessons'
-route: '/content/lessons/blueprint-0-1'
-title: 'Lessons learned: Parameter-Blaupause'
-description: 'Parameter-Blaupause für das proto-Superorganismus 2.0 / WT-System'
+topic: 'lessons-learned'
+route: '/content/lessons-learned/blueprint-0-1'
+title: 'Lessons learned: Strukturvariablen, Zonenstruktur und Grundsicherung im Modell'
+description: 'Parameter-Blaupause für das proto-Superorganismus 2.0 / WT-System. Ein erster Versuch, Größen zuzuordnen und konkret durchzuspielen.'
 keywords: 'Parameter blueprint Superorganismus System WT Token Weighted Strukturvariablen Zonenstruktur'
 version: 1
-createdAt: '2025-12-05T22:48:12.791Z'
+createdAt: '2025-12-05T20:48:12.791Z'
+author: 'Me & GPT'
 ---
 
 # Parameter-Blaupause: proto-Superorganismus 2.0 / WT-System

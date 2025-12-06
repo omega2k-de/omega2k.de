@@ -18,7 +18,7 @@
       >
     </span>
     <div class="deck-card-body">
-      <h2 [title]="card.title" class="deck-title" [id]="labelId">{{ card.title }}</h2>
+      <h2 [title]="card.title" class="deck-title" [id]="labelId">{{ removePrefix(card.title) }}</h2>
       <p aria-label="Beschreibung" class="deck-text" [id]="descId">{{ card.ogDescription }}</p>
     </div>
 

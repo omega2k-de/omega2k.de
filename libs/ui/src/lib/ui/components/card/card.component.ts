@@ -37,4 +37,8 @@ export class CardComponent extends VibrateDirective {
   onClick() {
     return this.router.navigateByUrl(this.card().route);
   }
+
+  protected removePrefix(title: string): string {
+    return title.split(':').splice(1).join('-') ?? title;
+  }
 }

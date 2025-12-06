@@ -2,13 +2,14 @@
 id: '32'
 parent: '30'
 slug: 'lessons-city-x-wt-zone-extreme-burnout'
-topic: 'lessons'
-route: '/content/lessons/city-x-wt-zone-extreme-burnout'
+topic: 'lessons-learned'
+route: '/content/lessons-learned/city-x-wt-zone-extreme-burnout'
 title: 'Lessons learned: Extrem-Zonen-Modell im Stadt-X-Pflegepilot'
 description: 'Das Stadt-X-Szenario untersucht ein WT-Zonenmodell im Pflegesektor mit Extrem-Zone C und zeigt anhand durchgerechneter Beispiele, wie Burnout, neue Unterklassen und systemische Schieflagen entstehen – und welche Korrekturen für v0.3 nötig sind.'
 keywords: 'superorganismus, weighted time token, wt-zonen, stadt x, pflege, burnout, extrem-zone, zeitsouveränität, arbeitszeit, charta, simulationsmodell, lessons learned'
 version: 2
-createdAt: '2025-12-05T20:39:34.731Z'
+createdAt: '2025-12-05T22:39:34.731Z'
+author: 'Me & GPT'
 ---
 
 # Lessons learned: Extrem-Zonen-Modell im Stadt-X-Pflegepilot
