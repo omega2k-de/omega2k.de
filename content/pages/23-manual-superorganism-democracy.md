@@ -340,3 +340,17 @@ gefährlichem Tempo verändert. Dieses Handbuch argumentiert:
 
 Die zentrale Frage bleibt: Welche Rolle willst du in diesem proto-Superorganismus spielen – Zuschauer:in, Profiteur:in,
 Zyniker:in oder Mitgestalter:in?
+
+## Nachtrag vom 06.12.2025
+
+> Die Diskussion mit ChatGPT5.1 ist heute an einem Punkt angelangt, wo ich nicht mag:
+> 
+> **» Das, was jetzt noch möglich ist, ist kein „Feintuning“, sondern ein Notfall-Umbau unter laufender Belastung – mit realem Risiko von
+> Teil- oder #Systemkollaps. «**
+
+[Ich geh’s in „drei“ Schritten durch.](https://x.com/xn__2k_dcc/status/1997254782592090220?s=20) Stimmt nicht so ganz, weil das Endergebnis
+war mir eigentlich schon spätestens vor einem Jahr logisch komplett bewusst klar, unterbewusst war es mir aber schon die letzten 30 Jahre
+irgendwo präsent, aber ohne direkte Information über das Gesamtbild bleibt man blind. Aus dem Gedanken heraus ist das Modell in die Version
+2.0 erweitert worden.
+Mit [der Einleitung zum proto-Superorganismus 2.0](/content/superorganism-2-0#1-handbuch-proto-superorganismus-2-0-einleitung-grundidee)
+fängt alles an.
