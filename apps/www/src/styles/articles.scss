@@ -470,15 +470,15 @@ h6 {
   }
 }
 
-.article-block-html {
+.article-block-html:has(table) {
   overflow: auto;
   max-height: 75vh;
-}
 
-.article-block-html table {
-  border-collapse: collapse;
-  width: max-content;
-  min-width: 100%;
+  table {
+    border-collapse: collapse;
+    width: max-content;
+    min-width: 100%;
+  }
 }
 
 .article-block-html th,

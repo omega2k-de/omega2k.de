@@ -29,7 +29,6 @@ import {
   UrlSerializer,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withPreloading,
   withRouterConfig,
   withViewTransitions,
 } from '@angular/router';
@@ -50,7 +49,6 @@ import {
   ScrollPositionService,
   SeoStrategy,
 } from '@o2k/core';
-import { QuicklinkStrategy } from 'ngx-quicklink';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -80,8 +78,7 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'disabled',
         anchorScrolling: 'enabled',
       }),
-      withRouterConfig({ paramsInheritanceStrategy: 'always', onSameUrlNavigation: 'reload' }),
-      withPreloading(QuicklinkStrategy)
+      withRouterConfig({ paramsInheritanceStrategy: 'always', onSameUrlNavigation: 'reload' })
     ),
     { provide: UrlSerializer, useClass: PrimaryOnlyUrlSerializer },
     provideAppInitializer(() => inject(ScrollPositionService).enable()),

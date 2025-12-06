@@ -4,8 +4,9 @@ import { MockComponents, MockDirectives, MockProvider } from 'ng-mocks';
 import { IconDirective, VibrateDirective } from '../../directives';
 import { GrowlComponent } from './components';
 import { OverlayComponent } from './overlay.component';
-import { NotificationService, NotificationTypes } from '@o2k/core';
+import { CoordinatorService, NotificationService, NotificationTypes } from '@o2k/core';
 import { BehaviorSubject } from 'rxjs';
+import { signal } from '@angular/core';
 
 describe('NotificationsComponent', () => {
   let component: NotificationsComponent;
@@ -22,6 +23,13 @@ describe('NotificationsComponent', () => {
       providers: [
         MockProvider(NotificationService, {
           notifications$: notificationsSubject.asObservable(),
+        }),
+        MockProvider(CoordinatorService, {
+          toggleNotificationOverlay: vi.fn(),
+          isNavigationOpen: signal<boolean>(false),
+          isNotificationOpen: signal<boolean>(false),
+          showBackdrop: signal<boolean>(false),
+          isAsideOpen: signal<boolean>(false),
         }),
       ],
     }).compileComponents();
@@ -42,16 +50,5 @@ describe('NotificationsComponent', () => {
   it('#hasSeenAllImportantMessages is true on empty list', () => {
     const state = component['hasSeenAllImportantMessages']([]);
     expect(state).toBeTruthy();
-  });
-
-  it('#ngOnDestroy should clear map', () => {
-    component['toggleMinimize']();
-    expect(component['minimized']()).toStrictEqual(false);
-    component['toggleMinimize']();
-    expect(component['minimized']()).toStrictEqual(true);
-    component['toggleMinimize']();
-    expect(component['minimized']()).toStrictEqual(false);
-    component['toggleMinimize']();
-    expect(component['minimized']()).toStrictEqual(true);
   });
 });

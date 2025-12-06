@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoggerService } from '../logger';
 import { PwaUpdateService } from './pwa-update.service';
 import { WEBSOCKET_WORKER } from '../websocket';
@@ -34,6 +34,13 @@ export class CoordinatorService {
 
   private readonly navigationOpen = signal<boolean>(false);
   readonly isNavigationOpen = this.navigationOpen.asReadonly();
+
+  private readonly notificationOpen = signal<boolean>(false);
+  readonly isNotificationOpen = this.notificationOpen.asReadonly();
+
+  readonly showBackdrop = computed(
+    () => this.isNavigationOpen() || this.isAsideOpen() || this.isNotificationOpen()
+  );
 
   constructor() {
     this.worker.message$
@@ -140,5 +147,15 @@ export class CoordinatorService {
     }
 
     this.doc.documentElement.setAttribute('data-navigation', String(this.navigationOpen()));
+  }
+
+  toggleNotificationOverlay(show?: boolean) {
+    if (typeof show === 'boolean') {
+      this.notificationOpen.set(show);
+    } else {
+      this.notificationOpen.set(!this.notificationOpen());
+    }
+
+    this.doc.documentElement.setAttribute('data-notification', String(this.notificationOpen()));
   }
 }

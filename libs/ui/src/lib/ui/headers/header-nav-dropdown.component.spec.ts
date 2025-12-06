@@ -17,7 +17,10 @@ describe('HeaderNavDropdownComponent', () => {
         provideConfig({ logger: 'OFF' }),
         provideRouter([]),
         MockProvider(CoordinatorService, {
-          isNavigationOpen: signal(false),
+          isNavigationOpen: signal<boolean>(false),
+          isNotificationOpen: signal<boolean>(false),
+          showBackdrop: signal<boolean>(false),
+          isAsideOpen: signal<boolean>(false),
         }),
         MockProvider(NavigationService, {
           loadByLocation: vi.fn().mockReturnValueOnce(of([])),

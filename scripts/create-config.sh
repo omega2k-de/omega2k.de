@@ -8,7 +8,7 @@ ROBOTS_TXT=./apps/www/public/robots.txt
 APP_INDEX=./apps/www/src/index.html
 
 DEFAULT_SSL="true"
-DEFAULT_VERSION="0.42.84"
+DEFAULT_VERSION="0.42.85"
 DEFAULT_SSR_PORT="4200"
 DEFAULT_SSR_HOST="www.omega2k.de.o2k"
 DEFAULT_API_PORT="42080"

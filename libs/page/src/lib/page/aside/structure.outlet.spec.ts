@@ -14,7 +14,13 @@ describe('StructureOutlet', () => {
       imports: [StructureOutlet, MockDirectives(IconDirective)],
       providers: [
         MockProvider(ContentContextService, { headings: signal([]) }),
-        MockProvider(CoordinatorService),
+        MockProvider(CoordinatorService, {
+          toggleNotificationOverlay: vi.fn(),
+          isNavigationOpen: signal<boolean>(false),
+          isNotificationOpen: signal<boolean>(false),
+          showBackdrop: signal<boolean>(false),
+          isAsideOpen: signal<boolean>(false),
+        }),
       ],
     }).compileComponents();
 

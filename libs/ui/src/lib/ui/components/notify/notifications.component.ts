@@ -1,10 +1,9 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconDirective, VibrateDirective } from '../../directives';
 import { OverlayComponent } from './overlay.component';
 import { GrowlComponent } from './components';
-import { NotificationService, NotificationTypes } from '@o2k/core';
-import { tap } from 'rxjs';
+import { CoordinatorService, NotificationService, NotificationTypes } from '@o2k/core';
 
 @UntilDestroy()
 @Component({
@@ -17,19 +16,23 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   private seenImportantIds = new Map<string, boolean>();
   private service = inject(NotificationService);
 
-  protected minimized = signal(true);
+  protected coordinator = inject(CoordinatorService);
   protected messages = signal<NotificationTypes[]>([]);
+
+  constructor() {
+    effect(() => {
+      const messages = this.messages();
+      if (messages.length === 0) {
+        this.coordinator.toggleNotificationOverlay(false);
+      } else if (!this.hasSeenAllImportantMessages(messages)) {
+        this.coordinator.toggleNotificationOverlay(true);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.service.notifications$
-      .pipe(
-        tap(messages => {
-          if (!this.hasSeenAllImportantMessages(messages)) {
-            this.minimized.set(false);
-          }
-        }),
-        untilDestroyed(this)
-      )
+      .pipe(untilDestroyed(this))
       .subscribe(list => this.messages.set(list));
   }
 
@@ -42,11 +45,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       message.onCancel();
     }
     this.seenImportantIds.clear();
-    this.minimized.set(false);
+    this.coordinator.toggleNotificationOverlay(false);
   }
 
   protected toggleMinimize() {
-    this.minimized.set(!this.minimized());
+    this.coordinator.toggleNotificationOverlay();
   }
 
   private hasSeenAllImportantMessages(messages: NotificationTypes[]) {

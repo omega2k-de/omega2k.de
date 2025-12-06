@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CoordinatorService } from '@o2k/core';
 
 @Component({
   selector: 'ui-animated-backdrop',
@@ -7,5 +8,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './animated-backdrop.component.scss',
 })
 export class AnimatedBackdropComponent {
-  readonly show = input<boolean>(false);
+  protected readonly coordinator = inject(CoordinatorService);
 }

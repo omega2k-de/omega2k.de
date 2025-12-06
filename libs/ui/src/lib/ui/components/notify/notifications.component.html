@@ -1,7 +1,8 @@
 @let _messages = messages();
 <ui-overlay class="widget">
   @let count = _messages.length;
-  @let dialogExpanded = minimized() ? 'false' : 'true';
+  @let isOpen = coordinator.isNotificationOpen();
+  @let dialogExpanded = isOpen ? 'true' : 'false';
   <div
     role="dialog"
     class="drawer nm-surface nm-raised"
@@ -10,7 +11,7 @@
     aria-live="polite"
     [attr.aria-expanded]="dialogExpanded"
     [class.has-messages]="count > 0">
-    @if (!minimized()) {
+    @if (isOpen) {
       <div class="messages" animate.enter="grow-messages" animate.leave="shrink-messages">
         <div role="list" aria-label="Benachrichtigungen" class="wrapper">
           @for (message of _messages; track message.id) {
@@ -27,18 +28,16 @@
     }
     @if (count > 0) {
       <div class="handle">
-        @let badgeLabel = count + ' neue Nachricht' + (count !== 1 ? 'en' : '');
+        @let badgeLabel = count + ' neue Nachricht' + (count === 1 ? '' : 'en');
         <button
           tabindex="0"
           type="button"
           class="toggle nm-button"
           uiVibrate
           (click)="toggleMinimize()"
-          [uiIcon]="minimized() ? 'keyboard_arrow_down' : 'keyboard_arrow_up'"
-          [attr.aria-label]="
-            minimized() ? 'Benachrichtigungen öffnen' : 'Benachrichtigungen schließen'
-          "
-          [title]="minimized() ? 'öffnen' : 'schließen'"
+          [uiIcon]="isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+          [attr.aria-label]="isOpen ? 'Benachrichtigungen schließen' : 'Benachrichtigungen öffnen'"
+          [title]="isOpen ? 'schließen' : 'öffnen'"
           size="md"></button>
         <button
           tabindex="-1"

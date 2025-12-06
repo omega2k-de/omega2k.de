@@ -75,7 +75,7 @@ Konfliktdynamiken.
 
 Teil II des Handbuchs wird diese physikalische Lage in das Bild eines überhitzten Stoffwechsels und eines aus dem Gleichgewicht geratenen
 „internen Klimas“ des proto-Superorganismus
-einordnen.[/content/superorganism-2-0/part-ii-interpretative-framework#klima_als_internes_milieu_des] Für den Realitätsschock genügt an
+einordnen. Für den [Realitätsschock](/content/superorganism-2-0/part-ii-interpretative-framework#content) genügt an
 dieser Stelle die nüchterne Feststellung: Wir haben die Grenzen dessen, was als stabiler Rahmen für eine komplexe Zivilisation gilt, bereits
 verlassen.
 

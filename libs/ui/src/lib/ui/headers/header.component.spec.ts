@@ -67,8 +67,11 @@ describe('HeaderComponent', () => {
           notifications$: of([]),
         }),
         MockProvider(CoordinatorService, {
-          isNavigationOpen: signal(false),
-          isAsideOpen: signal(true),
+          toggleNotificationOverlay: vi.fn(),
+          isNavigationOpen: signal<boolean>(false),
+          isNotificationOpen: signal<boolean>(false),
+          showBackdrop: signal<boolean>(false),
+          isAsideOpen: signal<boolean>(false),
         }),
         MockProvider(ScrollProgressService, {
           progress$: of(0),

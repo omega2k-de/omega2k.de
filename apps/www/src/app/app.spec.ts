@@ -65,6 +65,8 @@ describe('App', () => {
         MockProvider(LocalStorageService),
         MockProvider(CoordinatorService, {
           isNavigationOpen: signal<boolean>(false),
+          isNotificationOpen: signal<boolean>(false),
+          showBackdrop: signal<boolean>(false),
           isAsideOpen: signal<boolean>(false),
         }),
         MockProvider(ViewportScroller, {
