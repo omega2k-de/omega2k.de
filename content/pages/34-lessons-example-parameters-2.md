@@ -40,7 +40,7 @@ Wir behalten die beiden Kernachsen aus dem vorherigen Beispiel bei:
 Zusätzlich führen wir zwei **Hilfsdimensionen** ein, die für akademische/technische Berufe besonders aussagekräftig sind:
 
 - **Zeitkritikalität `t`** – Wie schnell werden bei Ausfall der Tätigkeit ernsthafte Probleme sichtbar?
-- **Substituierbarkeit/Automatisierbarkeit `s`** – Wie leicht kann diese Tätigkeit kurzfristig ersetzt oder automatisiert werden?
+- **Substituierbarkeit / Automatisierbarkeit `s`** – Wie leicht kann diese Tätigkeit kurzfristig ersetzt oder automatisiert werden?
 
 ### Gemeinwohlfaktor `g` (ca. 1,0–3,0)
 
@@ -61,7 +61,7 @@ Zusätzlich führen wir zwei **Hilfsdimensionen** ein, die für akademische/tech
 - `2`: Probleme werden mittelfristig spürbar (Tage bis Wochen).
 - `3`: Probleme treten sehr schnell auf (Minuten bis Stunden).
 
-### Substituierbarkeit/Automatisierbarkeit `s` (Skala 1–3)
+### Substituierbarkeit / Automatisierbarkeit `s` (Skala 1–3)
 
 - `1`: relativ leicht zu ersetzen oder teilweise zu automatisieren (viele potenzielle Ersatzkräfte, standardisierte Abläufe).
 - `2`: begrenzt ersetzbar, mittlere Engpässe bei Ausfall.
