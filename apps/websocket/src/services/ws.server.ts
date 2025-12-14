@@ -304,7 +304,21 @@ export class WsServer {
       origin: origin,
       maxAge: 24 * 3600,
       exposedHeaders: ['Content-Encoding'],
-      allowedHeaders: ['Origin', 'Range', 'Accept', 'Content-Type', 'Authorization'],
+      allowedHeaders: [
+        'Origin',
+        'Range',
+        'Accept',
+        'User-Agent',
+        'Content-Type',
+        'Authorization',
+        'cache-control',
+        'pragma',
+        'Accept-Language',
+        'Sec-Fetch-Mode',
+        'Sec-Fetch-Site',
+        'Sec-Fetch-Dest',
+        'If-None-Match',
+      ],
     };
     this.app.use(
       compression({
