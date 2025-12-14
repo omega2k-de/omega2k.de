@@ -35,7 +35,7 @@
       },
       "configurations": {
         "production": {
-          "sourceMap": true,
+          "sourceMap": false,
           "allowedCommonJsDependencies": [
             "crypto-js",
             "dayjs",
