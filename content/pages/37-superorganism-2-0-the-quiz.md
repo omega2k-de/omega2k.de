@@ -10,12 +10,12 @@ description: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) u
 ogDescription: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) und eine Antwort, die Kinder verstehen. Am Ende jeder Antwort steht eine kurze Zuordnung: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (welche Regel würde es besser machen?).'
 keywords: 'superorganismus, demokratie, faq, quiz, fragen, antworten'
 author: 'Me & GPT'
-version: 2
+version: 3
 isNew: true
 createdAt: '2025-12-21T21:58:21.011Z'
 ---
 
-## 1) „Wenn eigentlich genug da ist – warum fühlt es sich für viele trotzdem nach Mangel an?“
+## „Wenn eigentlich genug da ist – warum fühlt es sich für viele trotzdem nach Mangel an?“
 
 > **Frage:** Wenn die Welt so viel Essen, Energie und Dinge herstellen kann – warum haben dann manche trotzdem Angst, dass es nicht reicht?
 
@@ -27,7 +27,7 @@ Manchmal ist nicht die Menge das Problem, sondern die Verteilung und die Regeln.
 
 ---
 
-## 2) „Wer arbeitet noch, wenn alle das Nötigste bekommen?“
+## „Wer arbeitet noch, wenn alle das Nötigste bekommen?“
 
 > **Frage:** Wenn jeder ein Basis-Leben hat (Essen, Wohnung, Sicherheit) – arbeitet dann überhaupt noch jemand?
 
@@ -39,7 +39,7 @@ Viele Menschen arbeiten nicht nur wegen Geld. Sie wollen können, helfen, bauen,
 
 ---
 
-## 3) „Ist das dann Sozialismus oder Kommunismus?“
+## „Ist das dann Sozialismus oder Kommunismus?“
 
 > **Frage:** Ist das nicht einfach ein anderes Wort für Sozialismus oder Kommunismus?
 
@@ -51,7 +51,7 @@ Nein, es ist eher wie ein fairer Spielplatz mit Regeln. Auf dem Spielplatz darf 
 
 ---
 
-## 4) „Warum wird man mit Besitz schneller reich als durch Arbeit?“
+## „Warum wird man mit Besitz schneller reich als durch Arbeit?“
 
 > **Frage:** Warum kann jemand reich werden, obwohl er gar nicht so viel arbeitet – und ein anderer arbeitet viel und bleibt trotzdem arm?
 
@@ -63,7 +63,7 @@ Weil Besitz sich oft selbst vermehrt. Wer Geld, Häuser oder Firmenanteile hat, 
 
 ---
 
-## 5) „Warum werden Mieten teurer, obwohl niemand extra Wohnungen ‘zaubert’?“
+## „Warum werden Mieten teurer, obwohl niemand extra Wohnungen ‘zaubert’?“
 
 > **Frage:** Wieso wird Wohnen teurer, auch wenn die Wohnung doch dieselbe bleibt?
 
@@ -75,7 +75,7 @@ Weil Wohnraum knapp ist und manche ihn wie ein Sammelobjekt behandeln: „Haben 
 
 ---
 
-## 6) „Warum ist ‘billig’ manchmal eigentlich teuer?“
+## „Warum ist ‘billig’ manchmal eigentlich teuer?“
 
 > **Frage:** Wenn etwas billig ist – warum kann es trotzdem der Umwelt oder Menschen schaden?
 
@@ -87,7 +87,7 @@ Weil die Rechnung manchmal versteckt wird. Wenn eine Fabrik einen Fluss verschmu
 
 ---
 
-## 7) „Warum sind alle gestresst, obwohl alles ‘effizienter’ wird?“
+## „Warum sind alle gestresst, obwohl alles ‘effizienter’ wird?“
 
 > **Frage:** Warum haben viele weniger Zeit, obwohl Technik doch alles schneller macht?
 
@@ -99,7 +99,7 @@ Weil „schneller“ oft genutzt wird, um noch mehr zu tun – statt früher fer
 
 ---
 
-## 8) „Warum fühlt sich das Internet manchmal wie ein kaputtes Nervensystem an?“
+## „Warum fühlt sich das Internet manchmal wie ein kaputtes Nervensystem an?“
 
 > **Frage:** Warum sind im Internet so viele Streit, Lügen und extreme Dinge?
 
@@ -111,7 +111,7 @@ Weil viele Plattformen Aufmerksamkeit belohnen. Und starke Gefühle (Wut, Angst)
 
 ---
 
-## 9) „Warum verbreitet sich eine Lüge manchmal schneller als die Wahrheit?“
+## „Warum verbreitet sich eine Lüge manchmal schneller als die Wahrheit?“
 
 > **Frage:** Wie kann es sein, dass Quatsch schneller rumgeht als Fakten?
 
@@ -123,7 +123,7 @@ Eine Lüge kann sehr einfach sein: „Die sind schuld!“ Die Wahrheit ist oft k
 
 ---
 
-## 10) „Warum können ein paar ‘Cheater’ alles kaputtmachen?“
+## „Warum können ein paar ‘Cheater’ alles kaputtmachen?“
 
 > **Frage:** Warum reichen wenige Betrüger, damit ein System unfair wird?
 
@@ -135,7 +135,7 @@ Weil Cheater Vorteile nehmen und die Kosten auf alle anderen schieben. In einem 
 
 ---
 
-## 11) „Warum ist ‘Wachstum’ nicht automatisch ‘Wohlstand’?“
+## „Warum ist ‘Wachstum’ nicht automatisch ‘Wohlstand’?“
 
 > **Frage:** Wenn die Wirtschaft wächst – warum geht es dann nicht allen besser?
 
@@ -147,7 +147,7 @@ Weil Wachstum auch schlechte Dinge zählen kann. Wenn viele krank sind, wächst 
 
 ---
 
-## 12) „Warum gehen Dinge so schnell kaputt oder werden ‘alt’?“
+## „Warum gehen Dinge so schnell kaputt oder werden ‘alt’?“
 
 > **Frage:** Wieso sind manche Sachen so gebaut, dass sie bald kaputtgehen oder nicht mehr passen?
 
@@ -159,7 +159,7 @@ Weil Verkauf oft wichtiger belohnt wird als Haltbarkeit. Wenn Firmen nur dann ge
 
 ---
 
-## 13) „Warum wird Energie teuer, obwohl Sonne und Wind ‘gratis’ sind?“
+## „Warum wird Energie teuer, obwohl Sonne und Wind ‘gratis’ sind?“
 
 > **Frage:** Wenn Sonne und Wind nichts kosten, warum kostet Strom dann trotzdem?
 
@@ -171,7 +171,7 @@ Weil Strom nicht nur „Quelle“ ist, sondern auch Netze, Speicher, Leitungen, 
 
 ---
 
-## 14) „Warum fühlen sich Menschen machtlos, obwohl wir so viele sind?“
+## „Warum fühlen sich Menschen machtlos, obwohl wir so viele sind?“
 
 > **Frage:** Wie kann es sein, dass Milliarden Menschen sich machtlos fühlen?
 
@@ -183,7 +183,7 @@ Weil Koordination schwer ist. Viele wollen etwas Gutes, aber jeder alleine wirkt
 
 ---
 
-## 15) „Warum sieht man Krisen kommen – und trotzdem passiert wenig?“
+## „Warum sieht man Krisen kommen – und trotzdem passiert wenig?“
 
 > **Frage:** Wenn viele Probleme vorhersehbar sind, warum handeln wir oft so spät?
 
@@ -195,7 +195,7 @@ Weil Feedback zu langsam oder zu leise ist. Menschen reagieren stark, wenn es so
 
 ---
 
-## 16) „Warum gilt Arbeit als Wert, selbst wenn sie niemandem hilft?“
+## „Warum gilt Arbeit als Wert, selbst wenn sie niemandem hilft?“
 
 > **Frage:** Warum ist ‘beschäftigt sein’ manchmal wichtiger als ‘nützlich sein’?
 
@@ -207,7 +207,7 @@ Weil Geld oft an Jobstunden hängt, nicht an echtem Nutzen. Dann entstehen Täti
 
 ---
 
-## 17) „Warum verdienen Pflege, Betreuung und Bildung oft weniger – obwohl sie so wichtig sind?“
+## „Warum verdienen Pflege, Betreuung und Bildung oft weniger – obwohl sie so wichtig sind?“
 
 > **Frage:** Warum sind Berufe, die Menschen aufbauen, oft schlechter bezahlt als manche, die nur Geld bewegen?
 
@@ -219,7 +219,7 @@ Weil der Markt oft kurzfristige Gewinne belohnt. Pflege und Bildung wirken aber 
 
 ---
 
-## 18) „Warum wird so schnell ‘wir gegen die’?“
+## „Warum wird so schnell ‘wir gegen die’?“
 
 > **Frage:** Warum teilen sich Menschen so schnell in Lager und streiten, statt Probleme zu lösen?
 
@@ -231,7 +231,7 @@ Weil Alarmgefühle schnell sind und Denken langsamer ist. Wenn das Nervensystem 
 
 ---
 
-## 19) „Wenn ich alleine wenig ändere – warum ist mein Verhalten trotzdem wichtig?“
+## „Wenn ich alleine wenig ändere – warum ist mein Verhalten trotzdem wichtig?“
 
 > **Frage:** Wenn mein Müll oder mein Beitrag so klein ist, warum soll ich mich anstrengen?
 
@@ -243,7 +243,7 @@ Weil viele kleine Dinge zusammen groß sind. Ein Tropfen ist klein, aber ein Mee
 
 ---
 
-## 20) „Warum können Preise für wichtige Dinge plötzlich ausrasten (z. B. RAM)?“
+## „Warum können Preise für wichtige Dinge plötzlich ausrasten (z. B. RAM)?“
 
 > **Frage:** Warum werden wichtige Dinge manchmal plötzlich extrem teuer, obwohl sie vorher bezahlbar waren?
 

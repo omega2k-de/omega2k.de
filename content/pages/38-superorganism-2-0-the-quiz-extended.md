@@ -10,12 +10,12 @@ description: 'Spielregel: Erst die Frage vorlesen. Dann Kinder raten lassen. Dan
 ogDescription: 'Spielregel: Erst die Frage vorlesen. Dann Kinder raten lassen. Danach die Antwort lesen. Am Ende steht wieder: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (wie wird es stabil?).'
 keywords: 'superorganismus, demokratie, faq, quiz, fragen, antworten'
 author: 'Me & GPT'
-version: 1
+version: 2
 isNew: true
 createdAt: '2025-12-21T22:29:22.200Z'
 ---
 
-## 1) „Was ist ein ‘Level-Up’ im echten Leben?“
+## „Was ist ein ‘Level-Up’ im echten Leben?“
 
 > **Frage:** In Spielen wirst du stärker, wenn du übst. Was wäre ein Level-Up im echten Leben?
 
@@ -27,7 +27,7 @@ Ein Level-Up ist, wenn du etwas besser kannst als vorher: lesen, rechnen, kochen
 
 ---
 
-## 2) „Wenn niemand zurückgelassen wird – warum sollte man sich dann noch anstrengen?“
+## „Wenn niemand zurückgelassen wird – warum sollte man sich dann noch anstrengen?“
 
 > **Frage:** Wenn alle ein Basis-Leben bekommen, warum sollte man dann noch üben und lernen?
 
@@ -39,7 +39,7 @@ Weil Menschen wachsen wollen. Kinder lernen laufen, ohne dass jemand ihnen Geld 
 
 ---
 
-## 3) „Was sind ‘Extra verdienen’ und ‘Extra Optionen’ überhaupt?“
+## „Was sind ‘Extra verdienen’ und ‘Extra Optionen’ überhaupt?“
 
 > **Frage:** Was könnte man „extra“ bekommen, wenn man Level-Ups macht?
 
@@ -51,7 +51,7 @@ Extra bedeutet nicht „Luxus für wenige“, sondern: mehr Wahlfreiheit. Zum Be
 
 ---
 
-## 4) „Warum ist Bildung wie ein Booster oder Power-Up?“
+## „Warum ist Bildung wie ein Booster oder Power-Up?“
 
 > **Frage:** Warum sind Schule, Ausbildung und Lernen so wichtig für Level-Ups?
 
@@ -63,7 +63,7 @@ Weil Bildung dir Werkzeuge gibt. Ohne Werkzeuge musst du alles schwerer machen. 
 
 ---
 
-## 5) „Warum reicht ‘Schule’ allein manchmal nicht?“
+## „Warum reicht ‘Schule’ allein manchmal nicht?“
 
 > **Frage:** Wenn es Schulen gibt – warum klappt Lernen bei vielen trotzdem schlecht?
 
@@ -75,7 +75,7 @@ Weil Menschen verschieden lernen. Manche lernen durch Lesen, andere durch Machen
 
 ---
 
-## 6) „Was ist ein Skill-Tree?“
+## „Was ist ein Skill-Tree?“
 
 > **Frage:** Was ist ein Skill-Tree im echten Leben?
 
@@ -87,7 +87,7 @@ Ein Skill-Tree ist eine Landkarte deiner Fähigkeiten. Du kannst Wege wählen: T
 
 ---
 
-## 7) „Warum ist Spezialisierung in eine passende Nische so wertvoll?“
+## „Warum ist Spezialisierung in eine passende Nische so wertvoll?“
 
 > **Frage:** Warum ist es gut, wenn jeder etwas findet, das wirklich zu ihm passt?
 
@@ -104,7 +104,7 @@ Das ist wie in einem Team: Nicht alle müssen Torwart sein. Wenn jeder die Rolle
 
 ---
 
-## 8) „Muss jeder studieren, damit er wertvoll ist?“
+## „Muss jeder studieren, damit er wertvoll ist?“
 
 > **Frage:** Sind Menschen ohne Studium weniger wert?
 
@@ -116,7 +116,7 @@ Nein. Ein Körper braucht nicht nur Gehirn, sondern auch Hände, Herz und Nerven
 
 ---
 
-## 9) „Wie erkennt man, wofür man geeignet ist?“
+## „Wie erkennt man, wofür man geeignet ist?“
 
 > **Frage:** Woher weiß ich, welches Level-Up zu mir passt?
 
@@ -128,7 +128,7 @@ Durch Ausprobieren. Wie bei Spielen: Du testest Klassen (Heiler, Tank, Scout). I
 
 ---
 
-## 10) „Warum sind Fehler wichtig?“
+## „Warum sind Fehler wichtig?“
 
 > **Frage:** Warum darf man beim Leveln Fehler machen?
 
@@ -140,7 +140,7 @@ Weil Fehler Feedback sind. Ohne Fehler weißt du nicht, was du noch üben musst.
 
 ---
 
-## 11) „Was sind ‘Quests’ im echten Leben?“
+## „Was sind ‘Quests’ im echten Leben?“
 
 > **Frage:** Gibt es im echten Leben Quests wie in Spielen?
 
@@ -152,7 +152,7 @@ Ja. Quests sind Aufgaben, die echten Nutzen haben: etwas reparieren, jemandem he
 
 ---
 
-## 12) „Wie bekommt man Ansehen, ohne andere kleinzumachen?“
+## „Wie bekommt man Ansehen, ohne andere kleinzumachen?“
 
 > **Frage:** Kann man anerkannt werden, ohne dass andere verlieren?
 
@@ -164,7 +164,7 @@ Ja. Anerkennung ist keine Torte, die kleiner wird, wenn andere auch ein Stück b
 
 ---
 
-## 13) „Was bedeutet ‘hoch honoriert’ – und warum ist das fair?“
+## „Was bedeutet ‘hoch honoriert’ – und warum ist das fair?“
 
 > **Frage:** Warum sollte jemand, der viel kann, mehr bekommen?
 
@@ -176,7 +176,7 @@ Weil manche Skills selten sind, schwer zu lernen sind oder große Verantwortung 
 
 ---
 
-## 14) „Was ist ‘Gerechtigkeit’ im Skill-Tree?“
+## „Was ist ‘Gerechtigkeit’ im Skill-Tree?“
 
 > **Frage:** Ist es gerecht, wenn nicht alle dasselbe bekommen?
 
@@ -188,7 +188,7 @@ Gerecht ist nicht: alle bekommen gleich viel. Gerecht ist: alle bekommen genug z
 
 ---
 
-## 15) „Wie verhindert man, dass ‘Cheater’ beim Leveln schummeln?“
+## „Wie verhindert man, dass ‘Cheater’ beim Leveln schummeln?“
 
 > **Frage:** Was, wenn jemand lügt und sagt, er kann etwas, um Extras zu bekommen?
 
@@ -200,7 +200,7 @@ Dann braucht es Anti-Cheat: Prüfungen, Praxisproben, Feedback von Teams, Nachwe
 
 ---
 
-## 16) „Kann man den Skill-Tree wechseln, wenn man merkt, es passt nicht?“
+## „Kann man den Skill-Tree wechseln, wenn man merkt, es passt nicht?“
 
 > **Frage:** Was, wenn ich später merke: Das war nicht mein Weg?
 
@@ -212,7 +212,7 @@ Dann sollte Wechsel normal sein. Menschen entwickeln sich. Was du mit 10 liebst,
 
 ---
 
-## 17) „Warum macht eine passende Nische glücklich?“
+## „Warum macht eine passende Nische glücklich?“
 
 > **Frage:** Warum sind manche Menschen glücklich, wenn sie eine Sache richtig gut machen?
 
@@ -224,7 +224,7 @@ Weil es Sinn gibt und weil dein Gehirn gern Muster beherrscht. Wenn du merkst: �
 
 ---
 
-## 18) „Was ist ‘Real Life 3.0’ in einem Satz?“
+## „Was ist ‘Real Life 3.0’ in einem Satz?“
 
 > **Frage:** Wenn du das Ganze ganz kurz erklären müsstest: Was ist Real Life 3.0?
 
@@ -236,7 +236,7 @@ Real Life 3.0 ist ein System, in dem niemand zurückgelassen wird, jeder lernen 
 
 ---
 
-## 19) „Wieso ist ‘Wissen’ besser als ‘Dinge anhäufen’?“
+## „Wieso ist ‘Wissen’ besser als ‘Dinge anhäufen’?“
 
 > **Frage:** Warum wäre es klüger, Wissen zu sammeln statt nur Sachen?
 
@@ -248,7 +248,7 @@ Weil Dinge kaputtgehen, verloren gehen oder weggenommen werden können. Wissen b
 
 ---
 
-## 20) „Warum braucht ein ‘Star Trek’-Moment Regeln und nicht nur gute Menschen?“
+## „Warum braucht ein ‘Star Trek’-Moment Regeln und nicht nur gute Menschen?“
 
 > **Frage:** Reicht es nicht, wenn Menschen einfach nett sind?
 
