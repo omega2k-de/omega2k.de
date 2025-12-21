@@ -10,7 +10,7 @@ description: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) u
 ogDescription: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) und eine Antwort, die Kinder verstehen. Am Ende jeder Antwort steht eine kurze Zuordnung: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (welche Regel würde es besser machen?).'
 keywords: 'superorganismus, demokratie, faq, quiz, fragen, antworten'
 author: 'Me & GPT'
-version: 1
+version: 2
 isNew: true
 createdAt: '2025-12-21T21:58:21.011Z'
 ---
@@ -22,6 +22,7 @@ createdAt: '2025-12-21T21:58:21.011Z'
 Manchmal ist nicht die Menge das Problem, sondern die Verteilung und die Regeln. Stell dir vor, es gibt einen großen Kuchen für alle. Wenn einige sich die größten Stücke nehmen, obwohl alle Hunger haben, dann wirkt es so, als sei der Kuchen „zu klein“. In Wirklichkeit fehlt eine faire Regel: Erst bekommt jeder ein Grundstück, damit niemand leer ausgeht. Danach kann man über Extras sprechen.
 
 **Krankheit (im Körperbild):** Ein Arm bekommt zu wenig „Blut“, obwohl genug im Körper ist.  
+
 **Heil-Regelkreis:** Grundversorgung zuerst + klare Regeln, damit niemand abgehängt wird.
 
 ---
@@ -33,6 +34,7 @@ Manchmal ist nicht die Menge das Problem, sondern die Verteilung und die Regeln.
 Viele Menschen arbeiten nicht nur wegen Geld. Sie wollen können, helfen, bauen, entdecken, stolz sein, gebraucht werden. Kinder lernen ja auch laufen, obwohl sie dafür kein Geld bekommen. Wichtig ist: Basis-Leben heißt nicht „alle bekommen alles“, sondern „niemand fällt durchs Loch“. Und danach gibt es „Level-Ups“: Wer lernt, Verantwortung übernimmt, Probleme löst oder hilft, bekommt mehr Möglichkeiten, Anerkennung und Freiheiten.
 
 **Krankheit:** Angst-Regelung („nur Druck bringt Leistung“).  
+
 **Heil-Regelkreis:** Basis-Sicherheit + Skill-Tree-Belohnungen für Beitrag, Lernen, Verantwortung.
 
 ---
@@ -44,6 +46,7 @@ Viele Menschen arbeiten nicht nur wegen Geld. Sie wollen können, helfen, bauen,
 Nein, es ist eher wie ein fairer Spielplatz mit Regeln. Auf dem Spielplatz darf jeder spielen (Grundrechte), aber niemand darf anderen die Schaukel wegnehmen und „für immer besetzen“. Das ist nicht „alles gleich machen“. Es ist: gleiche Würde, faire Chancen, klare Grenzen gegen Betrug. Wettbewerb kann bleiben – aber er findet innerhalb von Regeln statt, die Menschen und Natur schützen.
 
 **Krankheit:** „Label-Reflex“ (ein Wort ersetzt Denken).  
+
 **Heil-Regelkreis:** Klare Begriffe: Grundrechte + Wettbewerb im Rahmen + Anti-Cheat.
 
 ---
@@ -55,6 +58,7 @@ Nein, es ist eher wie ein fairer Spielplatz mit Regeln. Auf dem Spielplatz darf 
 Weil Besitz sich oft selbst vermehrt. Wer Geld, Häuser oder Firmenanteile hat, bekommt manchmal Zinsen oder Gewinne. Das ist wie ein Schneeball, der beim Rollen größer wird. Arbeit ist dagegen an Zeit gebunden: Ein Tag hat nur 24 Stunden. Das fühlt sich unfair an, wenn die Regeln so sind, dass „der Schneeball“ immer schneller wächst und andere kaum aufholen können.
 
 **Krankheit:** Selbstverstärkung („Wachstumsturm“ nur bei wenigen).  
+
 **Heil-Regelkreis:** Regeln, die extreme Selbstvermehrung begrenzen + faire Beiträge für Gemeinwohl.
 
 ---
@@ -66,6 +70,7 @@ Weil Besitz sich oft selbst vermehrt. Wer Geld, Häuser oder Firmenanteile hat, 
 Weil Wohnraum knapp ist und manche ihn wie ein Sammelobjekt behandeln: „Haben ist besser als brauchen.“ Wenn viele Menschen eine Sache unbedingt brauchen (Wohnen), kann der Preis steigen, obwohl das Produkt nicht besser geworden ist. Das ist wie bei wenigen Trinkflaschen in der Wüste: Wer sie kontrolliert, kann die Regeln bestimmen. Darum braucht Wohnen besondere Regeln.
 
 **Krankheit:** Engpass-Druck („zu hoher Blutdruck“ in einem Bereich).  
+
 **Heil-Regelkreis:** Mehr bauen + Spekulation bremsen + Mindeststandards für bezahlbares Wohnen.
 
 ---
@@ -77,6 +82,7 @@ Weil Wohnraum knapp ist und manche ihn wie ein Sammelobjekt behandeln: „Haben 
 Weil die Rechnung manchmal versteckt wird. Wenn eine Fabrik einen Fluss verschmutzt, ist das Produkt an der Kasse vielleicht billig – aber die Natur, Tiere und Menschen zahlen später den Schaden. Das ist wie Müll unter den Teppich kehren: Du siehst ihn kurz nicht, aber er stinkt irgendwann. „Billig“ ist oft nur „Kosten wurden woanders abgeladen“.
 
 **Krankheit:** Vergiftung im Stoffwechsel (Schaden bleibt im System).  
+
 **Heil-Regelkreis:** Kostenwahrheit: Schäden müssen im Preis und in Regeln sichtbar werden.
 
 ---
@@ -88,6 +94,7 @@ Weil die Rechnung manchmal versteckt wird. Wenn eine Fabrik einen Fluss verschmu
 Weil „schneller“ oft genutzt wird, um noch mehr zu tun – statt früher fertig zu sein. Stell dir vor, du kannst doppelt so schnell laufen. Dann könnte man sagen: „Super, jetzt hast du mehr Freizeit.“ Oder man sagt: „Dann läufst du jetzt doppelt so weit.“ Viele Systeme wählen leider die zweite Variante. Dadurch entsteht Dauerstress, obwohl die Technik eigentlich helfen könnte.
 
 **Krankheit:** Daueralarm („Herzrasen“).  
+
 **Heil-Regelkreis:** Produktivität muss in Zeitwohlstand oder bessere Versorgung zurückfließen.
 
 ---
@@ -99,6 +106,7 @@ Weil „schneller“ oft genutzt wird, um noch mehr zu tun – statt früher fer
 Weil viele Plattformen Aufmerksamkeit belohnen. Und starke Gefühle (Wut, Angst) ziehen oft mehr Aufmerksamkeit als ruhige Wahrheit. Das ist wie ein Megafon, das automatisch lauter wird, wenn jemand schreit. Wenn das „Nervensystem“ ständig Alarm sendet, wird der ganze Körper unruhig und trifft schlechte Entscheidungen. Darum brauchen wir „Informations-Hygiene“.
 
 **Krankheit:** Falsche Signale im Nervensystem.  
+
 **Heil-Regelkreis:** Qualität belohnen, nicht nur Klicks; Transparenz, Quellen, Verantwortung.
 
 ---
@@ -110,6 +118,7 @@ Weil viele Plattformen Aufmerksamkeit belohnen. Und starke Gefühle (Wut, Angst)
 Eine Lüge kann sehr einfach sein: „Die sind schuld!“ Die Wahrheit ist oft komplizierter: „Es gibt viele Ursachen.“ Menschen mögen einfache Geschichten. Und Algorithmen mögen starke Reaktionen. Zusammen wird daraus ein Turbo. Deshalb ist die Lösung nicht nur „mehr Fakten“, sondern auch bessere Regeln: Lügen dürfen nicht der einfachste Weg sein, berühmt zu werden.
 
 **Krankheit:** Fiebertraum (Verwirrung durch Alarm-Stories).  
+
 **Heil-Regelkreis:** Reibung für Desinformation + Medienlernen + klare Plattform-Regeln.
 
 ---
@@ -121,6 +130,7 @@ Eine Lüge kann sehr einfach sein: „Die sind schuld!“ Die Wahrheit ist oft k
 Weil Cheater Vorteile nehmen und die Kosten auf alle anderen schieben. In einem Spiel ohne Anti-Cheat gewinnt nicht der Beste, sondern der Dreisteste. Und wenn die Ehrlichen sehen, dass Cheaten sich lohnt, machen irgendwann immer mehr mit – und das Spiel kippt. Darum sind Regeln und Kontrolle nicht „gemein“, sondern Schutz für die Fairen.
 
 **Krankheit:** Infektion (Cheating steckt an).  
+
 **Heil-Regelkreis:** Anti-Cheat: Transparenz, echte Konsequenzen, einfache Meldewege.
 
 ---
@@ -132,6 +142,7 @@ Weil Cheater Vorteile nehmen und die Kosten auf alle anderen schieben. In einem 
 Weil Wachstum auch schlechte Dinge zählen kann. Wenn viele krank sind, wächst vielleicht der Umsatz für Medikamente. Wenn es Stau gibt, wird mehr Benzin verkauft. Das ist wie ein Punktestand, der auch für Fehler Punkte gibt. Darum braucht man bessere Messwerte: Gesundheit, Bildung, Sicherheit, Naturzustand, Zeit – nicht nur „mehr Geld bewegt“.
 
 **Krankheit:** Falsches Thermometer (falsche Messgröße).  
+
 **Heil-Regelkreis:** Neue Ziele/Kennzahlen: Lebensqualität und Stabilität statt nur „mehr“.
 
 ---
@@ -143,6 +154,7 @@ Weil Wachstum auch schlechte Dinge zählen kann. Wenn viele krank sind, wächst 
 Weil Verkauf oft wichtiger belohnt wird als Haltbarkeit. Wenn Firmen nur dann gewinnen, wenn du ständig neu kaufst, dann lohnt sich Reparierbarkeit weniger. Das ist wie ein System, das immer neue Schuhe verkauft, statt gute Schuhe zu machen. Ein gesunder Organismus recycelt und repariert. Unsere Wirtschaft sollte das auch: langlebig, reparierbar, wiederverwendbar.
 
 **Krankheit:** Selbstschädigung (Ressourcen werden unnötig verbrannt).  
+
 **Heil-Regelkreis:** Recht auf Reparatur, Ersatzteile, lange Garantien, Kreislauf-Standards.
 
 ---
@@ -154,6 +166,7 @@ Weil Verkauf oft wichtiger belohnt wird als Haltbarkeit. Wenn Firmen nur dann ge
 Weil Strom nicht nur „Quelle“ ist, sondern auch Netze, Speicher, Leitungen, Wartung und Regeln. Stell dir vor, Regen ist gratis – aber du brauchst Rohre, Tanks und Filter, um Wasser zuverlässig zu haben. Außerdem gibt es Macht: Wer alte Systeme besitzt, kämpft manchmal darum, dass neue langsamer kommen. Deshalb braucht man kluge Regeln, damit das neue System fair und stabil wird.
 
 **Krankheit:** Durchblutungsstörung (Transport/Verteilung ist Engpass).  
+
 **Heil-Regelkreis:** Netze & Speicher ausbauen + faire Marktregeln + weniger Abhängigkeiten.
 
 ---
@@ -165,6 +178,7 @@ Weil Strom nicht nur „Quelle“ ist, sondern auch Netze, Speicher, Leitungen, 
 Weil Koordination schwer ist. Viele wollen etwas Gutes, aber jeder alleine wirkt klein. Das ist wie bei einem Ruderboot: Wenn alle durcheinander rudern, dreht man sich im Kreis. Das Internet kann helfen, aber nur wenn es klare Ziele, ehrliche Informationen und gute Regeln gibt. Sonst macht es nur Lärm. „Macht“ entsteht, wenn viele kleine Beiträge zusammenpassen.
 
 **Krankheit:** Koordinationslähmung.  
+
 **Heil-Regelkreis:** Einfache Beteiligung + lokale Projekte + gemeinsame Ziele + sichtbarer Fortschritt.
 
 ---
@@ -176,6 +190,7 @@ Weil Koordination schwer ist. Viele wollen etwas Gutes, aber jeder alleine wirkt
 Weil Feedback zu langsam oder zu leise ist. Menschen reagieren stark, wenn es sofort weh tut. Aber Klima, Böden, Ungleichheit sind oft schleichend – wie Karies: erst merkt man nichts, später tut es sehr weh. Außerdem ist Verantwortung verteilt: Jeder denkt, „jemand anders wird es schon machen“. Darum braucht man Frühwarnsysteme und klare Zuständigkeiten.
 
 **Krankheit:** Träge Reflexe (zu späte Reaktion).  
+
 **Heil-Regelkreis:** Frühwarnwerte + klare Verantwortung + automatische Korrekturregeln.
 
 ---
@@ -187,6 +202,7 @@ Weil Feedback zu langsam oder zu leise ist. Menschen reagieren stark, wenn es so
 Weil Geld oft an Jobstunden hängt, nicht an echtem Nutzen. Dann entstehen Tätigkeiten, die nur so tun, als wären sie wichtig. Ein gesunder Organismus macht keine Bewegungen, die nur Energie verbrennen. Er macht Bewegungen, die ihn erhalten. Deshalb ist die Idee: Basis-Sicherheit für alle – und extra Belohnungen für Dinge, die wirklich helfen (Pflege, Bildung, Infrastruktur, Reparatur, Natur).
 
 **Krankheit:** Fehlsteuerung (Energie wird falsch eingesetzt).  
+
 **Heil-Regelkreis:** Nutzen belohnen + Grundsicherheit + klare „Gemeinwohl-Level-Ups“.
 
 ---
@@ -198,6 +214,7 @@ Weil Geld oft an Jobstunden hängt, nicht an echtem Nutzen. Dann entstehen Täti
 Weil der Markt oft kurzfristige Gewinne belohnt. Pflege und Bildung wirken aber langfristig: Wenn Kinder gut lernen und Menschen gesund bleiben, merkt man das erst später – aber dann ist es unbezahlbar wertvoll. Ein Körper, der sein Gehirn und seine Heilung vernachlässigt, wird schwach. Darum muss ein System genau diese Bereiche stabil finanzieren.
 
 **Krankheit:** Unterversorgung von „Gehirn und Heilung“.  
+
 **Heil-Regelkreis:** Mindeststandards + stabile Finanzierung + Anerkennung nach Systemrelevanz.
 
 ---
@@ -209,6 +226,7 @@ Weil der Markt oft kurzfristige Gewinne belohnt. Pflege und Bildung wirken aber 
 Weil Alarmgefühle schnell sind und Denken langsamer ist. Wenn das Nervensystem dauernd „Gefahr!“ ruft, sucht das Gehirn einen Gegner. Dann wird Zusammenarbeit schwer. Das ist wie wenn im Körper ständig Entzündung läuft: Man fühlt sich krank und gereizt. Deshalb braucht man Regeln, die Streit entschärfen und echte Zusammenarbeit belohnen.
 
 **Krankheit:** Autoimmunreaktion (das System bekämpft sich selbst).  
+
 **Heil-Regelkreis:** De-Eskalations-Design: weniger Anreiz für Hass, mehr für Lösung und Begegnung.
 
 ---
@@ -220,6 +238,7 @@ Weil Alarmgefühle schnell sind und Denken langsamer ist. Wenn das Nervensystem 
 Weil viele kleine Dinge zusammen groß sind. Ein Tropfen ist klein, aber ein Meer ist nur Tropfen. Wichtig ist: Menschen brauchen Feedback, sonst fühlen sie sich sinnlos. Wenn du siehst, dass dein Beitrag Teil eines gemeinsamen Ziels ist, bleibt Motivation stabil. Darum helfen sichtbare Fortschritte: Zähler, gemeinsame Aktionen, lokale Projekte.
 
 **Krankheit:** Skalierungs-Missverständnis („zu wenig Feedback“).  
+
 **Heil-Regelkreis:** Wirkung sichtbar machen + gemeinsame Ziele + kleine Schritte bündeln.
 
 ---
@@ -231,6 +250,7 @@ Weil viele kleine Dinge zusammen groß sind. Ein Tropfen ist klein, aber ein Mee
 Weil Engpässe, wenige Hersteller, Transportprobleme oder Spekulation den Preis treiben können. Das ist wie wenn es nur wenige Bäcker gibt und plötzlich jeder Brot braucht – dann steigt der Preis. Bei Technik kommt dazu: Manche Bauteile hängen an wenigen Fabriken weltweit. Ein gesunder Organismus baut Reserven auf und sorgt für mehrere Versorgungswege.
 
 **Krankheit:** Krampf im Versorgungssystem (Supply-Chain-Spasmus).  
+
 **Heil-Regelkreis:** Resilienz: mehrere Quellen, Vorräte, fairer Wettbewerb, Transparenz über Engpässe.
 
 ---
