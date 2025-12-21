@@ -32,7 +32,7 @@ async function collectFilesRecursive(dir) {
 async function resizeOriginals(allFiles) {
   const originals = allFiles.filter(fullPath => {
     const file = path.basename(fullPath);
-    return /\.(jpe?g|png)$/i.test(file) && !/_\d+x\d+\.(jpe?g|png)$/i.test(file);
+    return /\.(jpe?g|png|webp)$/i.test(file) && !/_\d+x\d+\.(jpe?g|png|webp)$/i.test(file);
   });
 
   console.log(`Found ${originals.length} base JPEG(s) to check for resizing.`);

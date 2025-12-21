@@ -6,11 +6,14 @@ topic: 'superorganism-2-0'
 route: '/content/superorganism-2-0/the-quiz'
 title: 'Handbuch proto-Superorganismus 2.0: Frage-Antwort-Kartenset'
 ogTitle: 'Frage-Antwort-Kartenset: Planet als „Proto-Superorganismus“ (kindgerecht, aber mit Denk-Tiefe)'
+ogImage: '/cdn/images/manual/the-quiz_1200x800.webp'
+ogImageWidth: '1200'
+ogImageHeight: '800'
 description: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) und eine Antwort, die Kinder verstehen. Am Ende jeder Antwort steht eine kurze Zuordnung: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (welche Regel würde es besser machen?).'
 ogDescription: 'Hinweis zur Spielregel: Jede Karte hat eine Frage (zum Vorlesen) und eine Antwort, die Kinder verstehen. Am Ende jeder Antwort steht eine kurze Zuordnung: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (welche Regel würde es besser machen?).'
 keywords: 'superorganismus, demokratie, faq, quiz, fragen, antworten'
 author: 'Me & GPT'
-version: 3
+version: 4
 isNew: true
 createdAt: '2025-12-21T21:58:21.011Z'
 ---

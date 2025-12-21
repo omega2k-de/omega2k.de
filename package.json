@@ -1,6 +1,6 @@
 {
   "name": "@omega2k.de/source",
-  "version": "0.42.85",
+  "version": "0.42.86",
   "license": "MIT",
   "scripts": {
     "prepare": "husky && npm install pnpm --global",

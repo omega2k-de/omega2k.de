@@ -6,6 +6,9 @@ route: '/content/one-life-in-details'
 title: 'Everyones life matters (detailed version)'
 description: 'Eine kleine Lebensgeschichte in Kapiteln'
 ogTitle: 'Everyones life matters'
+ogImage: '/cdn/images/private/one-life-in-details_1200x800.webp'
+ogImageWidth: '1200'
+ogImageHeight: '800'
 createdAt: '2025-12-20T22:47:00.000Z'
 ---
 

@@ -6,11 +6,14 @@ topic: 'superorganism-2-0'
 route: '/content/superorganism-2-0/the-quiz-extended'
 title: 'Handbuch proto-Superorganismus 2.0: Frage-Antwort-Kartenset „Level-Ups“'
 ogTitle: 'Frage-Antwort-Kartenset: „Level-Ups“, Skill-Tree und Bildung als Booster (kindgerecht, aber mit Tiefe)'
+ogImage: '/cdn/images/manual/the-quiz-extended_1200x800.webp'
+ogImageWidth: '1200'
+ogImageHeight: '800'
 description: 'Spielregel: Erst die Frage vorlesen. Dann Kinder raten lassen. Danach die Antwort lesen. Am Ende steht wieder: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (wie wird es stabil?).'
 ogDescription: 'Spielregel: Erst die Frage vorlesen. Dann Kinder raten lassen. Danach die Antwort lesen. Am Ende steht wieder: „Krankheit“ (was läuft schief?) und „Heil-Regelkreis“ (wie wird es stabil?).'
 keywords: 'superorganismus, demokratie, faq, quiz, fragen, antworten'
 author: 'Me & GPT'
-version: 2
+version: 3
 isNew: true
 createdAt: '2025-12-21T22:29:22.200Z'
 ---

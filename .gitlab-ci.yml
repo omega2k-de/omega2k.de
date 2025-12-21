@@ -12,7 +12,7 @@ workflow:
 
 variables:
   CI: true
-  APP_VERSION: 0.42.85
+  APP_VERSION: 0.42.86
   DOCKER_DRIVER: overlay2
   REGISTRY: 'registry.omega2k.de'
   NODE_IMAGE: '${REGISTRY}/omega2k.de/node'
