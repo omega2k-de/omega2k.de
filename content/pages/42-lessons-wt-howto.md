@@ -7,7 +7,7 @@ route: '/content/lessons-learned/wt-howto'
 title: 'Lessons learned: WT-Zeitwirtschaft als Evolutionsstufe von Information zu Koordination'
 description: 'Kompakte Diskussionsvorlage: WT-Zeitwirtschaft als Evolutionsstufe von Daten zu gesellschaftlicher Koordination. Fokus auf verifizierbare Signale, Feedbackschleifen, faire Allokation über gewichtete Zeit sowie Anti-Gaming-Mechanismen. Integriert Skill-Tree-Logik (Bildung als Upgrade) und ein Civic-Bounty-Prinzip (Bug-Bounty-Analogie) als Sicherheitslayer, der das Melden und Beheben von Systemfehlern stärker belohnt als deren Ausnutzung.'
 keywords: 'superorganismus 2.0, zeitwirtschaft, weighted time tokens, wt, informationsökologie, koordination, regelkreis, feedbackschleifen, anreizdesign, gemeinwohl, qualifikation, risiko, stress, gamification, skill-tree, bug bounty, civic-bounty, anti-gaming, governance, datenschutz, polyzentrisch, charta, pilotprojekt'
-version: 1
+version: 2
 createdAt: '2025-12-31T20:55:13.341Z'
 author: 'Me & GPT'
 ---
@@ -78,7 +78,9 @@ fair und ausreichend besetzt sind.
 
 Als schematische Formel würde das beispielsweise wir folgt aussehen:
 
-[ WT = (Belastung \cdot 0{,}3) + (Risiko \cdot 0{,}2) + (Knappheit \cdot 0{,}15) + (Qualifikation \cdot 0{,}2) + (Gemeinwohl \cdot 0{,}15) ]
+\[
+WT = (Belastung \cdot 0{,}3) + (Risiko \cdot 0{,}2) + (Knappheit \cdot 0{,}15) + (Qualifikation \cdot 0{,}2) + (Gemeinwohl \cdot 0{,}15)
+\]
 
 mit Werten z.B. von 1 bis 3 pro Faktor. Die genaue Bestimmung könnte man mittels Simulation und KI austüfteln lassen, um stabile
 Anfangsfaktoren zu bekommen. Es würden dann außerdem bestimmte Min/Max-Werte existieren müssen.
@@ -91,7 +93,12 @@ Anfangsfaktoren zu bekommen. Es würden dann außerdem bestimmte Min/Max-Werte e
 WT ist kein zentraler Masterplan, sondern ein Regelwerk, das lokale Autonomie mit globalen Leitplanken kombiniert:
 
 - lokal: Bedarfsermittlung, Priorisierung, Ausgestaltung (polyzentrisch)
-- global: Grenzwerte, Mindeststandards, Audit-Regeln, Transparenzanforderungen ([Charta](/content/superorganism-2-0/charta-variant-a#content))
+- global: Grenzwerte, Mindeststandards, Audit-Regeln,
+  Transparenzanforderungen ([Charta](/content/superorganism-2-0/charta-variant-a#content))
+
+Dabei ist entscheidend, dass das Protokoll das gleiche sein muss, um die Vernetzbarkeit der verschiedenen Knoten (Rahmen) immer weiter
+gewährleisten und als Redundanz in die Berechnungen einbeziehen zu können. Nur so klappt eine komplette Grundversorgung - aller Menschen -
+ohne Überproduktion und Verschwendung bei gleichzeitigem Erhalt der aktuellen Standards.
 
 ## Gamification als Sicherheits- und Motivationslayer (Skill-Tree + Bug-Bounty-Logik)
 
@@ -165,3 +172,9 @@ Ein Pilot sollte klein starten, aber echte Anreiz- und Sicherheitsfragen testen:
 Der entscheidende Anspruch dieser Vorlage ist nicht „wir haben die perfekte Zukunft“, sondern: Wenn Information die neue Umweltbedingung
 ist, braucht Gesellschaft eine neue Evolutionsstufe der Koordination. WT kann als Vorschlag verstanden werden, wie aus Signalen ein
 demokratisch legitimierter Regelkreis wird – inklusive Sicherheitslayer, der Fehler belohnt zu melden und zu beheben, statt sie auszunutzen.
+Wer hätte Lust so ein Modell durchzuspielen und beizutragen, was wer auch immer wie wenig beitragen kann? Ziel ist kontinuierliche
+Verbesserung auch durch Testen möglicher Glitches oder Hacks, wie man bei PC-Spielen.
+
+Gegenwärtig wird man durch Erbschaft Millionär*in und nicht durch unsere hochgelobte Leistungsgesellschaft. Das Anreizsystem, der
+Allgemeinheit möglichst wenig zurückzugeben und möglichst hohe Profite für sich zu behalten, scheint ein archaisches Relikt aus vergangenen
+Zeiten, als man noch echte Goldmünzen getauscht hatte. Wird langsam Zeit für ein Upgrade für alle, oder?
