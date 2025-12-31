@@ -11,7 +11,7 @@ ogImageWidth: '1200'
 ogImageHeight: '800'
 description: 'WT-System am Beispiel von Berufen, die typischerweise eine längere Ausbildung, ein Studium bzw. formale Abschlüsse erfordern.'
 keywords: 'superorganismus, weighted time token, wt-zonen, stadt x, pflege, burnout, extrem-zone, zeitsouveränität, arbeitszeit, charta, simulationsmodell, lessons learned'
-version: 1
+version: 2
 createdAt: '2025-12-06T12:27:39.563Z'
 author: 'Me & GPT'
 ---
@@ -256,7 +256,7 @@ Im [proto-Superorganismus](/content/superorganism-2-0#content) ist das relevant,
 
 ## Folgerungen für Zonenwahl und WT-Skalen
 
-### 1. Priorität und WT-Faktoren
+### Priorität und WT-Faktoren
 
 - Alle genannten Berufe sollten in **Basis- bzw. Systemzonen** mit hoher Priorität liegen (`priority_i = 1`).
 - Innerhalb dieser Priorität kannst du feiner differenzieren:
@@ -267,21 +267,21 @@ WT-Faktoren könnten z.B. so gestaltet werden:
 
 - `WT_rate_i = g_i * q_i`, ergänzt um Aufschläge für hohe `t` und geringe `s` (kaum ersetzbar, sehr zeitkritisch).
 
-### 2. Langfristige vs. kurzfristige Wirkung
+### Langfristige vs. kurzfristige Wirkung
 
 - Bildungs- und Frühbetreuungszonen sollten ein **besonderes Gewicht** erhalten, obwohl ihre Probleme zeitverzögert sichtbar werden (`t`
   kleiner).
 - Das Modell sollte ausdrücklich verhindern, dass kurzfristig sichtbare Sektoren (z.B. Strom) alles dominieren, während Bildung „unsichtbar
   verhungert“.
 
-### 3. Nutzung von `t` und `s` als Steuergrößen
+### Nutzung von `t` und `s` als Steuergrößen
 
 - **Zeitkritikalität `t`** kann in der Planung und im Monitoring genutzt werden:
   - Hohe `t` → stärkere Resilienzanforderungen, Redundanzen, Notfallpläne.
 - **Substituierbarkeit `s`** hilft, Engpässe zu erkennen:
   - Hohe `s`-Werte (schwer ersetzbar) → zusätzlicher Anreiz in Ausbildung, bessere Arbeitsbedingungen, gezielte Förderung.
 
-### 4. Vergleich mit nicht-akademischen Basisberufen
+### Vergleich mit nicht-akademischen Basisberufen
 
 - Du kannst im gleichen Koordinatensystem nun:
   - Müllabfuhr, Busverkehr, Kassentätigkeit (vorheriges Beispiel)

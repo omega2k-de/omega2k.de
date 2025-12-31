@@ -11,7 +11,7 @@ ogImageWidth: '1200'
 ogImageHeight: '800'
 description: 'WT-System gewichtet Arbeitszeit nach Gemeinwohl, Qualifikation und Belastung, sichert Grundversorgung und wird demokratisch gesteuert.'
 keywords: 'superorganismus, weighted time token, wt-zonen, stadt x, pflege, burnout, extrem-zone, zeitsouveränität, arbeitszeit, charta, simulationsmodell, lessons learned'
-version: 1
+version: 2
 createdAt: '2025-12-06T12:12:31.231Z'
 author: 'Me & GPT'
 ---
@@ -226,14 +226,14 @@ umkehren zu können.
 
 Aus diesen fünf Beispielen lassen sich bereits einige konkrete Designentscheidungen für deine WT-Zonen und Faktoren ableiten.
 
-### 1. Alle genannten Berufe gehören klar in `priority_i = 1` (Basisversorgung)
+### Alle genannten Berufe gehören klar in `priority_i = 1` (Basisversorgung)
 
 - Fakultativ kannst du innerhalb der Basisversorgung noch differenzieren (z.B. 1a: unmittelbar lebensrelevant, 1b: essentiell für Alltag &
   Teilhabe).
 - Wichtig ist, dass sie **nicht** mit reinem Luxus- oder Prestige-Sektor in Konkurrenz um Aufmerksamkeit und Vergütung stehen, sondern als
   eigenes „Fundament“ der Versorgung modelliert werden.
 
-### 2. Feinere q-Bandbreiten innerhalb der Basisversorgung
+### Feinere q-Bandbreiten innerhalb der Basisversorgung
 
 Es lohnt sich, innerhalb der Basiszonen zwei typische q-Korridore festzulegen, z.B.:
 
@@ -246,7 +246,7 @@ Es lohnt sich, innerhalb der Basiszonen zwei typische q-Korridore festzulegen, z
 Damit kann dein System innerhalb der Basisversorgung gezielt nach Qualifikation/Risiko differenzieren, ohne den Gemeinwohlbeitrag zu
 relativieren.
 
-### 3. Optionaler zusätzlicher Faktor für Belastung/Unsichtbarkeit
+### Optionaler zusätzlicher Faktor für Belastung/Unsichtbarkeit
 
 Ein erkennbares Muster ist, dass Tätigkeiten wie Müllabfuhr, Busfahren und Kassieren:
 
@@ -263,7 +263,7 @@ Dieser könnte sich aus Aspekten wie Schmutzarbeit, Stigmatisierung, monotoner H
 - besondere Rotationsregeln,
 - oder bevorzugten Zugang zu Regenerations- und Bildungszonen auslösen.
 
-### 4. Bestätigung der Zonenstruktur
+### Bestätigung der Zonenstruktur
 
 Die Zuordnung zeigt auch, dass deine Intuition, Basisversorgung in getrennte Zonen für:
 
@@ -281,7 +281,7 @@ Für die praktische Implementierung heißt das:
 - Einzelne Berufe werden dann als Punkte oder Intervalle innerhalb dieser Bereiche verortet.
 - Auf dieser Basis kannst du `WT_rate_i`, Caps, Rotationsregeln und Zeitboden-spezifische Zugänge präziser kalibrieren.
 
-### 5. Anschlussfähigkeit an weitere Berufsfelder
+### Anschlussfähigkeit an weitere Berufsfelder
 
 Die hier erkannten Cluster bieten gleichzeitig Ankerpunkte für die Erweiterung auf andere Tätigkeiten:
 
