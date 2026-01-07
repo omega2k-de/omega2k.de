@@ -305,7 +305,7 @@ importers:
         version: 3.0.6
       '@types/sharedworker':
         specifier: latest
-        version: 0.0.197
+        version: 0.0.201
       '@types/sql.js':
         specifier: ^1.4.9
         version: 1.4.9
@@ -448,8 +448,8 @@ importers:
         specifier: ^1.57.0
         version: 1.57.0
       pnpm:
-        specifier: ^10.25.0
-        version: 10.25.0
+        specifier: ^10.27.0
+        version: 10.27.0
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -4449,8 +4449,8 @@ packages:
   '@types/serve-static@1.15.10':
     resolution: {integrity: sha512-tRs1dB+g8Itk72rlSI2ZrW6vZg0YrLI81iQSTkMmOqnqCaNr/8Ek4VwWcN5vZgCYWbg/JJSGBlUaYGAOP73qBw==}
 
-  '@types/sharedworker@0.0.197':
-    resolution: {integrity: sha512-BdLFob7vPTmrcbce3RmMYbxjPrueZQzLEmXNpZe7gp6atuiE3yhMsThca4AaQHMytzM9J+6Rx5hO/oojAYIxtA==}
+  '@types/sharedworker@0.0.201':
+    resolution: {integrity: sha512-jb0l/5wMJjUi9Cs4lHAHGq6WnsmqLmEppUm5qGoNG8JAA1FCU0vb52ffZ1pzvRyQCyYoxSWm0pvF3EqPsY+NaQ==}
 
   '@types/sockjs@0.3.36':
     resolution: {integrity: sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==}
@@ -9350,8 +9350,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  pnpm@10.25.0:
-    resolution: {integrity: sha512-XoJjkCevN8+DIGG8xtY5whljRIjg8rrr54UCink957Ul/80/f/V09emGBlTgmP6FK6isXdXO/hdn0joCCpL1AQ==}
+  pnpm@10.27.0:
+    resolution: {integrity: sha512-ctaZ2haxF5wUup5k3HHJpAmIy9xlwmTLDkidt96RfyDc9NZNhyNiXylpulLUt+KhFwaC2awqXcrqq3MrfhbwSg==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -11555,10 +11555,12 @@ packages:
   whatwg-encoding@2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
     engines: {node: '>=12'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -16969,7 +16971,7 @@ snapshots:
       '@types/node': 24.10.4
       '@types/send': 0.17.6
 
-  '@types/sharedworker@0.0.197': {}
+  '@types/sharedworker@0.0.201': {}
 
   '@types/sockjs@0.3.36':
     dependencies:
@@ -22998,7 +23000,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  pnpm@10.25.0: {}
+  pnpm@10.27.0: {}
 
   portfinder@1.0.38:
     dependencies:
