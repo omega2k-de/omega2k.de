@@ -1,7 +1,8 @@
 #!/bin/bash
 
-. ./docker/config/app-version
 . ./docker/config/node-image
+
+NODE_IMAGE_TAG="${NODE_IMAGE_TAG:-latest}"
 
 UID="$(id -u)"
 GID="$(id -g)"
@@ -19,9 +20,4 @@ if [ -z "${NODE_IMAGE}" ]; then
   exit 2
 fi
 
-if [ -z "${APP_VERSION}" ]; then
-  echo "❌  APP_VERSION not defined"
-  exit 1
-fi
-
-docker run --rm --user ${UID}:${GID} -it --volume="${PWD}:/builds/developers/omega2k.de" --workdir="/builds/developers/omega2k.de" "${NODE_IMAGE}:${APP_VERSION}" pnpm e2e
+docker run --rm --user ${UID}:${GID} -it --volume="${PWD}:/builds/developers/omega2k.de" --workdir="/builds/developers/omega2k.de" "${NODE_IMAGE}:${NODE_IMAGE_TAG}" pnpm e2e

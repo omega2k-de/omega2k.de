@@ -1,7 +1,8 @@
 #!/bin/bash
 
-. ./docker/config/app-version
 . ./docker/config/node-image
+
+NODE_IMAGE_TAG="${NODE_IMAGE_TAG:-latest}"
 
 PWD="$(pwd)"
 
@@ -17,12 +18,8 @@ if [ -z "${NODE_IMAGE}" ]; then
   exit 2
 fi
 
-if [ -z "${APP_VERSION}" ]; then
-  echo "❌  APP_VERSION not defined"
-  exit 1
-fi
-
 docker pull ${NODE_IMAGE}:latest >/dev/null 2>&1 || echo ${NODE_IMAGE}:latest missing
-docker build --file ./docker/Dockerfile.node --cache-from ${NODE_IMAGE}:latest --tag ${NODE_IMAGE}:${APP_VERSION} .
-docker image tag ${NODE_IMAGE}:${APP_VERSION} ${NODE_IMAGE}:latest
-docker image push --quiet --all-tags ${NODE_IMAGE}
+docker build --file ./docker/Dockerfile.node --cache-from ${NODE_IMAGE}:latest --tag ${NODE_IMAGE}:${NODE_IMAGE_TAG} .
+docker image tag ${NODE_IMAGE}:${NODE_IMAGE_TAG} ${NODE_IMAGE}:latest
+docker image push --quiet ${NODE_IMAGE}:${NODE_IMAGE_TAG}
+docker image push --quiet ${NODE_IMAGE}:latest

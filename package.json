@@ -1,10 +1,9 @@
 {
   "name": "@omega2k.de/source",
-  "version": "0.42.86",
   "license": "MIT",
   "scripts": {
     "prepare": "husky && npm install pnpm --global",
-    "commitmsg": "commitlint -x @commitlint/config-conventional -E GIT_PARAMS",
+    "commitmsg": "commitlint --edit",
     "start": "NODE_EXTRA_CA_CERTS=\"$PWD/ssl/rootCA.pem\" pnpx nx run www:serve",
     "lint": "pnpm ci:lint -- --fix",
     "test": "pnpx nx run-many --target=test --outputStyle=stream --parallel=1 -- --coverage.enabled --coverage.all",
@@ -15,6 +14,7 @@
     "git:cleanup": "./scripts/git-cleanup.sh",
     "update:screenshots:light": "tsx ./tools/pwa-screenshots.ts https://www.omega2k.de apps/www/public/screenshots/light light",
     "update:screenshots:dark": "tsx ./tools/pwa-screenshots.ts https://www.omega2k.de apps/www/public/screenshots/dark dark",
+    "ci:commitlint": "sh ./scripts/ci-commitlint.sh",
     "ci:lint": "nx run-many --target=lint --outputStyle=stream --configuration=production",
     "ci:eslint": "eslint --config eslint.config.mjs --format gitlab --output-file gl-codequality.json",
     "ci:test": "LOGGER=OFF pnpx nx run-many --target=test --outputStyle=stream --configuration=production --coverage --collectCoverage --parallel=1 -- --coverage.enabled --coverage.all",
@@ -24,7 +24,8 @@
     "ci:build:db": "tsx ./tools/build-content-db.ts",
     "ci:copy:db": "./scripts/copy-content-database.sh",
     "ci:htmlhint": "htmlhint apps/ libs/ dist/",
-    "ci:pipeline": "pnpm ci:lint && pnpm ci:eslint && pnpm ci:test && pnpm ci:websocket-e2e && pnpm ci:www-e2e && pnpm ci:build && pnpm ci:copy:db && pnpm ci:htmlhint"
+    "ci:pipeline": "pnpm ci:lint && pnpm ci:eslint && pnpm ci:test && pnpm ci:websocket-e2e && pnpm ci:www-e2e && pnpm ci:build && pnpm ci:copy:db && pnpm ci:htmlhint",
+    "release": "node ./scripts/release.mjs"
   },
   "private": true,
   "dependencies": {
@@ -118,6 +119,9 @@
     "@playwright/test": "^1.58.2",
     "@pnpm/modules-yaml": "^1002.0.1",
     "@schematics/angular": "21.2.4",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/gitlab": "^13.3.1",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.21",
     "@swc/helpers": "0.5.20",
@@ -188,6 +192,7 @@
     "prettier-plugin-css-order": "^2.2.0",
     "react-refresh": "^0.18.0",
     "sharp": "^0.34.5",
+    "semantic-release": "^25.0.1",
     "source-map-explorer": "^2.5.3",
     "stylelint": "^17.6.0",
     "stylelint-config-clean-order": "^8.0.1",

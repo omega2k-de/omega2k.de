@@ -11,11 +11,14 @@ volumes:
 services:
   webservice-ssr:
     hostname: '${COMPOSE_DOMAIN_SSR:-www.omega2k.de.o2k}'
-    container_name: 'webservice-www-${COMPOSE_IMAGE_TAG:-latest}-${APP_VERSION:-0.0.0}'
+    container_name: 'webservice-www-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
       context: ../../..
       dockerfile: ./docker/Dockerfile.ssr
+      args:
+        RELEASE_VERSION: '${RELEASE_VERSION:-0.0.0-dev}'
+        VCS_REF: '${CI_COMMIT_SHA:-local}'
     image: '${REGISTRY:-registry.omega2k.de}/www/ssr:${COMPOSE_IMAGE_TAG:-latest}'
     volumes:
       - browser:/app/browser
@@ -28,11 +31,14 @@ services:
 
   webservice-api:
     hostname: '${COMPOSE_DOMAIN_API:-api.omega2k.de.o2k}'
-    container_name: 'webservice-api-${COMPOSE_IMAGE_TAG:-latest}-${APP_VERSION:-0.0.0}'
+    container_name: 'webservice-api-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
       context: ../../..
       dockerfile: ./docker/Dockerfile.api
+      args:
+        RELEASE_VERSION: '${RELEASE_VERSION:-0.0.0-dev}'
+        VCS_REF: '${CI_COMMIT_SHA:-local}'
     image: '${REGISTRY:-registry.omega2k.de}/www/api:${COMPOSE_IMAGE_TAG:-latest}'
     volumes:
       - likes:/app/likes

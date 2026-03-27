@@ -8,7 +8,7 @@ ROBOTS_TXT=./apps/www/public/robots.txt
 APP_INDEX=./apps/www/src/index.html
 
 DEFAULT_SSL="true"
-DEFAULT_VERSION="0.42.86"
+DEFAULT_VERSION="0.0.0-dev"
 DEFAULT_SSR_PORT="4200"
 DEFAULT_SSR_HOST="www.omega2k.de.o2k"
 DEFAULT_API_PORT="42080"
@@ -31,6 +31,40 @@ HASH="null"
 NONCE="null"
 NONCE_NG=""
 HASH_NG="[HASH]"
+
+resolve_version() {
+  if [ -n "${RELEASE_VERSION:-}" ]; then
+    printf "%s" "${RELEASE_VERSION}"
+    return
+  fi
+
+  if [ -n "${VERSION:-}" ]; then
+    printf "%s" "${VERSION}"
+    return
+  fi
+
+  if [ -n "${CI_COMMIT_TAG:-}" ]; then
+    printf "%s" "${CI_COMMIT_TAG#v}"
+    return
+  fi
+
+  if [ -n "${CI_COMMIT_SHORT_SHA:-}" ]; then
+    printf "%s" "${CI_COMMIT_SHORT_SHA}"
+    return
+  fi
+
+  if git rev-parse --git-dir >/dev/null 2>&1; then
+    LAST_TAG="$(git describe --tags --match 'v[0-9]*' --abbrev=0 2>/dev/null || true)"
+    if [ -n "${LAST_TAG}" ]; then
+      printf "%s" "${LAST_TAG#v}"
+      return
+    fi
+  fi
+
+  printf "%s" "${DEFAULT_VERSION}"
+}
+
+RESOLVED_VERSION="$(resolve_version)"
 
 if [ -n "$CI_COMMIT_SHORT_SHA" ]; then
 #  RND16HEX="$(openssl rand -hex 8)"
@@ -65,7 +99,7 @@ printf "export const APP_CONFIG: ConfigInterface = {
 };
 " \
   "${SSL:-${DEFAULT_SSL}}" \
-  "${APP_VERSION:-${DEFAULT_VERSION}}" \
+  "${RESOLVED_VERSION}" \
   "${COMPOSE_PORT_SSR:-${DEFAULT_SSR_PORT}}" \
   "${COMPOSE_DOMAIN_SSR:-${DEFAULT_SSR_HOST}}" \
   "${COMPOSE_PORT_API:-${DEFAULT_API_PORT}}" \
@@ -82,7 +116,7 @@ printf "export const APP_CONFIG: ConfigInterface = {
   "${COMPOSE_WSS_FPS:-${DEFAULT_WSS_FPS}}" >> "${CONFIG_PARAMS}"
 
 echo "SSL=${SSL:-${DEFAULT_SSL}}" > "${CONFIG_ENV}"
-echo "VERSION=${APP_VERSION:-${DEFAULT_VERSION}}" >> "${CONFIG_ENV}"
+echo "VERSION=${RESOLVED_VERSION}" >> "${CONFIG_ENV}"
 echo "SSR_PORT=${COMPOSE_PORT_SSR:-${DEFAULT_SSR_PORT}}" >> "${CONFIG_ENV}"
 echo "SSR_HOST=${COMPOSE_DOMAIN_SSR:-${DEFAULT_SSR_HOST}}" >> "${CONFIG_ENV}"
 echo "API_PORT=${COMPOSE_PORT_API:-${DEFAULT_API_PORT}}" >> "${CONFIG_ENV}"

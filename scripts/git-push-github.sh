@@ -12,10 +12,8 @@ if [ -z "${GITHUB_TOKEN}" ]; then
   exit 1
 fi
 
-if [ -z "${APP_VERSION}" ]; then
-  echo "❌ APP_VERSION not set"
-  exit 1
-fi
+RELEASE_VERSION="${RELEASE_VERSION:-${CI_COMMIT_TAG#v}}"
+RELEASE_TAG="${RELEASE_TAG:-${CI_COMMIT_TAG:-}}"
 
 GITHUB_REPO="https://x-access-token:${GITHUB_TOKEN}@github.com/omega2k-de/omega2k.de.git"
 
@@ -38,19 +36,21 @@ git add -A
 if git diff --cached --quiet; then
   echo "no changes."
 else
-  if [ -n "${CI_COMMIT_TAG}" ]; then
-    msg="Release ${APP_VERSION} ${CI_COMMIT_TAG} (from ${CI_COMMIT_SHORT_SHA:-${LOCAL_HASH})})"
+  if [ -n "${RELEASE_TAG}" ]; then
+    msg="chore(release): sync ${RELEASE_TAG} (${CI_COMMIT_SHORT_SHA:-${LOCAL_HASH}})"
+  elif [ -n "${RELEASE_VERSION}" ]; then
+    msg="chore(sync): mirror main ${RELEASE_VERSION} (${CI_COMMIT_SHORT_SHA:-${LOCAL_HASH}})"
   else
-    msg="Live deploy ${APP_VERSION} main (${CI_COMMIT_SHORT_SHA:-${LOCAL_HASH}})"
+    msg="chore(sync): mirror main (${CI_COMMIT_SHORT_SHA:-${LOCAL_HASH}})"
   fi
   echo "$msg"
   git commit -m "$msg"
 fi
 
-if [ -n "${CI_COMMIT_TAG}" ]; then
-  git tag -f "${CI_COMMIT_TAG}" HEAD
+if [ -n "${RELEASE_TAG}" ]; then
+  git tag -f "${RELEASE_TAG}" HEAD
   git push origin main
-  git push origin "${CI_COMMIT_TAG}"
+  git push origin "${RELEASE_TAG}"
 else
   git push origin main
 fi
