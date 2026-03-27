@@ -9,9 +9,16 @@ import { MockProvider } from 'ng-mocks';
 describe('DeviceNotifyService', () => {
   let service: DeviceNotifyService;
 
-  const NotificationMock = () => ({ addEventListener: vi.fn() });
-  NotificationMock.permission = 'default';
-  NotificationMock.requestPermission = vi.fn().mockResolvedValue('granted');
+  class NotificationMock {
+    static permission: NotificationPermission = 'default';
+    static requestPermission = vi.fn().mockResolvedValue<'granted'>('granted');
+    addEventListener = vi.fn();
+
+    constructor(
+      public title?: string,
+      public options?: NotificationOptions
+    ) {}
+  }
 
   beforeEach(() => {
     vi.stubGlobal('Notification', NotificationMock);

@@ -8,13 +8,6 @@ describe('InputComponent', () => {
   let component: InputComponent<SelectObject>;
   let fixture: ComponentFixture<InputComponent<SelectObject>>;
 
-  beforeEach(() => {
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => {
-      cb(0);
-      return 0;
-    });
-  });
-
   afterEach(() => {
     vi.restoreAllMocks();
   });

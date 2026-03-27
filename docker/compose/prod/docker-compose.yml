@@ -12,6 +12,7 @@ services:
   webservice-ssr:
     hostname: 'www.omega2k.de'
     container_name: 'de-omega2k-www-${COMPOSE_IMAGE_TAG:-latest}-${APP_VERSION:-0.0.0}'
+    restart: always
     build:
       context: ../../..
       dockerfile: ./docker/Dockerfile.ssr
@@ -23,22 +24,12 @@ services:
     depends_on:
       webservice-api:
         condition: service_started
-    deploy:
-      resources:
-        limits:
-          cpus: '3.00'
-          memory: 512M
-        reservations:
-          cpus: '2.00'
-          memory: 256M
-      restart_policy:
-        condition: on-failure
-        max_attempts: 30
     networks: [o2k]
 
   webservice-api:
     hostname: 'api.omega2k.de'
     container_name: 'de-omega2k-api-${COMPOSE_IMAGE_TAG:-latest}-${APP_VERSION:-0.0.0}'
+    restart: always
     build:
       context: ../../..
       dockerfile: ./docker/Dockerfile.api
@@ -49,15 +40,4 @@ services:
       - '42001:80'
     environment:
       LIKES_DB_PATH: /app/likes/likes.db
-    deploy:
-      resources:
-        limits:
-          cpus: '2.00'
-          memory: 512M
-        reservations:
-          cpus: '1.00'
-          memory: 256M
-      restart_policy:
-        condition: on-failure
-        max_attempts: 30
     networks: [o2k]

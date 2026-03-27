@@ -25,10 +25,11 @@ describe('VibrateDirective', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
-    fixture.detectChanges();
   });
 
   it('pointerup should trigger vibrate [13, 37]', () => {
+    fixture.detectChanges();
+
     const vibrateSpy = (window.navigator.vibrate = vi.fn());
     const debugElement: DebugElement = fixture.debugElement;
     const button = debugElement.query(By.css('button'));

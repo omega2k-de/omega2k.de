@@ -1,7 +1,1 @@
-#echo "✔ Typescript checking..."
-echo "" > pre-commit.log
-#npx tsc --project tsconfig.tsc.json
-npx eslint . --fix --quiet
 npx lint-staged
-find ./apps ./libs -type f -name "package.json" -exec git add {} \; >> pre-commit.log
-git update-index --again >> pre-commit.log

@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import { nxE2EPreset } from '@nx/playwright/preset';
+import { execSync } from 'child_process';
+import fs from 'fs';
 import path from 'path';
 import { workspaceRoot } from '@nx/devkit';
 
@@ -14,6 +16,32 @@ const baseURL = process.env['BASE_URL'] || 'https://localhost:4203';
 dotenv.config({ quiet: true });
 
 const reporterBasePath = path.join(__dirname, `../../coverage/apps/www`);
+const hasEdgeChannel = fs.existsSync('/opt/microsoft/msedge/msedge');
+const hasChromeChannel = fs.existsSync('/opt/google/chrome/chrome');
+const ldconfigPath = ['/usr/sbin/ldconfig', '/sbin/ldconfig'].find(candidate =>
+  fs.existsSync(candidate)
+);
+const linuxLibraryCache = (() => {
+  if (process.platform !== 'linux' || !ldconfigPath) {
+    return '';
+  }
+
+  try {
+    return execSync(`${ldconfigPath} -p`, { encoding: 'utf8' });
+  } catch {
+    return '';
+  }
+})();
+const hasWebkitRuntime =
+  process.platform !== 'linux' ||
+  [
+    'libgtk-4.so.1',
+    'libgraphene-1.0.so.0',
+    'libgstapp-1.0.so.0',
+    'libgstvideo-1.0.so.0',
+    'libharfbuzz-icu.so.0',
+    'libwoff2dec.so.1.0.2',
+  ].every(library => linuxLibraryCache.includes(library));
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -69,37 +97,53 @@ export default defineConfig({
         ...devices['Desktop Firefox'],
       },
     },
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+    ...(hasWebkitRuntime
+      ? [
+          {
+            name: 'webkit',
+            use: {
+              ...devices['Desktop Safari'],
+            },
+          },
+        ]
+      : []),
     {
       name: 'Mobile Chrome',
       use: {
         ...devices['Pixel 5'],
       },
     },
-    {
-      name: 'Mobile Safari',
-      use: {
-        ...devices['iPhone 12'],
-      },
-    },
-    {
-      name: 'Microsoft Edge',
-      use: {
-        ...devices['Desktop Edge'],
-        channel: 'msedge',
-      },
-    },
-    {
-      name: 'Google Chrome',
-      use: {
-        ...devices['Desktop Chrome'],
-        channel: 'chrome',
-      },
-    },
+    ...(hasWebkitRuntime
+      ? [
+          {
+            name: 'Mobile Safari',
+            use: {
+              ...devices['iPhone 12'],
+            },
+          },
+        ]
+      : []),
+    ...(hasEdgeChannel
+      ? [
+          {
+            name: 'Microsoft Edge',
+            use: {
+              ...devices['Desktop Edge'],
+              channel: 'msedge',
+            },
+          },
+        ]
+      : []),
+    ...(hasChromeChannel
+      ? [
+          {
+            name: 'Google Chrome',
+            use: {
+              ...devices['Desktop Chrome'],
+              channel: 'chrome',
+            },
+          },
+        ]
+      : []),
   ],
 });

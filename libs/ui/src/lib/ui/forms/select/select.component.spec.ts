@@ -32,6 +32,10 @@ interface TestData<T extends TestSelectObject> {
   attributes: { [key: string]: string };
 }
 
+const waitForAnimationFrame = async () => {
+  await new Promise<void>(resolve => window.requestAnimationFrame(() => resolve()));
+};
+
 describe('SelectComponent', () => {
   let component: SelectComponent<TestSelectObject>;
   let fixture: ComponentFixture<SelectComponent<TestSelectObject>>;
@@ -40,16 +44,10 @@ describe('SelectComponent', () => {
     mockDate.set(1752952580109);
   });
 
-  beforeEach(() => {
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => {
-      cb(0);
-      return 0;
-    });
-  });
-
-  afterEach(() => {
+  afterEach(async () => {
+    await waitForAnimationFrame();
     mockDate.reset();
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('select should fill form', () => {
@@ -363,7 +361,7 @@ describe('SelectComponent', () => {
       expect(currentSpy).toHaveBeenCalledWith(null);
     });
 
-    it('#onKeyDown browser autofill if possible', () => {
+    it('#onKeyDown browser autofill if possible', async () => {
       const selectSpy = vi.spyOn(component['selectionS'], 'select');
       const input = fixture.debugElement.query(By.css('input'));
       const event = {
@@ -375,6 +373,7 @@ describe('SelectComponent', () => {
       input.nativeElement.value = 'Option B';
 
       component.onKeyDown(event);
+      await waitForAnimationFrame();
 
       expect(input.nativeElement.value).toStrictEqual('Option B');
       expect(selectSpy).toHaveBeenCalledWith({
@@ -446,7 +445,7 @@ describe('SelectComponent', () => {
       expect(currentSpy).toHaveBeenNthCalledWith(6, uiOptions[4]);
     });
 
-    it('#onKeyDown browser autofill if not possible', () => {
+    it('#onKeyDown browser autofill if not possible', async () => {
       const selectSpy = vi.spyOn(component['selectionS'], 'select');
       const input = fixture.debugElement.query(By.css('input'));
       const event = {
@@ -458,6 +457,7 @@ describe('SelectComponent', () => {
       input.nativeElement.value = 'Option Z';
 
       component.onKeyDown(event);
+      await waitForAnimationFrame();
 
       expect(input.nativeElement.value).toStrictEqual('Option Z');
       expect(selectSpy).toHaveBeenCalledWith({
@@ -674,7 +674,7 @@ describe('SelectComponent', () => {
       expect(patchValueSpy).toHaveBeenCalledWith('');
     });
 
-    it('#onBlur should select single option', () => {
+    it('#onBlur should select single option', async () => {
       component['itemsS'].setAllItems([
         {
           label: 'Option 1',
@@ -686,6 +686,7 @@ describe('SelectComponent', () => {
       const event = { relatedTarget } as unknown as FocusEvent;
 
       component.onBlur(event);
+      await waitForAnimationFrame();
 
       expect(selectSpy).toHaveBeenCalledTimes(1);
       expect(selectSpy).toHaveBeenCalledWith({
@@ -737,7 +738,7 @@ describe('SelectComponent', () => {
 
     it.each(handleCursorElements)(
       '#handleEnter should handle cursor single select $0',
-      focusElement => {
+      async focusElement => {
         const patchValueSpy = vi.spyOn(component.inputRef, 'patchValue');
         const toggleSpy = vi.spyOn(component['selectionS'], 'toggle');
         vi.spyOn(component['focusS'], 'focusElement').mockReturnValue(focusElement);
@@ -747,6 +748,7 @@ describe('SelectComponent', () => {
 
         component['handleEnter']({ preventDefault: vi.fn() } as unknown as KeyboardEvent);
         component['handleEnter']({ preventDefault: vi.fn() } as unknown as KeyboardEvent);
+        await waitForAnimationFrame();
 
         expect(patchValueSpy).toHaveBeenCalledTimes(1);
         expect(toggleSpy).toHaveBeenCalledTimes(1);
@@ -757,12 +759,24 @@ describe('SelectComponent', () => {
 
     it.each(handleCursorElements)(
       '#handleEnter should handle cursor multiselect $0',
-      focusElement => {
+      async focusElement => {
         const onTouched = vi.fn();
         component.registerOnTouched(onTouched);
         const toggleSpy = vi.spyOn(component['selectionS'], 'toggle');
         vi.spyOn(component['focusS'], 'focusElement').mockReturnValue(focusElement);
-        vi.spyOn(component['configS'], 'isMultiple').mockReturnValue(true);
+        fixture.componentRef.setInput('options', {
+          mode: 'input',
+          label: 'Some Label',
+          autocomplete: 'on',
+          multiselect: {
+            separator: ', ',
+          },
+          factory: (label: string) => ({
+            label,
+            value: 42,
+          }),
+        });
+        fixture.detectChanges();
 
         const item = component['itemsS'].getFromAllByIndex(2);
         component['itemsS'].current = item;
@@ -770,6 +784,7 @@ describe('SelectComponent', () => {
         component['handleEnter']({ preventDefault: vi.fn() } as unknown as KeyboardEvent);
         component['handleEnter']({ preventDefault: vi.fn() } as unknown as KeyboardEvent);
         component['handleEnter']({ preventDefault: vi.fn() } as unknown as KeyboardEvent);
+        await waitForAnimationFrame();
 
         expect(onTouched).toHaveBeenCalledTimes(3);
         expect(toggleSpy).toHaveBeenCalledTimes(3);

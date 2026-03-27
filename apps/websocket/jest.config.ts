@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'websocket',
   preset: '../../jest.preset.cjs',
   testEnvironment: 'node',

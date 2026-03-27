@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LikesService, LikeState } from '@o2k/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconDirective, VibrateDirective } from '../../directives';
@@ -7,7 +7,7 @@ import { IconDirective, VibrateDirective } from '../../directives';
 @UntilDestroy()
 @Component({
   selector: 'ui-like-button',
-  imports: [CommonModule, IconDirective, VibrateDirective],
+  imports: [IconDirective, VibrateDirective],
   templateUrl: './like-button.component.html',
   styleUrls: ['./like-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

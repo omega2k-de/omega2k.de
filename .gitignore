@@ -62,11 +62,13 @@ testem.log
 Thumbs.db
 
 .nx/cache
+.nx/coverage
 .nx/workspace-data
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 
 .angular
+.pnpm-store
 
 test-results
 gl-codequality.json
@@ -80,3 +82,6 @@ gource.mp4
 ngsw.json
 ngsw-worker.js
 likes.db
+
+.claude/worktrees
+.claude/settings.local.json

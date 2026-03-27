@@ -14,13 +14,18 @@ import { RootMarginModel } from '../models';
 import { IoService } from './io.service';
 import { VoService } from './vo.service';
 
+const intersectionObserverFactory = vi.fn(
+  class MockIntersectionObserver {
+    disconnect = vi.fn();
+    observe = vi.fn();
+    unobserve = vi.fn();
+  }
+);
+
 describe('IoService', () => {
   let service: IoService;
-  (window as unknown as { IntersectionObserver: unknown })['IntersectionObserver'] = vi.fn(() => ({
-    disconnect: vi.fn(),
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-  }));
+  (window as unknown as { IntersectionObserver: unknown })['IntersectionObserver'] =
+    intersectionObserverFactory;
 
   describe('IoService:server', () => {
     afterEach(() => {

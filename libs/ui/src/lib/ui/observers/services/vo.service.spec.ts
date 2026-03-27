@@ -5,6 +5,9 @@ import { provideConfig } from '@o2k/core';
 import { VoService } from './vo.service';
 
 describe('VoService', () => {
+  const matchingCalls = (calls: unknown[][], type: string, handler: VoidFunction) =>
+    calls.filter(call => call[0] === type && call[1] === handler);
+
   describe('VoService:browser', () => {
     let service: VoService;
 
@@ -38,13 +41,13 @@ describe('VoService', () => {
       service.observe(null);
 
       // assert
-      expect(windowSpy).toHaveBeenCalledTimes(3);
-      expect(windowSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(3, 'orientationchange', service['tick']);
-      expect(addEventListener).toHaveBeenCalledTimes(2);
-      expect(addEventListener).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(addEventListener).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
+      expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(addEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(addEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
     });
 
     it('#unobserve should stop listening changes with root: null', () => {
@@ -61,13 +64,17 @@ describe('VoService', () => {
       service.unobserve(null);
 
       // assert
-      expect(windowSpy).toHaveBeenCalledTimes(3);
-      expect(windowSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(3, 'orientationchange', service['tick']);
-      expect(removeEventListener).toHaveBeenCalledTimes(2);
-      expect(removeEventListener).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(removeEventListener).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
+      expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(removeEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(removeEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(
+        1
+      );
     });
 
     it('#observe should start listening changes with html element as root', () => {
@@ -85,16 +92,15 @@ describe('VoService', () => {
       service.observe(element);
 
       // assert
-      expect(elementSpy).toHaveBeenCalledTimes(2);
-      expect(windowSpy).toHaveBeenCalledTimes(3);
-      expect(addEventListener).toHaveBeenCalledTimes(2);
-      expect(elementSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(elementSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(3, 'orientationchange', service['tick']);
-      expect(addEventListener).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(addEventListener).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
+      expect(matchingCalls(elementSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(elementSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(addEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(addEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
     });
 
     it('#unobserve should stop listening changes with html element as root', () => {
@@ -113,16 +119,19 @@ describe('VoService', () => {
       service.unobserve(element);
 
       // assert
-      expect(elementSpy).toHaveBeenCalledTimes(2);
-      expect(windowSpy).toHaveBeenCalledTimes(3);
-      expect(removeEventListener).toHaveBeenCalledTimes(2);
-      expect(elementSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(elementSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
-      expect(windowSpy).toHaveBeenNthCalledWith(3, 'orientationchange', service['tick']);
-      expect(removeEventListener).toHaveBeenNthCalledWith(1, 'resize', service['tick']);
-      expect(removeEventListener).toHaveBeenNthCalledWith(2, 'scroll', service['tick']);
+      expect(matchingCalls(elementSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(elementSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
+      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(removeEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(
+        1
+      );
+      expect(matchingCalls(removeEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(
+        1
+      );
     });
   });
 

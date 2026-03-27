@@ -27,6 +27,9 @@ export class VpoObserveDirective implements AfterViewInit, OnDestroy {
   private ioEntry = signal<IntersectionObserverEntry | null>(null);
   private visible = signal<boolean>(true);
   private handle: ObserverHandleInterface | null = null;
+  private initFrameId: null | number = null;
+  private rootVarFrameId: null | number = null;
+  private destroyed = false;
   private window = inject(WINDOW);
   private injector = inject(Injector);
   private renderer2 = inject(Renderer2);
@@ -42,12 +45,24 @@ export class VpoObserveDirective implements AfterViewInit, OnDestroy {
   readonly vpoVisibleChange = output<boolean>();
 
   ngAfterViewInit() {
-    this.window?.requestAnimationFrame(() =>
-      runInInjectionContext(this.injector, () => this.injectEffects())
-    );
+    this.initFrameId = this.window?.requestAnimationFrame(() => {
+      this.initFrameId = null;
+      if (!this.destroyed) {
+        runInInjectionContext(this.injector, () => this.injectEffects());
+      }
+    }) ?? null;
   }
 
   ngOnDestroy(): void {
+    this.destroyed = true;
+    if (this.initFrameId !== null) {
+      this.window?.cancelAnimationFrame(this.initFrameId);
+      this.initFrameId = null;
+    }
+    if (this.rootVarFrameId !== null) {
+      this.window?.cancelAnimationFrame(this.rootVarFrameId);
+      this.rootVarFrameId = null;
+    }
     if (this.handle) {
       this.handle.unobserve();
       this.handle = null;
@@ -91,9 +106,16 @@ export class VpoObserveDirective implements AfterViewInit, OnDestroy {
         const intersectRatioRootVar = this.config()?.intersectRatioRootVar;
         const entry = this.ioEntry();
         if (entry && typeof intersectRatioRootVar === 'string' && intersectRatioRootVar.length) {
-          this.window?.requestAnimationFrame(() =>
-            this.updateRootVar(intersectRatioRootVar, entry)
-          );
+          if (this.rootVarFrameId !== null) {
+            this.window?.cancelAnimationFrame(this.rootVarFrameId);
+          }
+          this.rootVarFrameId =
+            this.window?.requestAnimationFrame(() => {
+              this.rootVarFrameId = null;
+              if (!this.destroyed) {
+                this.updateRootVar(intersectRatioRootVar, entry);
+              }
+            }) ?? null;
         }
       },
       {

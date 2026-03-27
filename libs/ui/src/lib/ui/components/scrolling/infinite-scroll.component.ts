@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -14,7 +13,7 @@ const ActiveZone = 150; // pixels
 
 @Component({
   selector: 'ui-infinite-scroll',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './infinite-scroll.component.html',
   styleUrl: './infinite-scroll.component.scss',
 })

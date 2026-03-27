@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -29,7 +28,7 @@ interface PointerDataInterface {
 @UntilDestroy()
 @Component({
   selector: 'ui-ws-pointers',
-  imports: [CommonModule, IconDirective],
+  imports: [IconDirective],
   templateUrl: './ws-pointers.component.html',
   styleUrl: './ws-pointers.component.scss',
 })

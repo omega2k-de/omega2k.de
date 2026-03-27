@@ -4,6 +4,7 @@ import { PerfService } from './perf.service';
 
 describe('PerfService', () => {
   let service: PerfService;
+  const stringify = (fn: CallableFunction) => fn.toString();
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
@@ -22,9 +23,7 @@ describe('PerfService', () => {
     service.start(fn);
     const result = service.performance(fn);
 
-    expect(result?.method).toStrictEqual(`() => {
-      return;
-    }`);
+    expect(result?.method).toStrictEqual(stringify(fn));
     expect(result?.sequence).toHaveLength(0);
     expect(result?.start).toBeGreaterThan(0);
   });
@@ -37,9 +36,7 @@ describe('PerfService', () => {
     service.stop(fn);
     const result = service.performance(fn);
 
-    expect(result?.method).toStrictEqual(`() => {
-      return;
-    }`);
+    expect(result?.method).toStrictEqual(stringify(fn));
     expect(result?.sequence).toHaveLength(1);
     expect(result?.avg).toBeGreaterThan(0);
     expect(result?.start).toBeGreaterThan(0);
@@ -61,12 +58,8 @@ describe('PerfService', () => {
 
     expect(result).toBeInstanceOf(Array);
     expect(result).toHaveLength(2);
-    expect(result?.[0]?.method).toStrictEqual(`() => {
-      return;
-    }`);
-    expect(result?.[1]?.method).toStrictEqual(`() => {
-      return;
-    }`);
+    expect(result?.[0]?.method).toStrictEqual(stringify(fn1));
+    expect(result?.[1]?.method).toStrictEqual(stringify(fn2));
   });
 
   it('#summary should return empty', () => {
@@ -79,9 +72,7 @@ describe('PerfService', () => {
     expect(result).toBeInstanceOf(Array);
     expect(result).toHaveLength(1);
     expect(result?.[0]?.avg).toStrictEqual(0);
-    expect(result?.[0]?.method).toStrictEqual(`() => {
-      return;
-    }`);
+    expect(result?.[0]?.method).toStrictEqual(stringify(fn1));
   });
 
   it('#stop should truncate sequence', () => {
@@ -97,8 +88,6 @@ describe('PerfService', () => {
 
     expect(result?.[0]?.avg).toBeGreaterThan(0);
     expect(result?.[0]?.sequence).toHaveLength(1000);
-    expect(result?.[0]?.method).toStrictEqual(`() => {
-      return;
-    }`);
+    expect(result?.[0]?.method).toStrictEqual(stringify(fn1));
   });
 });

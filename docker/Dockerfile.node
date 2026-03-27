@@ -1,6 +1,6 @@
 FROM node:22.18.0
 
-ENV NPM_CONFIG_LOGLEVEL info
+ENV NPM_CONFIG_LOGLEVEL=info
 
 RUN set -ex \
     && apt-get update && apt-get install -y \

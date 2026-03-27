@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { describe } from 'vitest';
 import { AuxiliaryRoutesService } from './auxiliary-routes.service';
@@ -97,13 +97,12 @@ describe('AuxiliaryRoutesService', () => {
 
     it.each(data)(
       'router $command should return $expected',
-      fakeAsync(({ command, expected }: { command: []; expected: boolean }) => {
-        router.navigate(command);
+      async ({ command, expected }: { command: []; expected: boolean }) => {
         let active = null;
         service.noAuxiliaryRouteActive$.subscribe(data => (active = data));
-        tick();
+        await router.navigate(command);
         expect(active).toStrictEqual(expected);
-      })
+      }
     );
   });
 
@@ -138,13 +137,12 @@ describe('AuxiliaryRoutesService', () => {
 
     it.each(data)(
       'router $command should return $expected for $key',
-      fakeAsync(({ command, key, expected }: { command: []; key: string; expected: boolean }) => {
-        router.navigate(command);
+      async ({ command, key, expected }: { command: []; key: string; expected: boolean }) => {
         let active = null;
         service.isActive(key).subscribe(data => (active = data));
-        tick();
+        await router.navigate(command);
         expect(active).toStrictEqual(expected);
-      })
+      }
     );
   });
 });

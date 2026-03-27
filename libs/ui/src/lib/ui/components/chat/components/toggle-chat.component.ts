@@ -1,5 +1,5 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { AutoIdDirective, IconDirective, VibrateDirective } from '../../../directives';
 import { ChatWindowComponent } from './chat-window.component';
@@ -10,7 +10,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'ui-toggle-chat',
   imports: [
-    CommonModule,
     IconDirective,
     CdkOverlayOrigin,
     CdkConnectedOverlay,
