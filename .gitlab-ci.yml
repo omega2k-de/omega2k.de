@@ -68,8 +68,6 @@ cache:
   rules:
     - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
 
-# lint stage
-
 lint commit messages:
   extends:
     - .standard-rules
@@ -164,8 +162,6 @@ prune all previews:
     - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
       when: manual
       allow_failure: true
-
-# test stage
 
 ci:test:
   extends:
@@ -272,8 +268,6 @@ ci:websocket-e2e:
       when: always
       allow_failure: false
 
-# build stage
-
 prepare semantic release:
   interruptible: false
   extends:
@@ -305,28 +299,6 @@ prepare semantic release:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
       when: always
       allow_failure: false
-
-#pack project artifacts:
-#  extends:
-#    - .standard-rules
-#  needs:
-#    - run lint all
-#    - ci:www-e2e
-#    - ci:websocket-e2e
-#    - ci:test
-#    - check testing image
-#  stage: build
-#  before_script:
-#    - pnpm install --ignore-scripts
-#  script:
-#    - pnpm pack
-#  artifacts:
-#    paths:
-#      - '*.tgz'
-#  rules:
-#    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
-#      when: always
-#      allow_failure: false
 
 build dist preview:
   extends:
@@ -405,8 +377,6 @@ publish to github:
   script:
     - sh ./scripts/git-push-github.sh
 
-# deploy stage
-
 run html tests:
   extends:
     - .standard-rules
@@ -431,6 +401,9 @@ deploy preview:
   extends:
     - .standard-rules
   image: ${DOCKER_IMAGE}
+  tags:
+    - docker
+    - ser6
   needs:
     - job: build dist preview
       artifacts: true
@@ -461,6 +434,9 @@ deploy live:
     - .standard-rules
   interruptible: false
   image: ${DOCKER_IMAGE}
+  tags:
+    - docker
+    - ser6
   needs:
     - job: build dist live
       artifacts: true
@@ -524,13 +500,14 @@ publish semantic release:
       when: always
       allow_failure: false
 
-# cleanup stage
-
 remove preview:
   interruptible: false
   extends:
     - .standard-rules
   image: ${DOCKER_IMAGE}
+  tags:
+    - docker
+    - ser6
   needs:
     - deploy preview
   stage: cleanup
