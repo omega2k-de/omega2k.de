@@ -21,3 +21,4 @@ export * from './pwa-update.service';
 export * from './request-cache.service';
 export * from './scroll-position.service';
 export * from './scroll-progress.service';
+export * from './websocket-http-bridge.service';

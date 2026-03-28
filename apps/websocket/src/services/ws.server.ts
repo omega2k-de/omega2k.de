@@ -21,6 +21,8 @@ import {
   WsClientInterface,
   type WsClientPointerInterface,
   WsCommands,
+  type WsHttpRequestCommand,
+  type WsHttpResponseMessage,
   WsMessages,
   WsMessageTypes,
 } from '@o2k/core';
@@ -463,8 +465,28 @@ export class WsServer {
       hasPointer: false,
     };
 
-    this.clientMap.set(socket, { seq, created, uuid, socket, flags, user });
+    this.clientMap.set(socket, {
+      seq,
+      created,
+      uuid,
+      socket,
+      flags,
+      user,
+      requestHeaders: this.extractRequestHeaders(_request),
+    });
     this.pushClientsCount();
+  }
+
+  private extractRequestHeaders(request: IncomingMessage): Record<string, string> {
+    const headers: Record<string, string> = {};
+    Object.entries(request.headers).forEach(([key, value]) => {
+      if (typeof value === 'string') {
+        headers[key.toLowerCase()] = value;
+      } else if (Array.isArray(value)) {
+        headers[key.toLowerCase()] = value.join(', ');
+      }
+    });
+    return headers;
   }
 
   private removeClient(socket: WebSocket) {
@@ -561,6 +583,125 @@ export class WsServer {
           client
         );
         break;
+      case 'http-request':
+        void this.handleHttpRequest(client, message);
+        break;
+    }
+  }
+
+  private async handleHttpRequest(client: WsClientInterface, message: WsHttpRequestCommand) {
+    const request = message.request;
+    const requestId = request?.requestId;
+    const target = this.resolveLocalApiUrl(request?.url);
+
+    if (!requestId || !target) {
+      this.reply(
+        <WsHttpResponseMessage>{
+          event: 'http-response',
+          requestId: requestId ?? 'missing',
+          ok: false,
+          status: 400,
+          url: request?.url ?? '',
+          error: 'invalid_request',
+        },
+        client
+      );
+      return;
+    }
+
+    try {
+      const upstreamHeaders = this.resolveUpstreamHeaders(
+        request.headers,
+        client,
+        request.withCredentials
+      );
+      const response = await fetch(target, {
+        method: request.method ?? 'GET',
+        headers: upstreamHeaders,
+        body:
+          request.body && !['GET', 'HEAD'].includes((request.method ?? 'GET').toUpperCase())
+            ? JSON.stringify(request.body)
+            : undefined,
+      });
+
+      const contentType = response.headers.get('content-type') ?? '';
+      const body = contentType.includes('application/json')
+        ? await response.json()
+        : await response.text();
+
+      const responseHeaders: Record<string, string> = {};
+      response.headers.forEach((value, key) => (responseHeaders[key] = value));
+
+      this.reply(
+        <WsHttpResponseMessage>{
+          event: 'http-response',
+          requestId,
+          ok: response.ok,
+          status: response.status,
+          url: request.url,
+          headers: responseHeaders,
+          body,
+        },
+        client
+      );
+    } catch (error) {
+      this.reply(
+        <WsHttpResponseMessage>{
+          event: 'http-response',
+          requestId,
+          ok: false,
+          status: 500,
+          url: request.url,
+          error: error instanceof Error ? error.message : 'unknown_error',
+        },
+        client
+      );
+    }
+  }
+
+  private resolveUpstreamHeaders(
+    requestHeaders: Record<string, string> | undefined,
+    client: WsClientInterface,
+    withCredentials?: boolean
+  ): Record<string, string> {
+    const headers: Record<string, string> = {};
+
+    Object.entries(requestHeaders ?? {}).forEach(([key, value]) => {
+      headers[key.toLowerCase()] = value;
+    });
+
+    if (withCredentials && !headers['cookie']) {
+      const cookie = client.requestHeaders?.['cookie'];
+      if (cookie) {
+        headers['cookie'] = cookie;
+      }
+    }
+
+    if (!headers['authorization']) {
+      const authorization = client.requestHeaders?.['authorization'];
+      if (authorization) {
+        headers['authorization'] = authorization;
+      }
+    }
+
+    return headers;
+  }
+
+  private resolveLocalApiUrl(url?: string): string | null {
+    if (!url) {
+      return null;
+    }
+
+    try {
+      const baseUrl = new URL(APP_CONFIG.api);
+      const target = new URL(url, baseUrl);
+      if (target.origin !== baseUrl.origin) {
+        return null;
+      }
+      const protocol = this.isSSL ? 'https' : 'http';
+      return `${protocol}://${this.options.host}:${this.options.port}${target.pathname}${target.search}`;
+    } catch {
+      return null;
     }
   }
 

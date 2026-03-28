@@ -35,7 +35,8 @@ export type WsMessages =
   | IsPausedMessage
   | PausedMessage
   | ResumeMessage
-  | PointerMessage;
+  | PointerMessage
+  | WsHttpResponseMessage;
 
 export interface WsMessage extends WsHasUuidInterface {
   message?: string;
@@ -154,6 +155,17 @@ export interface ClientsMessage extends WsMessage {
 export interface PointerMessage extends WsMessage {
   event: 'pointer';
   pointers: WsClientPointerInterface[];
+}
+
+export interface WsHttpResponseMessage extends WsMessage {
+  event: 'http-response';
+  requestId: string;
+  ok: boolean;
+  status: number;
+  url: string;
+  headers?: Record<string, string>;
+  body?: unknown;
+  error?: string;
 }
 
 export interface InvalidCommandMessage extends WsMessage {

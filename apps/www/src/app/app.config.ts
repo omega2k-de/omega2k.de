@@ -48,6 +48,7 @@ import {
   PwaUpdateService,
   ScrollPositionService,
   SeoStrategy,
+  WebsocketHttpInterceptorFn,
 } from '@o2k/core';
 import { appRoutes } from './app.routes';
 
@@ -91,7 +92,7 @@ export const appConfig: ApplicationConfig = {
       withJsonpSupport(),
       withFetch(),
       withXsrfConfiguration({ cookieName: 'X-XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' }),
-      withInterceptors([LoadingInterceptorFn, HttpCachingInterceptorFn])
+      withInterceptors([WebsocketHttpInterceptorFn, LoadingInterceptorFn, HttpCachingInterceptorFn])
     ),
     provideErrorHandler(),
     provideServiceWorker('ngsw-worker.js', {

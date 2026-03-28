@@ -13,6 +13,7 @@ export interface WsClientInterface extends WsHasUuidInterface {
   seq: number;
   rtt?: number;
   socket: WebSocket;
+  requestHeaders?: Record<string, string>;
   user: WsAuthorInterface;
   pointer?: WsMouseEvent;
   touch?: WsTouchEvent;

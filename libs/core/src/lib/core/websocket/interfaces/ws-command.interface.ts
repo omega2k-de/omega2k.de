@@ -6,6 +6,7 @@ import { UpdateStatus } from '../../interfaces';
 export type WsCommands =
   | WsOpenCommand
   | WsCloseCommand
+  | WsHttpRequestCommand
   | ChatCommand
   | VersionCommand
   | PingCommand
@@ -33,6 +34,18 @@ export interface WsOpenCommand extends WsCommand {
 
 export interface WsCloseCommand extends WsCommand {
   command: 'close-socket';
+}
+
+export interface WsHttpRequestCommand extends WsCommand {
+  command: 'http-request';
+  request: {
+    requestId: string;
+    method: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+    url: string;
+    headers?: Record<string, string>;
+    body?: unknown;
+    withCredentials?: boolean;
+  };
 }
 
 export interface MetricsCommand extends WsCommand {
