@@ -30,6 +30,9 @@
         "ssr": {
           "entry": "apps/www/src/server.ts"
         },
+        "security": {
+          "allowedHosts": ["omega2k.de", "www.omega2k.de", "*.omega2k.de"]
+        },
         "outputMode": "server",
         "webWorkerTsConfig": "apps/www/tsconfig.worker.json"
       },

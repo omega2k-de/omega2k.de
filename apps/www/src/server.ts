@@ -25,6 +25,19 @@ const routes = collectNavigableLoadComponentPaths(appRoutes);
 const staticRoutes = routes.filter(route => !route.startsWith('/content'));
 const histogram = monitorEventLoopDelay({ resolution: 10 });
 histogram.enable();
+const DEFAULT_ALLOWED_HOSTS = ['omega2k.de', 'www.omega2k.de', '*.omega2k.de'];
+
+function parseAllowedHostsFromEnv(value: string | undefined): string[] {
+  return (value ?? '')
+    .split(',')
+    .map(item => item.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function getAllowedHosts(): string[] {
+  const fromEnv = parseAllowedHostsFromEnv(process.env['NG_ALLOWED_HOSTS']);
+  return Array.from(new Set([...DEFAULT_ALLOWED_HOSTS, ...fromEnv]));
+}
 
 async function loadContentRoutesFromApi(): Promise<string[]> {
   const base = (api || url).replace(/\/+$/g, '').replace(/^https:/g, 'http:');
@@ -61,7 +74,9 @@ const headerMap = new Map<string, string>([
 export function ssrServer(): Express {
   const app = express();
   app.disable('x-powered-by');
-  const angularApp = new AngularNodeAppEngine();
+  const angularApp = new AngularNodeAppEngine({
+    allowedHosts: getAllowedHosts(),
+  });
 
   if (isDevMode()) {
     headerMap.set(

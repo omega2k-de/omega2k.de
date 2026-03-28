@@ -3,7 +3,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { MockProvider } from 'ng-mocks';
 import { ORIGIN, provideConfig } from '../tokens';
 import { SeoService } from './seo.service';
-import { Link } from '@grandgular/link';
+import { LinkService } from './link.service';
 
 describe('SeoService', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('SeoService', () => {
           useValue: 'https://origin:4711',
         },
         MockProvider(Title),
-        MockProvider(Link),
+        MockProvider(LinkService),
         MockProvider(Meta),
       ],
     });

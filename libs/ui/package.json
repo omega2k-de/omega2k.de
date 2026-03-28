@@ -12,7 +12,7 @@
     "object-hash": "^3.0.0",
     "vite": "^8.0.3",
     "@analogjs/vite-plugin-angular": "2.3.1",
-    "@nx/vite": "22.6.2",
+    "@nx/vite": "22.6.3",
     "@o2k/core": "^0.0.1",
     "escape-string-regexp": "^5.0.0",
     "@angular/platform-browser": "21.2.6",

@@ -3,8 +3,8 @@ import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 import { SeoMetaDataInterface } from '../interfaces';
-import { Link } from '@grandgular/link';
 import { ORIGIN } from '../tokens';
+import { LinkService } from './link.service';
 
 @UntilDestroy()
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,7 @@ export class SeoService {
   private readonly defaultCreator = '@xn__2k_dcc';
   private readonly origin = inject(ORIGIN);
   private readonly title = inject(Title);
-  private readonly link = inject(Link);
+  private readonly link = inject(LinkService);
   private readonly meta = inject(Meta);
 
   private metaDataSubject = new BehaviorSubject<SeoMetaDataInterface>({});

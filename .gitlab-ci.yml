@@ -371,6 +371,7 @@ build dist live:
     COMPOSE_CONTAINER_NAME_API: 'de-omega2k-api'
     ENV_FILE: '.env'
   script:
+    - echo "RELEASE_CREATED=${RELEASE_CREATED:-unset} RELEASE_VERSION=${RELEASE_VERSION:-unset}"
     - if [ "${RELEASE_CREATED:-false}" != "true" ]; then echo "No semantic release prepared; skipping live build."; exit 0; fi
     - chmod +x ./scripts/create-config.sh
     - sh ./scripts/create-config.sh
@@ -463,8 +464,6 @@ deploy live:
       artifacts: true
     - job: prepare semantic release
       artifacts: true
-  dependencies:
-    - build dist live
   stage: deploy
   variables:
     COMPOSE_HOSTNAME: 'de-omega2k-www'
@@ -480,6 +479,7 @@ deploy live:
     COMPOSE_PORT_SSR: 42000
     COMPOSE_PORT_API: 42001
   script:
+    - echo "RELEASE_CREATED=${RELEASE_CREATED:-unset} RELEASE_VERSION=${RELEASE_VERSION:-unset}"
     - if [ "${RELEASE_CREATED:-false}" != "true" ]; then echo "No semantic release prepared; skipping live deploy."; exit 0; fi
     - chmod +x ./docker/scripts/deploy-prod.sh
     - sh ./docker/scripts/deploy-prod.sh

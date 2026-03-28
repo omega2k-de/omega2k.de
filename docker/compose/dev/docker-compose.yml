@@ -1,8 +1,7 @@
 networks:
   o2k:
-    name: o2k
+    name: o2k-network
     driver: bridge
-    external: true
 
 volumes:
   likes:

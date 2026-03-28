@@ -7,6 +7,7 @@ export * from './device-notify.service';
 export * from './error-handler.service';
 export * from './health.service';
 export * from './likes.service';
+export * from './link.service';
 export * from './loading.service';
 export * from './local-storage.service';
 export * from './navigation.service';
