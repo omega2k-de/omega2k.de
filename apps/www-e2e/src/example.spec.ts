@@ -16,7 +16,9 @@ test('redirects /impressum to /imprint', async ({ page }) => {
 
   await expect(page).toHaveURL(/\/imprint$/);
   await expect(page.getByRole('heading', { name: 'Impressum' })).toBeVisible();
-  await expect(page.getByRole('link', { name: /E-Mail an root@omega2k\.de schreiben/i })).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: /E-Mail an root@omega2k\.de schreiben/i })
+  ).toBeVisible();
 });
 
 test('renders the privacy page', async ({ page }) => {

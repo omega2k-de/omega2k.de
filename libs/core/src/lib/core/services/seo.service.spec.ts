@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { MockProvider } from 'ng-mocks';
-import { provideConfig } from '../tokens';
+import { ORIGIN, provideConfig } from '../tokens';
 import { SeoService } from './seo.service';
 import { Link } from '@grandgular/link';
-import { ORIGIN } from '../tokens';
 
 describe('SeoService', () => {
   beforeEach(() => {

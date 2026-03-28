@@ -45,12 +45,13 @@ export class VpoObserveDirective implements AfterViewInit, OnDestroy {
   readonly vpoVisibleChange = output<boolean>();
 
   ngAfterViewInit() {
-    this.initFrameId = this.window?.requestAnimationFrame(() => {
-      this.initFrameId = null;
-      if (!this.destroyed) {
-        runInInjectionContext(this.injector, () => this.injectEffects());
-      }
-    }) ?? null;
+    this.initFrameId =
+      this.window?.requestAnimationFrame(() => {
+        this.initFrameId = null;
+        if (!this.destroyed) {
+          runInInjectionContext(this.injector, () => this.injectEffects());
+        }
+      }) ?? null;
   }
 
   ngOnDestroy(): void {

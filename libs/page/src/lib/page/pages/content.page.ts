@@ -1,9 +1,15 @@
 import { Component, effect, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ContentContextService, PageData, PageRecordInterface, WINDOW } from '@o2k/core';
+import {
+  ContentContextService,
+  MarkdownBlock,
+  PageData,
+  PageRecordInterface,
+  renderMarkdownToBlocks,
+  WINDOW,
+} from '@o2k/core';
 import { map } from 'rxjs';
-import { MarkdownBlock, renderMarkdownToBlocks } from '@o2k/core';
 import { IconDirective, LikeButtonComponent, SafeHtmlPipe } from '@o2k/ui';
 import dayjs from 'dayjs';
 

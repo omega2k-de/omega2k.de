@@ -14,7 +14,9 @@ describe('API backend', () => {
     expect(res.data.usage['heapUsed']).toBeGreaterThan(0);
     expect(res.data.usage['external']).toBeGreaterThan(0);
     expect(res.data.usage['arrayBuffers']).toBeGreaterThan(0);
-    expect(res.data.version).toMatch(/^(?:[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?|[0-9a-f]{8})$/i);
+    expect(res.data.version).toMatch(
+      /^(?:[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?|[0-9a-f]{8})$/i
+    );
     if (null !== res.data.hash) {
       expect(res.data.hash).toMatch(/^([0-9a-f]{8})$/i);
     }

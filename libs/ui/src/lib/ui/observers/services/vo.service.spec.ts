@@ -43,9 +43,9 @@ describe('VoService', () => {
       // assert
       expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
-      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
-        1
-      );
+      expect(
+        matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])
+      ).toHaveLength(1);
       expect(matchingCalls(addEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(addEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
     });
@@ -66,9 +66,9 @@ describe('VoService', () => {
       // assert
       expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
-      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
-        1
-      );
+      expect(
+        matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])
+      ).toHaveLength(1);
       expect(matchingCalls(removeEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(
         1
       );
@@ -96,9 +96,9 @@ describe('VoService', () => {
       expect(matchingCalls(elementSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
-      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
-        1
-      );
+      expect(
+        matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])
+      ).toHaveLength(1);
       expect(matchingCalls(addEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(addEventListener.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
     });
@@ -123,9 +123,9 @@ describe('VoService', () => {
       expect(matchingCalls(elementSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'resize', service['tick'])).toHaveLength(1);
       expect(matchingCalls(windowSpy.mock.calls, 'scroll', service['tick'])).toHaveLength(1);
-      expect(matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])).toHaveLength(
-        1
-      );
+      expect(
+        matchingCalls(windowSpy.mock.calls, 'orientationchange', service['tick'])
+      ).toHaveLength(1);
       expect(matchingCalls(removeEventListener.mock.calls, 'resize', service['tick'])).toHaveLength(
         1
       );

@@ -70,7 +70,7 @@ const writeReleaseEnv = ({ releaseCreated, version = '', tag = '' }) => {
       `RELEASE_VERSION=${resolvedVersion}`,
       `RELEASE_TAG=${resolvedTag}`,
       `COMPOSE_IMAGE_TAG=${resolvedVersion}`,
-      `VERSION=${resolvedVersion}`
+      `VERSION=${resolvedVersion}`,
     ].join('\n') + '\n'
   );
 };
@@ -80,7 +80,7 @@ prepareGitLabApiAuthentication();
 
 const result = await semanticRelease({
   dryRun: isDryRun,
-  ci: true
+  ci: true,
 });
 
 if (!result) {
