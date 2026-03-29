@@ -401,6 +401,26 @@ describe('WsServer HTTP api', () => {
     }
   });
 
+  it('accepts loopback API origins on the active websocket api port', async () => {
+    const context = await createServer();
+    const wsServer = context.wsServer as unknown as {
+      options: { host: string; port: number };
+      resolveLocalApiUrl: (url?: string) => string | null;
+    };
+    const previousApi = APP_CONFIG.api;
+
+    APP_CONFIG.api = 'https://api.omega2k.de';
+    wsServer.options.port = 42081;
+
+    try {
+      expect(wsServer.resolveLocalApiUrl('https://127.0.0.1:42081/likes/2/toggle')).toBe(
+        'http://127.0.0.1:42081/likes/2/toggle'
+      );
+    } finally {
+      APP_CONFIG.api = previousApi;
+    }
+  });
+
   it('rejects empty random-card amounts', async () => {
     const context = await createServer();
 

@@ -16,8 +16,9 @@ const options: WsOptions = {
   hash,
 };
 
-if (process.env['API_PORT_OVERRIDE']) {
-  options.port = parseInt(process.env['API_PORT_OVERRIDE']);
+const apiPortOverride = process.env['API_PORT_OVERRIDE'] ?? process.env['API_PORT'];
+if (apiPortOverride) {
+  options.port = parseInt(apiPortOverride);
 }
 
 if (process.env['VAPID_PUBLIC_KEY'] && process.env['VAPID_PRIVATE_KEY']) {

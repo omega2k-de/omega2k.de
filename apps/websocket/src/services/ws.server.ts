@@ -60,6 +60,13 @@ interface WsClientCookie {
   expiresAt?: number;
 }
 
+interface WsBridgeResponse {
+  ok: boolean;
+  status: number;
+  headers?: Record<string, string>;
+  body?: unknown;
+}
+
 export class WsServer {
   private readonly uuid = randomUUID();
   private readonly _pingInterval: NodeJS.Timeout;
@@ -123,32 +130,11 @@ export class WsServer {
   }
 
   private getUserIdFromRequest(req: Request): string | null {
-    const header = req.header('cookie');
-    if (!header) {
-      return null;
-    }
-    const parts = header.split(';');
-    for (const part of parts) {
-      const trimmed = part.trim();
-      if (trimmed.startsWith('o2k_uid=')) {
-        return decodeURIComponent(trimmed.substring('o2k_uid='.length));
-      }
-    }
-    return null;
+    return this.getUserIdFromCookieHeader(req.header('cookie'));
   }
 
   private setUserIdCookie(res: Response, id: string): void {
-    const attrs = [
-      `o2k_uid=${encodeURIComponent(id)}`,
-      'Path=/',
-      'HttpOnly',
-      'SameSite=Lax',
-      'Max-Age=31536000',
-    ];
-    if (this._isSSL) {
-      attrs.push('Secure');
-    }
-    res.setHeader('Set-Cookie', attrs.join('; '));
+    res.setHeader('Set-Cookie', this.buildUserIdSetCookieValue(id));
   }
 
   private addContentApi() {
@@ -644,6 +630,23 @@ export class WsServer {
     }
 
     try {
+      const internalResponse = this.executeInternalApiRequest(client, request, target, method);
+      if (internalResponse) {
+        this.reply(
+          <WsHttpResponseMessage>{
+            event: 'http-response',
+            requestId,
+            ok: internalResponse.ok,
+            status: internalResponse.status,
+            url: request.url,
+            headers: internalResponse.headers,
+            body: internalResponse.body,
+          },
+          client
+        );
+        return;
+      }
+
       const upstreamHeaders = this.resolveUpstreamHeaders(
         request.headers,
         client,
@@ -652,7 +655,7 @@ export class WsServer {
         method,
         request.body
       );
-      const response = await fetch(target, {
+      const response = await this.fetchPreservingMethod(target, {
         method,
         headers: upstreamHeaders,
         body:
@@ -668,7 +671,9 @@ export class WsServer {
 
       const responseHeaders: Record<string, string> = {};
       response.headers.forEach((value, key) => (responseHeaders[key] = value));
-      this.captureSetCookieHeaders(client, response.headers, request.url);
+      if (request.withCredentials) {
+        this.captureSetCookieHeaders(client, response.headers, request.url);
+      }
 
       this.reply(
         <WsHttpResponseMessage>{
@@ -695,6 +700,101 @@ export class WsServer {
         client
       );
     }
+  }
+
+  private executeInternalApiRequest(
+    client: WsClientInterface,
+    request: WsHttpRequestCommand['request'],
+    target: string,
+    method: string
+  ): WsBridgeResponse | null {
+    let targetUrl: URL;
+    try {
+      targetUrl = new URL(target);
+    } catch {
+      return null;
+    }
+
+    const likeStateMatch = targetUrl.pathname.match(/^\/likes\/(\d+)$/);
+    if (method === 'GET' && likeStateMatch) {
+      const articleId = Number.parseInt(likeStateMatch[1] ?? '', 10);
+      if (Number.isNaN(articleId)) {
+        return { ok: false, status: 400, body: { error: 'invalid_article_id' } };
+      }
+
+      const upstreamHeaders = this.resolveUpstreamHeaders(
+        request.headers,
+        client,
+        request.withCredentials,
+        request.url,
+        method,
+        request.body
+      );
+      const userId = this.getUserIdFromCookieHeader(upstreamHeaders['cookie']);
+      return {
+        ok: true,
+        status: 200,
+        body: this.likes.getState(articleId, userId ?? null),
+      };
+    }
+
+    if (method === 'GET' && targetUrl.pathname === '/likes') {
+      const upstreamHeaders = this.resolveUpstreamHeaders(
+        request.headers,
+        client,
+        request.withCredentials,
+        request.url,
+        method,
+        request.body
+      );
+      const userId = this.getUserIdFromCookieHeader(upstreamHeaders['cookie']);
+      return {
+        ok: true,
+        status: 200,
+        body: this.likes.getAllStates(userId ?? null),
+      };
+    }
+
+    const likeToggleMatch = targetUrl.pathname.match(/^\/likes\/(\d+)\/toggle$/);
+    if (method === 'POST' && likeToggleMatch) {
+      const articleId = Number.parseInt(likeToggleMatch[1] ?? '', 10);
+      if (Number.isNaN(articleId)) {
+        return { ok: false, status: 400, body: { error: 'invalid_article_id' } };
+      }
+
+      const upstreamHeaders = this.resolveUpstreamHeaders(
+        request.headers,
+        client,
+        request.withCredentials,
+        request.url,
+        method,
+        request.body
+      );
+      let userId = this.getUserIdFromCookieHeader(upstreamHeaders['cookie']);
+      let responseHeaders: Record<string, string> | undefined;
+
+      if (!userId) {
+        userId = randomUUID();
+        const setCookie = this.buildUserIdSetCookieValue(userId);
+        responseHeaders = { 'set-cookie': setCookie };
+        if (request.withCredentials) {
+          this.captureSetCookieHeaders(
+            client,
+            new Headers({ 'set-cookie': setCookie }),
+            request.url
+          );
+        }
+      }
+
+      return {
+        ok: true,
+        status: 200,
+        headers: responseHeaders,
+        body: this.likes.toggle(articleId, userId),
+      };
+    }
+
+    return null;
   }
 
   private resolveUpstreamHeaders(
@@ -845,6 +945,35 @@ export class WsServer {
     }
 
     return selectedCookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
+  }
+
+  private getUserIdFromCookieHeader(cookieHeader?: string): string | null {
+    if (!cookieHeader) {
+      return null;
+    }
+
+    const parts = cookieHeader.split(';');
+    for (const part of parts) {
+      const trimmed = part.trim();
+      if (trimmed.startsWith('o2k_uid=')) {
+        return decodeURIComponent(trimmed.substring('o2k_uid='.length));
+      }
+    }
+    return null;
+  }
+
+  private buildUserIdSetCookieValue(id: string): string {
+    const attrs = [
+      `o2k_uid=${encodeURIComponent(id)}`,
+      'Path=/',
+      'HttpOnly',
+      'SameSite=Lax',
+      'Max-Age=31536000',
+    ];
+    if (this._isSSL) {
+      attrs.push('Secure');
+    }
+    return attrs.join('; ');
   }
 
   private captureSetCookieHeaders(
@@ -1091,6 +1220,40 @@ export class WsServer {
     return `${labels[labels.length - 2]}.${labels[labels.length - 1]}`;
   }
 
+  private async fetchPreservingMethod(
+    target: string,
+    init: {
+      method: string;
+      headers: Record<string, string>;
+      body?: string;
+    }
+  ): Promise<globalThis.Response> {
+    const maxRedirects = 5;
+    let url = target;
+    let redirects = 0;
+
+    while (true) {
+      const response = await fetch(url, {
+        method: init.method,
+        headers: init.headers,
+        body: init.body,
+        redirect: 'manual',
+      });
+
+      if (![301, 302, 303, 307, 308].includes(response.status)) {
+        return response;
+      }
+
+      const location = response.headers.get('location');
+      if (!location || redirects >= maxRedirects) {
+        return response;
+      }
+
+      url = new URL(location, url).toString();
+      redirects++;
+    }
+  }
+
   private resolveLocalApiUrl(url?: string): string | null {
     if (!url) {
       return null;
@@ -1099,7 +1262,7 @@ export class WsServer {
     try {
       const baseUrl = new URL(APP_CONFIG.api);
       const target = new URL(url, baseUrl);
-      if (target.origin !== baseUrl.origin) {
+      if (!this.isAllowedApiOrigin(target.origin)) {
         return null;
       }
 
@@ -1118,6 +1281,44 @@ export class WsServer {
     } catch {
       return null;
     }
+  }
+
+  private isAllowedApiOrigin(origin: string): boolean {
+    const normalizedOrigin = origin.toLowerCase();
+    const allowedOrigins = new Set<string>();
+
+    const configuredApiOrigin = new URL(APP_CONFIG.api).origin.toLowerCase();
+    allowedOrigins.add(configuredApiOrigin);
+
+    const isDefaultHttpsPort = this.options.port === 443;
+    const isDefaultHttpPort = this.options.port === 80;
+    const host = this.options.host.toLowerCase();
+
+    const httpsOrigin = isDefaultHttpsPort
+      ? `https://${host}`
+      : `https://${host}:${this.options.port}`;
+    const httpOrigin = isDefaultHttpPort ? `http://${host}` : `http://${host}:${this.options.port}`;
+    allowedOrigins.add(httpsOrigin);
+    allowedOrigins.add(httpOrigin);
+
+    const loopbackHttp = isDefaultHttpPort
+      ? 'http://127.0.0.1'
+      : `http://127.0.0.1:${this.options.port}`;
+    const loopbackHttps = isDefaultHttpsPort
+      ? 'https://127.0.0.1'
+      : `https://127.0.0.1:${this.options.port}`;
+    const localhostHttp = isDefaultHttpPort
+      ? 'http://localhost'
+      : `http://localhost:${this.options.port}`;
+    const localhostHttps = isDefaultHttpsPort
+      ? 'https://localhost'
+      : `https://localhost:${this.options.port}`;
+    allowedOrigins.add(loopbackHttp);
+    allowedOrigins.add(loopbackHttps);
+    allowedOrigins.add(localhostHttp);
+    allowedOrigins.add(localhostHttps);
+
+    return allowedOrigins.has(normalizedOrigin);
   }
 
   private resolveHttpMethod(request?: WsHttpRequestCommand['request']): string | null {
