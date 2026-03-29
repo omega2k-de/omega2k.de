@@ -8,6 +8,13 @@ describe('app.config.server', () => {
     vi.unstubAllEnvs();
   });
 
+  it('keeps https API_INTERNAL_URL unchanged', async () => {
+    vi.stubEnv('API_INTERNAL_URL', 'https://api.omega2k.de/');
+    const mod = await import('./app.config.server');
+    expect(mod.resolveServerApiBaseUrl()).toBe('https://api.omega2k.de');
+    vi.unstubAllEnvs();
+  });
+
   it('uses runtime log level override when provided', async () => {
     vi.stubEnv('SSR_LOG_LEVEL', 'debug');
     const mod = await import('./app.config.server');

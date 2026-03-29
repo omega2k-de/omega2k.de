@@ -67,7 +67,7 @@ function getAllowedHosts(): string[] {
 
 async function loadContentRoutesFromApi(): Promise<string[]> {
   const internalApi = process.env['API_INTERNAL_URL']?.trim();
-  const base = (internalApi || api || url).replace(/\/+$/g, '').replace(/^https:/g, 'http:');
+  const base = (internalApi || api || url).replace(/\/+$/g, '');
   const response = await fetch(`${base}/sitemap-routes`);
   if (!response.ok) {
     throw new Error(`sitemap-routes request failed with status ${response.status}`);

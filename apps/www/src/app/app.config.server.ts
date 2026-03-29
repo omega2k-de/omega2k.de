@@ -14,7 +14,7 @@ export function resolveServerApiBaseUrl(): string {
     return `https://localhost:${APP_CONFIG.api_port}`;
   }
 
-  return APP_CONFIG.api.replace(/https/, 'http').replace(/\/+$/g, '');
+  return APP_CONFIG.api.replace(/\/+$/g, '');
 }
 
 export function resolveServerLoggerLevel(): 'OFF' | 'DEBUG' | 'LOG' | 'INFO' | 'WARN' | 'ERROR' {

@@ -27,7 +27,7 @@ services:
       webservice-api:
         condition: service_started
     environment:
-      API_INTERNAL_URL: 'http://webservice-api'
+      API_INTERNAL_URL: '${API_INTERNAL_URL:-https://api.omega2k.de}'
     networks: [o2k]
 
   webservice-api:
