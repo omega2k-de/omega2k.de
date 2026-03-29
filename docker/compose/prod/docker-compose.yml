@@ -2,6 +2,8 @@ networks:
   o2k:
     name: o2k-network
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: 'true'
 
 volumes:
   likes:
@@ -9,7 +11,7 @@ volumes:
 
 services:
   webservice-ssr:
-    hostname: 'www.omega2k.de'
+    hostname: 'webservice-ssr'
     container_name: 'de-omega2k-www-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
@@ -31,7 +33,7 @@ services:
     networks: [o2k]
 
   webservice-api:
-    hostname: 'api.omega2k.de'
+    hostname: 'webservice-api'
     container_name: 'de-omega2k-api-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:

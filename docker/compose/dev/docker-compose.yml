@@ -9,7 +9,7 @@ volumes:
 
 services:
   webservice-ssr:
-    hostname: '${COMPOSE_DOMAIN_SSR:-www.omega2k.de.o2k}'
+    hostname: 'webservice-ssr-dev'
     container_name: 'webservice-www-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
@@ -31,7 +31,7 @@ services:
     networks: [o2k]
 
   webservice-api:
-    hostname: '${COMPOSE_DOMAIN_API:-api.omega2k.de.o2k}'
+    hostname: 'webservice-api-dev'
     container_name: 'webservice-api-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
