@@ -1,27 +1,43 @@
 %ui-icon-after {
-  content: attr(uiIcon) / '';
+  content: '';
   speak: never;
 
   transform: scale3d(1, 1, 1);
 
   direction: ltr;
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  inline-size: 1em;
+  block-size: 1em;
+  border-radius: 4px;
 
   font-family: 'MSO', serif;
   font-size: var(--font-size-default);
   font-feature-settings: 'liga';
   font-weight: normal;
   font-style: normal;
-  line-height: 1.5;
+  line-height: 1;
+  color: transparent;
   text-transform: none;
   text-rendering: optimizeLegibility;
   overflow-wrap: normal;
   white-space: nowrap;
 
+  background-color: currentColor;
+
   transition: all 50ms ease-in-out;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  html.icons-ready & {
+    content: attr(uiIcon) / '';
+    border-radius: 0;
+    color: inherit;
+    background-color: transparent;
+  }
 }
 
 [uiIcon] {
@@ -56,6 +72,7 @@
   &[rounded] {
     &:not(.before):after,
     &.before:before {
+      border-radius: 50%;
       font-family: 'MSR', serif;
     }
   }
