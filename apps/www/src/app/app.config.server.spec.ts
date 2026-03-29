@@ -7,4 +7,11 @@ describe('app.config.server', () => {
     expect(mod.resolveServerApiBaseUrl()).toBe('http://webservice-api');
     vi.unstubAllEnvs();
   });
+
+  it('uses runtime log level override when provided', async () => {
+    vi.stubEnv('SSR_LOG_LEVEL', 'debug');
+    const mod = await import('./app.config.server');
+    expect(mod.resolveServerLoggerLevel()).toBe('DEBUG');
+    vi.unstubAllEnvs();
+  });
 });

@@ -30,6 +30,7 @@ describe('ErrorHandlerService', () => {
 
     expect(loggerMock.error).toHaveBeenCalledWith(error.message, 'ErrorHandlerService', {
       stack: error.stack,
+      raw: error,
     });
   });
 });

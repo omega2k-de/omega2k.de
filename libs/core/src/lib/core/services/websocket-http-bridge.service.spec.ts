@@ -77,4 +77,33 @@ describe('WebsocketHttpBridgeService', () => {
     expect(response?.status).toBe(200);
     expect(response?.body).toEqual({ ok: true });
   });
+
+  it('never uses websocket transport on server platform (SSR)', async () => {
+    TestBed.resetTestingModule();
+    const serverStream = new Subject<WsMessages>();
+    const serverWorkerMock: Pick<WebsocketWorker, 'message$' | 'postMessage'> = {
+      message$: serverStream.asObservable(),
+      postMessage: vi.fn(),
+    };
+
+    TestBed.configureTestingModule({
+      providers: [
+        provideConfig({
+          api: 'https://api.omega2k.de',
+          url: 'https://www.omega2k.de',
+          socket: 'wss://api.omega2k.de',
+        }),
+        { provide: PLATFORM_ID, useValue: 'server' },
+        { provide: WEBSOCKET_WORKER, useValue: serverWorkerMock },
+        WebsocketHttpBridgeService,
+      ],
+    });
+
+    const service = TestBed.inject(WebsocketHttpBridgeService);
+    const req = new HttpRequest('POST', 'https://api.omega2k.de/likes/1/toggle', {});
+    const result = await firstValueFrom(service.execute(req, 500));
+
+    expect(result).toBeNull();
+    expect(serverWorkerMock.postMessage).not.toHaveBeenCalled();
+  });
 });

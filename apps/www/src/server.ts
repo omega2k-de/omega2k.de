@@ -9,7 +9,7 @@ import {
 import compression from 'compression';
 import cors, { CorsOptions } from 'cors';
 import dayjs from 'dayjs';
-import express, { Express } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import os from 'node:os';
 import { join } from 'node:path';
 import process from 'node:process';
@@ -27,6 +27,31 @@ const staticRoutes = routes.filter(route => !route.startsWith('/content'));
 const histogram = monitorEventLoopDelay({ resolution: 10 });
 histogram.enable();
 const DEFAULT_ALLOWED_HOSTS = ['omega2k.de', 'www.omega2k.de', '*.omega2k.de'];
+const runtimeLoggerLevel = (
+  process.env['SSR_LOG_LEVEL'] ??
+  process.env['COMPOSE_LOGGER'] ??
+  APP_CONFIG.logger
+).toUpperCase();
+
+function normalizeError(error: unknown): Error {
+  if (error instanceof Error) {
+    return error;
+  }
+
+  return new Error(typeof error === 'string' ? error : JSON.stringify(error));
+}
+
+function logServerError(stage: string, req: Request, error: unknown): void {
+  const normalized = normalizeError(error);
+  console.error('[E]', '[WwwServer.error]', {
+    stage,
+    method: req.method,
+    url: req.originalUrl || req.url,
+    message: normalized.message,
+    stack: normalized.stack,
+    cause: normalized.cause,
+  });
+}
 
 function parseAllowedHostsFromEnv(value: string | undefined): string[] {
   return (value ?? '')
@@ -114,10 +139,19 @@ export function ssrServer(): Express {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  if (shouldLogAccess(runtimeLoggerLevel)) {
+    console.info('[I]', '[WwwServer.config]', {
+      logger: runtimeLoggerLevel,
+      api: process.env['API_INTERNAL_URL']?.trim() || api,
+      socket,
+      url,
+    });
+  }
+
   app.use((req, res, next) => {
     const started = Date.now();
     res.on('finish', () => {
-      if (shouldLogAccess(APP_CONFIG.logger)) {
+      if (shouldLogAccess(runtimeLoggerLevel)) {
         const line = formatAccessLogLine(
           req.method,
           req.originalUrl || req.url,
@@ -213,7 +247,18 @@ export function ssrServer(): Express {
     angularApp
       .handle(req, { nonce, url })
       .then(response => (response ? writeResponseToNodeResponse(response, res) : next()))
-      .catch(next);
+      .catch(err => {
+        logServerError('angular.handle', req, err);
+        next(err);
+      });
+  });
+
+  app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+    logServerError('express.error-middleware', req, err);
+    if (res.headersSent) {
+      return next(err);
+    }
+    res.status(500).type('text/plain').send('Internal Server Error');
   });
 
   return app;

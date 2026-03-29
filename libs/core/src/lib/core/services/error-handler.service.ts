@@ -9,13 +9,35 @@ export class ErrorHandlerService implements ErrorHandler {
 
   private readonly isDevMode: boolean = isDevMode();
 
-  handleError(error: Error): void {
-    this.logger.error(error.message, 'ErrorHandlerService', {
-      stack: error.stack,
+  handleError(error: unknown): void {
+    const normalized = (() => {
+      if (error instanceof Error) {
+        return error;
+      }
+
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof (error as { message?: unknown }).message === 'string'
+      ) {
+        return new Error((error as { message: string }).message);
+      }
+
+      if (typeof error === 'string') {
+        return new Error(error);
+      }
+
+      return new Error('Unknown runtime error');
+    })();
+
+    this.logger.error(normalized.message, 'ErrorHandlerService', {
+      stack: normalized.stack,
+      raw: error,
     });
 
     if (this.isDevMode) {
-      throw error;
+      throw normalized;
     }
   }
 }

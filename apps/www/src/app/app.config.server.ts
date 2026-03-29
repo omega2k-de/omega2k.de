@@ -17,14 +17,26 @@ export function resolveServerApiBaseUrl(): string {
   return APP_CONFIG.api.replace(/https/, 'http').replace(/\/+$/g, '');
 }
 
+export function resolveServerLoggerLevel(): 'OFF' | 'DEBUG' | 'LOG' | 'INFO' | 'WARN' | 'ERROR' {
+  const runtimeLevel = (process.env['SSR_LOG_LEVEL'] ?? process.env['COMPOSE_LOGGER'])?.trim();
+  const normalized = runtimeLevel?.toUpperCase();
+  switch (normalized) {
+    case 'OFF':
+    case 'DEBUG':
+    case 'LOG':
+    case 'INFO':
+    case 'WARN':
+    case 'ERROR':
+      return normalized;
+    default:
+      return isDevMode() ? 'INFO' : 'ERROR';
+  }
+}
+
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(withRoutes(serverRoutes)),
-    provideConfig(
-      isDevMode()
-        ? { logger: 'INFO', api: resolveServerApiBaseUrl() }
-        : { logger: 'ERROR', api: resolveServerApiBaseUrl() }
-    ),
+    provideConfig({ logger: resolveServerLoggerLevel(), api: resolveServerApiBaseUrl() }),
   ],
 };
 
