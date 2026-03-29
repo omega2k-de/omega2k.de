@@ -1,4 +1,3 @@
-import axios from 'axios';
 import WebSocket from 'ws';
 import { randomUUID } from 'crypto';
 
@@ -12,8 +11,22 @@ interface WsHttpResponse {
   body?: unknown;
 }
 
+interface HealthResponse {
+  message: string;
+  uptime: number;
+  usage: {
+    rss: number;
+    heapTotal: number;
+    heapUsed: number;
+    external: number;
+    arrayBuffers: number;
+  };
+  version: string;
+  hash: string | null;
+}
+
 function getWsUrl(): string {
-  const baseUrl = axios.defaults.baseURL ?? 'https://127.0.0.1:42080';
+  const baseUrl = getHttpBaseUrl();
   if (baseUrl.startsWith('https://')) {
     return baseUrl.replace(/^https:/, 'wss:');
   }
@@ -21,6 +34,16 @@ function getWsUrl(): string {
     return baseUrl.replace(/^http:/, 'ws:');
   }
   return baseUrl;
+}
+
+function getHttpBaseUrl(): string {
+  const configured = process.env['WEBSOCKET_E2E_BASE_URL']?.trim();
+  if (configured) {
+    return configured.replace(/\/+$/g, '');
+  }
+
+  const port = process.env['API_PORT']?.trim() || '42080';
+  return `https://127.0.0.1:${port}`;
 }
 
 function getBridgeApiOrigin(): string {
@@ -38,10 +61,10 @@ function getBridgeApiOrigin(): string {
     }
   }
 
-  const axiosBase = axios.defaults.baseURL?.trim();
-  if (axiosBase) {
+  const localBase = getHttpBaseUrl();
+  if (localBase) {
     try {
-      return new URL(axiosBase).origin;
+      return new URL(localBase).origin;
     } catch {
       // ignore and continue with fallback
     }
@@ -49,6 +72,44 @@ function getBridgeApiOrigin(): string {
 
   const port = process.env['API_PORT']?.trim() || '42080';
   return `https://api.omega2k.de.o2k:${port}`;
+}
+
+function getSetCookieHeaders(headers: Headers): string[] {
+  const getSetCookie = (headers as Headers & { getSetCookie?: () => string[] }).getSetCookie;
+  const values = typeof getSetCookie === 'function' ? getSetCookie.call(headers) : [];
+  if (values.length) {
+    return values;
+  }
+  const fallback = headers.get('set-cookie');
+  return fallback ? [fallback] : [];
+}
+
+async function fetchJson<T = unknown>(
+  pathOrUrl: string,
+  init?: RequestInit & { jsonBody?: unknown }
+): Promise<{ status: number; headers: Headers; data: T }> {
+  const target = pathOrUrl.startsWith('http') ? pathOrUrl : `${getHttpBaseUrl()}${pathOrUrl}`;
+  const headers = new Headers(init?.headers);
+
+  if (typeof init?.jsonBody !== 'undefined' && !headers.has('content-type')) {
+    headers.set('content-type', 'application/json');
+  }
+
+  const response = await fetch(target, {
+    ...init,
+    headers,
+    body: typeof init?.jsonBody !== 'undefined' ? JSON.stringify(init.jsonBody) : init?.body,
+  });
+  const contentType = response.headers.get('content-type') ?? '';
+  const data = contentType.includes('application/json')
+    ? ((await response.json()) as T)
+    : ((await response.text()) as T);
+
+  return {
+    status: response.status,
+    headers: response.headers,
+    data,
+  };
 }
 
 async function openWsClient(): Promise<WebSocket> {
@@ -136,13 +197,13 @@ async function sendWsHttpRequest(
 
 describe('API backend', () => {
   it('GET /_health should return a message', async () => {
-    const res = await axios.get(`/_health`);
+    const res = await fetchJson<HealthResponse>('/_health');
 
     expect(res.status).toStrictEqual(200);
-    expect(res.headers['content-type']).toStrictEqual('application/json; charset=utf-8');
+    expect(res.headers.get('content-type')).toStrictEqual('application/json; charset=utf-8');
     expect(res.data.message).toEqual('OK');
     expect(res.data.uptime).toBeGreaterThan(0);
-    expect(res.data.usage).toBeInstanceOf(Object);
+    expect(res.data.usage).toEqual(expect.any(Object));
     expect(res.data.usage['rss']).toBeGreaterThan(0);
     expect(res.data.usage['heapTotal']).toBeGreaterThan(0);
     expect(res.data.usage['heapUsed']).toBeGreaterThan(0);
@@ -157,7 +218,7 @@ describe('API backend', () => {
   });
 
   it('GET /privacy should expose the cookies sent by the client', async () => {
-    const res = await axios.get(`/privacy`, {
+    const res = await fetchJson<{ cookies: Array<{ key: string; value: string }> }>('/privacy', {
       headers: {
         Cookie: 'theme=light',
       },
@@ -172,7 +233,12 @@ describe('API backend', () => {
   it('POST /likes/:articleId/toggle should create a cookie and persist like state', async () => {
     const articleId = Date.now();
 
-    const toggleRes = await axios.post(`/likes/${articleId}/toggle`);
+    const toggleRes = await fetchJson<{ articleId: number; count: number; liked: boolean }>(
+      `/likes/${articleId}/toggle`,
+      {
+        method: 'POST',
+      }
+    );
 
     expect(toggleRes.status).toStrictEqual(200);
     expect(toggleRes.data).toEqual({
@@ -181,7 +247,7 @@ describe('API backend', () => {
       liked: true,
     });
 
-    const setCookie = toggleRes.headers['set-cookie'];
+    const setCookie = getSetCookieHeaders(toggleRes.headers);
     expect(setCookie).toBeDefined();
     expect(setCookie).toHaveLength(1);
 
@@ -190,12 +256,18 @@ describe('API backend', () => {
 
     const cookie = cookieHeader?.split(';')[0];
     expect(cookie).toBeTruthy();
+    if (!cookie) {
+      throw new Error('Expected Set-Cookie to include cookie value');
+    }
 
-    const stateRes = await axios.get(`/likes/${articleId}`, {
-      headers: {
-        Cookie: cookie,
-      },
-    });
+    const stateRes = await fetchJson<{ articleId: number; count: number; liked: boolean }>(
+      `/likes/${articleId}`,
+      {
+        headers: {
+          Cookie: cookie,
+        },
+      }
+    );
 
     expect(stateRes.status).toStrictEqual(200);
     expect(stateRes.data).toEqual({
@@ -204,11 +276,14 @@ describe('API backend', () => {
       liked: true,
     });
 
-    const listRes = await axios.get(`/likes`, {
-      headers: {
-        Cookie: cookie,
-      },
-    });
+    const listRes = await fetchJson<Array<{ articleId: number; count: number; liked: boolean }>>(
+      `/likes`,
+      {
+        headers: {
+          Cookie: cookie,
+        },
+      }
+    );
 
     expect(listRes.status).toStrictEqual(200);
     expect(listRes.data).toEqual(
