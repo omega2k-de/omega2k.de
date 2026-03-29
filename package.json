@@ -206,6 +206,17 @@
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
+    "overrides": {
+      "@eslint/eslintrc>ajv": "6.12.6",
+      "eslint>ajv": "6.12.6",
+      "handlebars": "4.7.9",
+      "lodash": "4.17.23",
+      "minimatch@3": "3.1.4",
+      "minimatch@7": "7.4.8",
+      "minimatch@9": "9.0.7",
+      "picomatch": "4.0.4",
+      "smol-toml": "1.6.1"
+    },
     "peerDependencyRules": {
       "allowedVersions": {
         "node-fetch": "^2.7.0 || ^3.3.2"
