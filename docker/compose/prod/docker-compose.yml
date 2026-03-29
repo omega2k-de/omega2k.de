@@ -1,9 +1,8 @@
 networks:
   o2k:
-    name: o2k-network
-    driver: bridge
-    driver_opts:
-      com.docker.network.bridge.enable_icc: 'true'
+    enable_ipv6: true
+    ipam:
+      driver: default
 
 volumes:
   likes:

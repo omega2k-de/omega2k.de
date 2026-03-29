@@ -1,7 +1,8 @@
 networks:
   o2k:
-    name: o2k-network
-    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
 
 volumes:
   likes:
@@ -9,7 +10,7 @@ volumes:
 
 services:
   webservice-ssr:
-    hostname: 'webservice-ssr-dev'
+    hostname: 'webservice-ssr'
     container_name: 'webservice-www-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
@@ -31,7 +32,7 @@ services:
     networks: [o2k]
 
   webservice-api:
-    hostname: 'webservice-api-dev'
+    hostname: 'webservice-api'
     container_name: 'webservice-api-${COMPOSE_IMAGE_TAG:-latest}'
     restart: always
     build:
