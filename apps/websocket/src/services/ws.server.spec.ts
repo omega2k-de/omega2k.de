@@ -212,6 +212,7 @@ describe('WsServer HTTP api', () => {
     const wsServer = context.wsServer as unknown as {
       clientCookies: Map<string, Record<string, string>>;
       captureSetCookieHeaders: (client: { uuid: string }, headers: Headers) => void;
+      resolveHttpMethod: (request?: { method?: string; body?: unknown }) => string | null;
       resolveUpstreamHeaders: (
         requestHeaders: Record<string, string> | undefined,
         client: { uuid: string; requestHeaders?: Record<string, string> },
@@ -231,6 +232,26 @@ describe('WsServer HTTP api', () => {
     const upstream = wsServer.resolveUpstreamHeaders(undefined, client, true, 'POST', {});
     expect(upstream.cookie).toBe('o2k_uid=test-user');
     expect(upstream['content-type']).toBe('application/json');
+  });
+
+  it('infers POST for websocket http-request without method but with body', async () => {
+    const context = await createServer();
+    const wsServer = context.wsServer as unknown as {
+      resolveHttpMethod: (request?: { method?: string; body?: unknown }) => string | null;
+    };
+
+    expect(wsServer.resolveHttpMethod({ body: {} })).toBe('POST');
+    expect(wsServer.resolveHttpMethod({})).toBe('GET');
+  });
+
+  it('rejects unsupported websocket http-request methods', async () => {
+    const context = await createServer();
+    const wsServer = context.wsServer as unknown as {
+      resolveHttpMethod: (request?: { method?: string; body?: unknown }) => string | null;
+    };
+
+    expect(wsServer.resolveHttpMethod({ method: 'TRACE' })).toBeNull();
+    expect(wsServer.resolveHttpMethod({ method: 'post' })).toBe('POST');
   });
 
   it('rejects empty random-card amounts', async () => {

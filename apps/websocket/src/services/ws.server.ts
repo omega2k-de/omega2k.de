@@ -610,8 +610,9 @@ export class WsServer {
     const request = message.request;
     const requestId = request?.requestId;
     const target = this.resolveLocalApiUrl(request?.url);
+    const method = this.resolveHttpMethod(request);
 
-    if (!requestId || !target) {
+    if (!requestId || !target || !method) {
       this.reply(
         <WsHttpResponseMessage>{
           event: 'http-response',
@@ -619,7 +620,7 @@ export class WsServer {
           ok: false,
           status: 400,
           url: request?.url ?? '',
-          error: 'invalid_request',
+          error: !method ? 'invalid_method' : 'invalid_request',
         },
         client
       );
@@ -631,14 +632,14 @@ export class WsServer {
         request.headers,
         client,
         request.withCredentials,
-        request.method,
+        method,
         request.body
       );
       const response = await fetch(target, {
-        method: request.method ?? 'GET',
+        method,
         headers: upstreamHeaders,
         body:
-          request.body && !['GET', 'HEAD'].includes((request.method ?? 'GET').toUpperCase())
+          request.body && !['GET', 'HEAD'].includes(method)
             ? JSON.stringify(request.body)
             : undefined,
       });
@@ -808,6 +809,19 @@ export class WsServer {
     } catch {
       return null;
     }
+  }
+
+  private resolveHttpMethod(request?: WsHttpRequestCommand['request']): string | null {
+    const rawMethod = request?.method;
+    if (typeof rawMethod === 'string' && rawMethod.trim().length > 0) {
+      const normalizedMethod = rawMethod.toUpperCase();
+      return ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(normalizedMethod)
+        ? normalizedMethod
+        : null;
+    }
+
+    const hasBody = typeof request?.body !== 'undefined' && request?.body !== null;
+    return hasBody ? 'POST' : 'GET';
   }
 
   private handleBurstPingPong(message: BurstPingCommand, client: WsClientInterface) {
