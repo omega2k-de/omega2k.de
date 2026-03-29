@@ -34,6 +34,7 @@ interface TestContext {
   baseUrl: string;
   content: MockContentRepository;
   likes: MockLikesRepository;
+  wsServer: WsServer;
   close: () => Promise<void>;
 }
 
@@ -90,6 +91,7 @@ const createServer = async (): Promise<TestContext> => {
     baseUrl: `http://127.0.0.1:${address.port}`,
     content,
     likes,
+    wsServer: server,
     close: async () => {
       clearInterval(internals._pingInterval);
       clearInterval(internals._healthInterval);
@@ -189,6 +191,32 @@ describe('WsServer HTTP api', () => {
     expect(response.data).toEqual({
       cookies: [{ key: 'theme', value: 'light' }],
     });
+  });
+
+  it('stores Set-Cookie values in websocket client cookie jar for follow-up requests', async () => {
+    const context = await createServer();
+    const wsServer = context.wsServer as unknown as {
+      clientCookies: Map<string, Record<string, string>>;
+      captureSetCookieHeaders: (client: { uuid: string }, headers: Headers) => void;
+      resolveUpstreamHeaders: (
+        requestHeaders: Record<string, string> | undefined,
+        client: { uuid: string; requestHeaders?: Record<string, string> },
+        withCredentials?: boolean,
+        method?: string,
+        body?: unknown
+      ) => Record<string, string>;
+    };
+
+    const client = { uuid: 'test-client', requestHeaders: {} };
+    wsServer.clientCookies.set(client.uuid, {});
+
+    const headers = new Headers();
+    headers.append('set-cookie', 'o2k_uid=test-user; Path=/; HttpOnly; SameSite=Lax');
+    wsServer.captureSetCookieHeaders(client, headers);
+
+    const upstream = wsServer.resolveUpstreamHeaders(undefined, client, true, 'POST', {});
+    expect(upstream.cookie).toBe('o2k_uid=test-user');
+    expect(upstream['content-type']).toBe('application/json');
   });
 
   it('rejects empty random-card amounts', async () => {

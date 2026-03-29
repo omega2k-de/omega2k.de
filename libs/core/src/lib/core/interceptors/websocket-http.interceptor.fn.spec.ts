@@ -66,6 +66,21 @@ describe('WebsocketHttpInterceptor', () => {
     expect(next).toHaveBeenCalledWith({ via: 'ws' });
   });
 
+  it('prioritizes websocket for POST requests as well', () => {
+    const url = 'https://api.omega2k.de/likes/42/toggle';
+    const wsResponse = new HttpResponse({ status: 200, body: { liked: true }, url });
+    bridgeMock.execute = vi.fn().mockReturnValue(of(wsResponse));
+    const next = vi.fn();
+
+    httpClient.post(url, {}).subscribe(next);
+
+    expect(bridgeMock.execute).toHaveBeenCalledTimes(1);
+    const executeSpy = bridgeMock.execute as ReturnType<typeof vi.fn>;
+    expect(executeSpy.mock.calls[0][0].method).toBe('POST');
+    httpTestingController.expectNone(url);
+    expect(next).toHaveBeenCalledWith({ liked: true });
+  });
+
   it('supports opt-out via request context token', () => {
     const url = 'https://api.omega2k.de/content';
     const next = vi.fn();

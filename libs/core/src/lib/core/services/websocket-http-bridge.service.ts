@@ -46,7 +46,12 @@ export class WebsocketHttpBridgeService {
       return false;
     }
 
-    if (!['GET', 'HEAD'].includes(request.method.toUpperCase())) {
+    const method = request.method.toUpperCase();
+    if (!['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+      return false;
+    }
+
+    if (!this.isSupportedBody(request.body, method)) {
       return false;
     }
 
@@ -69,9 +74,16 @@ export class WebsocketHttpBridgeService {
       command: 'http-request',
       request: {
         requestId,
-        method: request.method as 'GET' | 'HEAD',
+        method: request.method.toUpperCase() as
+          | 'GET'
+          | 'HEAD'
+          | 'POST'
+          | 'PUT'
+          | 'PATCH'
+          | 'DELETE',
         url: request.urlWithParams,
         headers: this.toHeadersRecord(request.headers),
+        body: request.body,
         withCredentials: request.withCredentials,
       },
     });
@@ -123,5 +135,42 @@ export class WebsocketHttpBridgeService {
       }
     });
     return record;
+  }
+
+  private isSupportedBody(body: unknown, method: string): boolean {
+    if (['GET', 'HEAD'].includes(method)) {
+      return true;
+    }
+
+    if (typeof body === 'undefined' || body === null) {
+      return true;
+    }
+
+    if (typeof body === 'string' || typeof body === 'number' || typeof body === 'boolean') {
+      return true;
+    }
+
+    if (Array.isArray(body)) {
+      return true;
+    }
+
+    if (typeof body === 'object') {
+      if (
+        body instanceof FormData ||
+        body instanceof Blob ||
+        body instanceof ArrayBuffer ||
+        body instanceof URLSearchParams
+      ) {
+        return false;
+      }
+
+      if (ArrayBuffer.isView(body)) {
+        return false;
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }

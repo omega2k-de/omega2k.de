@@ -65,6 +65,7 @@ export class WsServer {
   private readonly app: Express;
   private readonly content: ContentRepository;
   private readonly likes: LikesRepository;
+  private readonly clientCookies = new Map<string, Record<string, string>>();
 
   constructor(options: WsOptions, content: ContentRepository, likes: LikesRepository) {
     this.options = options;
@@ -465,6 +466,7 @@ export class WsServer {
       hasPointer: false,
     };
 
+    const requestHeaders = this.extractRequestHeaders(_request);
     this.clientMap.set(socket, {
       seq,
       created,
@@ -472,8 +474,9 @@ export class WsServer {
       socket,
       flags,
       user,
-      requestHeaders: this.extractRequestHeaders(_request),
+      requestHeaders,
     });
+    this.clientCookies.set(uuid, this.parseCookieHeader(requestHeaders['cookie']));
     this.pushClientsCount();
   }
 
@@ -490,6 +493,10 @@ export class WsServer {
   }
 
   private removeClient(socket: WebSocket) {
+    const client = this.clientMap.get(socket);
+    if (client) {
+      this.clientCookies.delete(client.uuid);
+    }
     this.clientMap.delete(socket);
     this.pushClientsCount();
   }
@@ -613,7 +620,9 @@ export class WsServer {
       const upstreamHeaders = this.resolveUpstreamHeaders(
         request.headers,
         client,
-        request.withCredentials
+        request.withCredentials,
+        request.method,
+        request.body
       );
       const response = await fetch(target, {
         method: request.method ?? 'GET',
@@ -631,6 +640,7 @@ export class WsServer {
 
       const responseHeaders: Record<string, string> = {};
       response.headers.forEach((value, key) => (responseHeaders[key] = value));
+      this.captureSetCookieHeaders(client, response.headers);
 
       this.reply(
         <WsHttpResponseMessage>{
@@ -662,7 +672,9 @@ export class WsServer {
   private resolveUpstreamHeaders(
     requestHeaders: Record<string, string> | undefined,
     client: WsClientInterface,
-    withCredentials?: boolean
+    withCredentials?: boolean,
+    method?: string,
+    body?: unknown
   ): Record<string, string> {
     const headers: Record<string, string> = {};
 
@@ -670,8 +682,18 @@ export class WsServer {
       headers[key.toLowerCase()] = value;
     });
 
+    const hasBody = typeof body !== 'undefined' && body !== null;
+    const normalizedMethod = (method ?? 'GET').toUpperCase();
+    if (
+      hasBody &&
+      !['GET', 'HEAD'].includes(normalizedMethod) &&
+      headers['content-type'] === undefined
+    ) {
+      headers['content-type'] = 'application/json';
+    }
+
     if (withCredentials && !headers['cookie']) {
-      const cookie = client.requestHeaders?.['cookie'];
+      const cookie = this.getClientCookieHeader(client);
       if (cookie) {
         headers['cookie'] = cookie;
       }
@@ -685,6 +707,79 @@ export class WsServer {
     }
 
     return headers;
+  }
+
+  private parseCookieHeader(cookieHeader?: string): Record<string, string> {
+    const cookies: Record<string, string> = {};
+    if (!cookieHeader) {
+      return cookies;
+    }
+
+    cookieHeader.split(';').forEach(part => {
+      const trimmed = part.trim();
+      if (!trimmed) {
+        return;
+      }
+      const separator = trimmed.indexOf('=');
+      if (separator <= 0) {
+        return;
+      }
+      const name = trimmed.slice(0, separator).trim();
+      const value = trimmed.slice(separator + 1).trim();
+      if (name) {
+        cookies[name] = value;
+      }
+    });
+
+    return cookies;
+  }
+
+  private getClientCookieHeader(client: WsClientInterface): string | undefined {
+    const cookieMap = this.clientCookies.get(client.uuid);
+    if (!cookieMap) {
+      return client.requestHeaders?.['cookie'];
+    }
+
+    const entries = Object.entries(cookieMap);
+    if (!entries.length) {
+      return undefined;
+    }
+
+    return entries.map(([name, value]) => `${name}=${value}`).join('; ');
+  }
+
+  private captureSetCookieHeaders(client: WsClientInterface, headers: Headers): void {
+    const getSetCookie = (headers as Headers & { getSetCookie?: () => string[] }).getSetCookie;
+    const setCookieHeaders =
+      typeof getSetCookie === 'function' ? getSetCookie.call(headers) : ([] as string[]);
+    if (!setCookieHeaders.length) {
+      const fallbackSetCookie = headers.get('set-cookie');
+      if (fallbackSetCookie) {
+        setCookieHeaders.push(fallbackSetCookie);
+      }
+    }
+
+    if (!setCookieHeaders.length) {
+      return;
+    }
+
+    const cookieMap = this.clientCookies.get(client.uuid) ?? {};
+    setCookieHeaders.forEach(cookieLine => {
+      const [cookiePart] = cookieLine.split(';');
+      if (!cookiePart) {
+        return;
+      }
+      const separator = cookiePart.indexOf('=');
+      if (separator <= 0) {
+        return;
+      }
+      const name = cookiePart.slice(0, separator).trim();
+      const value = cookiePart.slice(separator + 1).trim();
+      if (name) {
+        cookieMap[name] = value;
+      }
+    });
+    this.clientCookies.set(client.uuid, cookieMap);
   }
 
   private resolveLocalApiUrl(url?: string): string | null {
