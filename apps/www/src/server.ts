@@ -187,28 +187,29 @@ export function ssrServer(): Express {
       });
   });
 
-  app.get('/sitemap.xml', async (_req, res) => {
-    try {
-      const contentRoutes = await loadContentRoutesFromApi();
-      const allRoutes = Array.from(new Set([...staticRoutes, ...contentRoutes])).sort();
+  app.get('/sitemap.xml', (_req, res) => {
+    void loadContentRoutesFromApi()
+      .then(contentRoutes => {
+        const allRoutes = Array.from(new Set([...staticRoutes, ...contentRoutes])).sort();
 
-      const root = xmlbuilder.create('urlset', { version: '1.0', encoding: 'UTF-8' });
-      root.att('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        const root = xmlbuilder.create('urlset', { version: '1.0', encoding: 'UTF-8' });
+        root.att('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-      const lastmod = dayjs().format('YYYY-MM-DD');
+        const lastmod = dayjs().format('YYYY-MM-DD');
 
-      allRoutes.forEach(routePath => {
-        const xmlUrl = root.ele('url');
-        xmlUrl.ele('loc', `${url}${routePath}`);
-        xmlUrl.ele('lastmod', lastmod);
+        allRoutes.forEach(routePath => {
+          const xmlUrl = root.ele('url');
+          xmlUrl.ele('loc', `${url}${routePath}`);
+          xmlUrl.ele('lastmod', lastmod);
+        });
+
+        res.header('Content-Type', 'application/xml');
+        res.send(root.end({ pretty: true }));
+      })
+      .catch(err => {
+        console.error(`GET /sitemap.xml error`, err);
+        res.status(500).type('text/plain').send('Sitemap generation failed');
       });
-
-      res.header('Content-Type', 'application/xml');
-      res.send(root.end({ pretty: true }));
-    } catch (err) {
-      console.error(`GET /sitemap.xml error`, err);
-      res.status(500).type('text/plain').send('Sitemap generation failed');
-    }
   });
 
   app.use((req, res, next) => {

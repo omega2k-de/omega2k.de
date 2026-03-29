@@ -47,6 +47,19 @@ import { LikesRepository } from '@o2k/core/core/repositories/likes.repository';
 const histogram = monitorEventLoopDelay({ resolution: 10 }); // 10ms buckets
 histogram.enable();
 
+type WsCookieSameSite = 'strict' | 'lax' | 'none';
+
+interface WsClientCookie {
+  name: string;
+  value: string;
+  domain: string;
+  path: string;
+  hostOnly: boolean;
+  secure: boolean;
+  sameSite: WsCookieSameSite;
+  expiresAt?: number;
+}
+
 export class WsServer {
   private readonly uuid = randomUUID();
   private readonly _pingInterval: NodeJS.Timeout;
@@ -65,7 +78,7 @@ export class WsServer {
   private readonly app: Express;
   private readonly content: ContentRepository;
   private readonly likes: LikesRepository;
-  private readonly clientCookies = new Map<string, Record<string, string>>();
+  private readonly clientCookies = new Map<string, WsClientCookie[]>();
 
   constructor(options: WsOptions, content: ContentRepository, likes: LikesRepository) {
     this.options = options;
@@ -486,7 +499,10 @@ export class WsServer {
       user,
       requestHeaders,
     });
-    this.clientCookies.set(uuid, this.parseCookieHeader(requestHeaders['cookie']));
+    this.clientCookies.set(
+      uuid,
+      this.parseCookieHeader(requestHeaders['cookie'], this.extractHostname(requestHeaders['host']))
+    );
     this.pushClientsCount();
   }
 
@@ -632,6 +648,7 @@ export class WsServer {
         request.headers,
         client,
         request.withCredentials,
+        request.url,
         method,
         request.body
       );
@@ -651,7 +668,7 @@ export class WsServer {
 
       const responseHeaders: Record<string, string> = {};
       response.headers.forEach((value, key) => (responseHeaders[key] = value));
-      this.captureSetCookieHeaders(client, response.headers);
+      this.captureSetCookieHeaders(client, response.headers, request.url);
 
       this.reply(
         <WsHttpResponseMessage>{
@@ -684,6 +701,7 @@ export class WsServer {
     requestHeaders: Record<string, string> | undefined,
     client: WsClientInterface,
     withCredentials?: boolean,
+    url?: string,
     method?: string,
     body?: unknown
   ): Record<string, string> {
@@ -704,7 +722,7 @@ export class WsServer {
     }
 
     if (withCredentials && !headers['cookie']) {
-      const cookie = this.getClientCookieHeader(client);
+      const cookie = this.getClientCookieHeader(client, url);
       if (cookie) {
         headers['cookie'] = cookie;
       }
@@ -720,9 +738,14 @@ export class WsServer {
     return headers;
   }
 
-  private parseCookieHeader(cookieHeader?: string): Record<string, string> {
-    const cookies: Record<string, string> = {};
+  private parseCookieHeader(cookieHeader?: string, requestHost?: string): WsClientCookie[] {
+    const cookies: WsClientCookie[] = [];
     if (!cookieHeader) {
+      return cookies;
+    }
+
+    const host = requestHost?.toLowerCase();
+    if (!host) {
       return cookies;
     }
 
@@ -737,29 +760,98 @@ export class WsServer {
       }
       const name = trimmed.slice(0, separator).trim();
       const value = trimmed.slice(separator + 1).trim();
-      if (name) {
-        cookies[name] = value;
+      if (!name) {
+        return;
       }
+
+      this.upsertClientCookie(cookies, {
+        name,
+        value,
+        domain: host,
+        path: '/',
+        hostOnly: true,
+        secure: false,
+        sameSite: 'lax',
+      });
     });
 
     return cookies;
   }
 
-  private getClientCookieHeader(client: WsClientInterface): string | undefined {
-    const cookieMap = this.clientCookies.get(client.uuid);
-    if (!cookieMap) {
-      return client.requestHeaders?.['cookie'];
-    }
-
-    const entries = Object.entries(cookieMap);
-    if (!entries.length) {
+  private getClientCookieHeader(client: WsClientInterface, url?: string): string | undefined {
+    const cookieJar = this.clientCookies.get(client.uuid);
+    if (!cookieJar || !cookieJar.length || !url) {
       return undefined;
     }
 
-    return entries.map(([name, value]) => `${name}=${value}`).join('; ');
+    let targetUrl: URL;
+    try {
+      targetUrl = new URL(url, APP_CONFIG.api);
+    } catch {
+      return undefined;
+    }
+
+    const now = Date.now();
+    const filteredJar = cookieJar.filter(cookie => !this.isCookieExpired(cookie, now));
+    this.clientCookies.set(client.uuid, filteredJar);
+
+    const requestHost = targetUrl.hostname.toLowerCase();
+    const requestPath = targetUrl.pathname || '/';
+    const isHttpsRequest = targetUrl.protocol === 'https:';
+    const requestSite = this.getSiteKey(targetUrl.hostname);
+    const originSite = this.getSiteKey(this.extractHostname(client.requestHeaders?.['origin']));
+    const requestProtocol = targetUrl.protocol.replace(':', '');
+    const originProtocol = this.extractOriginProtocol(client.requestHeaders?.['origin']);
+    const isSameSite = !originSite
+      ? true
+      : !!requestSite &&
+        requestSite === originSite &&
+        !!requestProtocol &&
+        !!originProtocol &&
+        requestProtocol === originProtocol;
+
+    const selectedCookies = filteredJar
+      .filter(cookie => {
+        if (cookie.secure && !isHttpsRequest) {
+          return false;
+        }
+
+        if (cookie.hostOnly) {
+          if (cookie.domain !== requestHost) {
+            return false;
+          }
+        } else if (requestHost !== cookie.domain && !requestHost.endsWith(`.${cookie.domain}`)) {
+          return false;
+        }
+
+        if (!this.pathMatches(requestPath, cookie.path)) {
+          return false;
+        }
+
+        if ((cookie.sameSite === 'strict' || cookie.sameSite === 'lax') && !isSameSite) {
+          return false;
+        }
+
+        if (cookie.sameSite === 'none' && !cookie.secure) {
+          return false;
+        }
+
+        return true;
+      })
+      .sort((a, b) => b.path.length - a.path.length);
+
+    if (!selectedCookies.length) {
+      return undefined;
+    }
+
+    return selectedCookies.map(cookie => `${cookie.name}=${cookie.value}`).join('; ');
   }
 
-  private captureSetCookieHeaders(client: WsClientInterface, headers: Headers): void {
+  private captureSetCookieHeaders(
+    client: WsClientInterface,
+    headers: Headers,
+    requestUrl?: string
+  ): void {
     const getSetCookie = (headers as Headers & { getSetCookie?: () => string[] }).getSetCookie;
     const setCookieHeaders =
       typeof getSetCookie === 'function' ? getSetCookie.call(headers) : ([] as string[]);
@@ -774,23 +866,229 @@ export class WsServer {
       return;
     }
 
-    const cookieMap = this.clientCookies.get(client.uuid) ?? {};
+    if (!requestUrl) {
+      return;
+    }
+
+    const cookieJar = this.clientCookies.get(client.uuid) ?? [];
     setCookieHeaders.forEach(cookieLine => {
-      const [cookiePart] = cookieLine.split(';');
-      if (!cookiePart) {
+      const parsed = this.parseSetCookieHeader(cookieLine, requestUrl);
+      if (!parsed) {
         return;
       }
-      const separator = cookiePart.indexOf('=');
-      if (separator <= 0) {
+      if (parsed.expiresAt !== undefined && parsed.expiresAt <= Date.now()) {
+        this.removeClientCookie(cookieJar, parsed.name, parsed.domain, parsed.path);
         return;
       }
-      const name = cookiePart.slice(0, separator).trim();
-      const value = cookiePart.slice(separator + 1).trim();
-      if (name) {
-        cookieMap[name] = value;
-      }
+      this.upsertClientCookie(cookieJar, parsed);
     });
-    this.clientCookies.set(client.uuid, cookieMap);
+    this.clientCookies.set(client.uuid, cookieJar);
+  }
+
+  private parseSetCookieHeader(cookieLine: string, requestUrl: string): WsClientCookie | null {
+    let url: URL;
+    try {
+      url = new URL(requestUrl, APP_CONFIG.api);
+    } catch {
+      return null;
+    }
+
+    const parts = cookieLine
+      .split(';')
+      .map(part => part.trim())
+      .filter(Boolean);
+    if (!parts.length) {
+      return null;
+    }
+
+    const [cookiePart, ...attributes] = parts;
+    if (!cookiePart) {
+      return null;
+    }
+    const separator = cookiePart.indexOf('=');
+    if (separator <= 0) {
+      return null;
+    }
+
+    const name = cookiePart.slice(0, separator).trim();
+    const value = cookiePart.slice(separator + 1).trim();
+    if (!name) {
+      return null;
+    }
+
+    const requestHost = url.hostname.toLowerCase();
+    let domain = requestHost;
+    let hostOnly = true;
+    let path = this.defaultCookiePath(url.pathname);
+    let secure = false;
+    let sameSite: WsCookieSameSite = 'lax';
+    let expiresAt: number | undefined;
+
+    for (const attribute of attributes) {
+      const [rawKey, ...rawValueParts] = attribute.split('=');
+      const key = rawKey?.trim().toLowerCase();
+      const valuePart = rawValueParts.join('=').trim();
+
+      switch (key) {
+        case 'domain': {
+          if (!valuePart) {
+            break;
+          }
+          const normalized = valuePart.replace(/^\./, '').toLowerCase();
+          if (requestHost === normalized || requestHost.endsWith(`.${normalized}`)) {
+            domain = normalized;
+            hostOnly = false;
+          }
+          break;
+        }
+        case 'path':
+          if (valuePart && valuePart.startsWith('/')) {
+            path = valuePart;
+          }
+          break;
+        case 'secure':
+          secure = true;
+          break;
+        case 'samesite': {
+          const normalized = valuePart.toLowerCase();
+          if (normalized === 'strict' || normalized === 'lax' || normalized === 'none') {
+            sameSite = normalized;
+          }
+          break;
+        }
+        case 'max-age': {
+          const seconds = Number.parseInt(valuePart, 10);
+          if (!Number.isNaN(seconds)) {
+            expiresAt = Date.now() + seconds * 1000;
+          }
+          break;
+        }
+        case 'expires': {
+          const ts = Date.parse(valuePart);
+          if (!Number.isNaN(ts)) {
+            expiresAt = ts;
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+
+    return {
+      name,
+      value,
+      domain,
+      path,
+      hostOnly,
+      secure,
+      sameSite,
+      expiresAt,
+    };
+  }
+
+  private upsertClientCookie(cookieJar: WsClientCookie[], cookie: WsClientCookie): void {
+    const index = cookieJar.findIndex(
+      existing =>
+        existing.name === cookie.name &&
+        existing.domain === cookie.domain &&
+        existing.path === cookie.path
+    );
+    if (index >= 0) {
+      cookieJar[index] = cookie;
+      return;
+    }
+    cookieJar.push(cookie);
+  }
+
+  private removeClientCookie(
+    cookieJar: WsClientCookie[],
+    name: string,
+    domain: string,
+    path: string
+  ): void {
+    const index = cookieJar.findIndex(
+      existing => existing.name === name && existing.domain === domain && existing.path === path
+    );
+    if (index >= 0) {
+      cookieJar.splice(index, 1);
+    }
+  }
+
+  private isCookieExpired(cookie: WsClientCookie, now: number): boolean {
+    return cookie.expiresAt !== undefined && cookie.expiresAt <= now;
+  }
+
+  private pathMatches(requestPath: string, cookiePath: string): boolean {
+    if (!requestPath.startsWith(cookiePath)) {
+      return false;
+    }
+
+    if (requestPath.length === cookiePath.length) {
+      return true;
+    }
+
+    if (cookiePath.endsWith('/')) {
+      return true;
+    }
+
+    return requestPath.charAt(cookiePath.length) === '/';
+  }
+
+  private defaultCookiePath(pathname: string): string {
+    if (!pathname || !pathname.startsWith('/')) {
+      return '/';
+    }
+    if (pathname === '/') {
+      return '/';
+    }
+
+    const slashIndex = pathname.lastIndexOf('/');
+    if (slashIndex <= 0) {
+      return '/';
+    }
+
+    return pathname.slice(0, slashIndex);
+  }
+
+  private extractHostname(value?: string): string | undefined {
+    if (!value) {
+      return undefined;
+    }
+
+    try {
+      return new URL(value).hostname.toLowerCase();
+    } catch {
+      const trimmed = value.trim().toLowerCase();
+      if (!trimmed) {
+        return undefined;
+      }
+      return trimmed.split(':')[0];
+    }
+  }
+
+  private extractOriginProtocol(origin?: string): string | undefined {
+    if (!origin) {
+      return undefined;
+    }
+
+    try {
+      return new URL(origin).protocol.replace(':', '').toLowerCase();
+    } catch {
+      return undefined;
+    }
+  }
+
+  private getSiteKey(host?: string): string | undefined {
+    if (!host) {
+      return undefined;
+    }
+
+    const labels = host.toLowerCase().split('.').filter(Boolean);
+    if (labels.length < 2) {
+      return host.toLowerCase();
+    }
+    return `${labels[labels.length - 2]}.${labels[labels.length - 1]}`;
   }
 
   private resolveLocalApiUrl(url?: string): string | null {
@@ -804,8 +1102,19 @@ export class WsServer {
       if (target.origin !== baseUrl.origin) {
         return null;
       }
+
+      const internalApiBase = process.env['API_INTERNAL_URL']?.trim();
+      if (internalApiBase) {
+        const internalBaseUrl = new URL(internalApiBase);
+        return `${internalBaseUrl.origin}${target.pathname}${target.search}`;
+      }
+
       const protocol = this.isSSL ? 'https' : 'http';
-      return `${protocol}://${this.options.host}:${this.options.port}${target.pathname}${target.search}`;
+      const isDefaultPort =
+        (protocol === 'https' && this.options.port === 443) ||
+        (protocol === 'http' && this.options.port === 80);
+      const portSegment = isDefaultPort ? '' : `:${this.options.port}`;
+      return `${protocol}://${this.options.host}${portSegment}${target.pathname}${target.search}`;
     } catch {
       return null;
     }
