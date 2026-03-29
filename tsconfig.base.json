@@ -17,6 +17,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "target": "es2022",
+    "ignoreDeprecations": "6.0",
     "module": "esnext",
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
