@@ -60,13 +60,13 @@ const createLikesRepository = (): MockLikesRepository => ({
   getAllStates: vi.fn().mockReturnValue([]),
 });
 
-const createServer = async (): Promise<TestContext> => {
+const createServer = async (logger: 'OFF' | 'INFO' = 'OFF'): Promise<TestContext> => {
   const content = createContentRepository();
   const likes = createLikesRepository();
   const server = new WsServer(
     {
       ssl: false,
-      logger: 'OFF',
+      logger,
       host: '127.0.0.1',
       port: 0,
       origin: 'http://127.0.0.1',
@@ -114,6 +114,20 @@ afterEach(async () => {
 });
 
 describe('WsServer HTTP api', () => {
+  it('writes access logs on INFO level', async () => {
+    const infoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    const context = await createServer('INFO');
+
+    await axios.get(`${context.baseUrl}/privacy`);
+
+    expect(
+      infoSpy.mock.calls.some(call =>
+        call.some(arg => typeof arg === 'string' && arg.includes('WsServer.access'))
+      )
+    ).toBe(true);
+    infoSpy.mockRestore();
+  });
+
   it('serves published content routes', async () => {
     const context = await createServer();
 

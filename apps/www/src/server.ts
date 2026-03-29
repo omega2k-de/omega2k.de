@@ -18,6 +18,7 @@ import { APP_CONFIG, collectNavigableLoadComponentPaths } from '@o2k/core';
 import { appRoutes } from './app/app.routes';
 import { monitorEventLoopDelay } from 'perf_hooks';
 import { isDevMode } from '@angular/core';
+import { formatAccessLogLine, shouldLogAccess } from './access-log.util';
 
 const { ssr_port, url, socket, api, version, hash, nonce } = APP_CONFIG;
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -40,7 +41,8 @@ function getAllowedHosts(): string[] {
 }
 
 async function loadContentRoutesFromApi(): Promise<string[]> {
-  const base = (api || url).replace(/\/+$/g, '').replace(/^https:/g, 'http:');
+  const internalApi = process.env['API_INTERNAL_URL']?.trim();
+  const base = (internalApi || api || url).replace(/\/+$/g, '').replace(/^https:/g, 'http:');
   const response = await fetch(`${base}/sitemap-routes`);
   if (!response.ok) {
     throw new Error(`sitemap-routes request failed with status ${response.status}`);
@@ -111,6 +113,22 @@ export function ssrServer(): Express {
   app.use(cors(options));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  app.use((req, res, next) => {
+    const started = Date.now();
+    res.on('finish', () => {
+      if (shouldLogAccess(APP_CONFIG.logger)) {
+        const line = formatAccessLogLine(
+          req.method,
+          req.originalUrl || req.url,
+          res.statusCode,
+          Date.now() - started
+        );
+        console.info('[I]', '[WwwServer.access]', line);
+      }
+    });
+    next();
+  });
 
   app.get('/_health', (_, res) => {
     const eventLoopDelayMs = (histogram.mean / 1.0e6).toFixed(2);

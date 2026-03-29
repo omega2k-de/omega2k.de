@@ -334,6 +334,16 @@ export class WsServer {
     this.app.use(cors(options));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use((req, res, next) => {
+      const started = Date.now();
+      res.on('finish', () => {
+        this.logger.info(
+          'WsServer.access',
+          `${req.method.toUpperCase()} ${req.originalUrl || req.url} -> ${res.statusCode} ${Date.now() - started}ms`
+        );
+      });
+      next();
+    });
     this.app.disable('x-powered-by');
     this.app.get('/', (_, res) => {
       res.status(301).redirect(APP_CONFIG.url);

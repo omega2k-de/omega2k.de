@@ -26,6 +26,8 @@ services:
     depends_on:
       webservice-api:
         condition: service_started
+    environment:
+      API_INTERNAL_URL: 'http://webservice-api'
     networks: [o2k]
 
   webservice-api:
