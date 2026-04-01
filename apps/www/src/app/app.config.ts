@@ -37,7 +37,6 @@ import {
   APP_CONFIG,
   CoordinatorService,
   DeviceNotifyService,
-  HttpCachingInterceptorFn,
   LoadingInterceptorFn,
   LOCAL_STORAGE_ENCRYPTION_KEY,
   NetworkService,
@@ -92,7 +91,7 @@ export const appConfig: ApplicationConfig = {
       withJsonpSupport(),
       withFetch(),
       withXsrfConfiguration({ cookieName: 'X-XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' }),
-      withInterceptors([WebsocketHttpInterceptorFn, LoadingInterceptorFn, HttpCachingInterceptorFn])
+      withInterceptors([WebsocketHttpInterceptorFn, LoadingInterceptorFn])
     ),
     provideErrorHandler(),
     provideServiceWorker('ngsw-worker.js', {

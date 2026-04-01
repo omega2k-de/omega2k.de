@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
-
 import { LikesService, LikeState } from '@o2k/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconDirective, VibrateDirective } from '../../directives';

@@ -238,6 +238,7 @@ android_wifi_4_bar_question ef11
 animated_images f49a
 animation e71c
 announcement e87f
+antigravity fffd2
 aod f2e6
 aod_tablet f89f
 aod_watch f6ac
@@ -305,10 +306,12 @@ arrow_upward e5d8
 arrow_upward_alt e986
 arrow_warm_up f4b5
 arrows_input f394
+arrows_left_right_circle eee4
 arrows_more_down f8ab
 arrows_more_up f8ac
 arrows_output f393
 arrows_outward f72c
+arrows_up_down_circle eee3
 art_track e060
 article ef42
 article_person f368
@@ -385,9 +388,11 @@ av_timer e01b
 avc f4af
 avg_pace f6bb
 avg_time f813
+avocado_bean fffa7
 award_meal f241
 award_star f612
 azm f6ec
+b_circle eee2
 baby_changing_station f19b
 back_hand e764
 back_to_tab f72b
@@ -553,6 +558,7 @@ bookmark_flag f456
 bookmark_heart f455
 bookmark_manager f7b1
 bookmark_remove e59a
+bookmark_stacks eee8
 bookmark_star f454
 bookmarks e98b
 books_movies_and_music ef82
@@ -623,6 +629,7 @@ build_circle ef48
 bungalow e591
 burst_mode e43c
 bus_alert e98f
+bus_map_pin fffa2
 bus_railway f36b
 business e7ee
 business_center eb3f
@@ -709,6 +716,7 @@ card_travel e8f8
 cardio_load f4b9
 cardiology e09c
 cards e991
+cards_stack f38f
 cards_star f375
 carpenter f1f8
 carry_on_bag eb08
@@ -746,6 +754,7 @@ chat e0c9
 chat_add_on f0f3
 chat_apps_script f0bd
 chat_bubble e0cb
+chat_bubble_off fffbb
 chat_bubble_outline e0cb
 chat_dashed eeed
 chat_error f7ac
@@ -753,6 +762,7 @@ chat_info f52b
 chat_paste_go f6bd
 chat_paste_go_2 f3cb
 check e5ca
+check_alert fff85
 check_box e834
 check_box_outline_blank e835
 check_circle f0be
@@ -783,6 +793,7 @@ chess_rook f25b
 chevron_backward f46b
 chevron_forward f46a
 chevron_left e5cb
+chevron_line_up eec3
 chevron_right e5cc
 child_care eb41
 child_friendly eb42
@@ -796,6 +807,7 @@ chronic ebb2
 church eaae
 cinematic_blur f853
 circle ef4a
+circle_circle eee1
 circle_notifications e994
 circles e7ea
 circles_ext e7ec
@@ -844,6 +856,7 @@ co_present eaf0
 code e86f
 code_blocks f84d
 code_off e4f3
+code_xml fff8b
 coffee efef
 coffee_maker eff0
 cognition e09f
@@ -875,6 +888,7 @@ compress e94d
 computer e31e
 computer_arrow_up f2f7
 computer_cancel f2f6
+computer_sound eeb4
 concierge f561
 conditions e0a0
 confirmation_number e638
@@ -986,6 +1000,8 @@ dangerous e99a
 dark_mode e51c
 dashboard e871
 dashboard_2 f3ea
+dashboard_2_edit fffd7
+dashboard_2_gear fffd6
 dashboard_customize e99b
 data_alert f7f6
 data_array ead1
@@ -1048,6 +1064,7 @@ desktop_windows e30c
 destruction f585
 details e3c8
 detection_and_zone e29f
+detection_and_zone_off eebf
 detector e282
 detector_alarm e1f7
 detector_battery e204
@@ -1345,6 +1362,7 @@ exposure_zero e3cf
 extension e87b
 extension_off e4f5
 eye_tracking f4c9
+eyebrow eeb3
 eyeglasses f6ee
 eyeglasses_2 f2c7
 eyeglasses_2_sound f265
@@ -1450,6 +1468,7 @@ find_in_page e880
 find_replace e881
 fingerprint e90d
 fingerprint_off f49d
+fire_check fffa8
 fire_extinguisher f1d8
 fire_hydrant f1a3
 fire_truck f8f2
@@ -1460,6 +1479,7 @@ fit_page_height f397
 fit_page_width f396
 fit_screen ea10
 fit_width f779
+fitbit_raquetball fffc5
 fitness_center eb43
 fitness_tracker f463
 fitness_trackers eef1
@@ -1535,6 +1555,7 @@ foot_bones f893
 footprint f87d
 for_you e9ac
 forest ea99
+fork_chart fffa6
 fork_left eba0
 fork_right ebac
 fork_spoon f3e4
@@ -1554,6 +1575,12 @@ format_h3 f85f
 format_h4 f860
 format_h5 f861
 format_h6 f862
+format_image_back eeb0
+format_image_break_left eeaf
+format_image_break_right eeae
+format_image_front eead
+format_image_inline_left eeac
+format_image_inline_right ffffd
 format_image_left f863
 format_image_right f864
 format_indent_decrease e23d
@@ -1572,6 +1599,7 @@ format_list_numbered e242
 format_list_numbered_rtl e267
 format_overline eb65
 format_paint e243
+format_paint_off fff97
 format_paragraph f865
 format_quote e244
 format_quote_off f413
@@ -1624,7 +1652,31 @@ g_mobiledata f010
 g_mobiledata_badge f7e1
 g_translate e927
 gallery_thumbnail f86f
+game_bumper_left eee0
+game_bumper_right eedf
+game_button_l eede
+game_button_l1 eedd
+game_button_l2 eedc
+game_button_r eedb
+game_button_r1 eeda
+game_button_r2 eed9
+game_button_zl eed8
+game_button_zr eed7
+game_stick_l3 eed6
+game_stick_left eed5
+game_stick_r3 eed4
+game_stick_right eed3
+game_trigger_left eed2
+game_trigger_right eed1
 gamepad e30f
+gamepad_circle_down eed0
+gamepad_circle_left eecf
+gamepad_circle_right eece
+gamepad_circle_up eecd
+gamepad_down eecc
+gamepad_left eecb
+gamepad_right eeca
+gamepad_up eec9
 games e30f
 garage f011
 garage_check f28d
@@ -1650,6 +1702,8 @@ girl eb68
 gite e58b
 glass_cup f6e3
 globe e64c
+globe_2_cancel fffb7
+globe_2_question fffb6
 globe_asia f799
 globe_book f3c9
 globe_location_pin f35d
@@ -1680,13 +1734,16 @@ graph_4 f39d
 graph_5 f39c
 graph_6 f39b
 graph_7 f346
+graph_8 fffec
 graphic_eq e1b8
+graphic_eq_off fff98
 grass f205
 grid_3x3 f015
 grid_3x3_off f67c
 grid_4x4 f016
 grid_goldenratio f017
 grid_guides f76f
+grid_layout_side fff8d
 grid_off e3eb
 grid_on e3ec
 grid_view e9b0
@@ -1816,7 +1873,11 @@ home_pin f14d
 home_repair_service f100
 home_speaker f11c
 home_storage f86c
+home_storage_gear fff7e
 home_work f030
+horizontal_align_center fff9c
+horizontal_align_left fff9b
+horizontal_align_right fff9a
 horizontal_distribute e014
 horizontal_rule f108
 horizontal_split e947
@@ -1828,6 +1889,7 @@ hourglass ebff
 hourglass_arrow_down f37e
 hourglass_arrow_up f37d
 hourglass_bottom ea5c
+hourglass_check fffed
 hourglass_disabled ef53
 hourglass_empty e88b
 hourglass_full e88c
@@ -2070,9 +2132,11 @@ line_style e919
 line_weight e91a
 linear_scale e260
 link e250
+link_2 fffb5
 link_off e16f
 linked_camera e438
 linked_services f535
+lips eeb2
 liquor ea60
 list e896
 list_alt e0ee
@@ -2240,6 +2304,7 @@ mic_alert f392
 mic_double f5d1
 mic_external_off ef59
 mic_external_on ef5a
+mic_gear eeba
 mic_none e31d
 mic_off e02b
 microbiology e10c
@@ -2308,8 +2373,10 @@ mobile_text f2eb
 mobile_text_2 f2e6
 mobile_theft f2a9
 mobile_ticket f2e4
+mobile_unlock eeea
 mobile_vibrate f2cb
 mobile_wrench f2b0
+mobiledata_arrows fffa3
 mobiledata_off f034
 mode f097
 mode_comment e253
@@ -2319,6 +2386,7 @@ mode_dual f557
 mode_edit f097
 mode_edit_outline f097
 mode_fan f168
+mode_fan_2 fffd0
 mode_fan_off ec17
 mode_heat f16a
 mode_heat_cool f16b
@@ -2345,6 +2413,7 @@ monochrome_photos e403
 monorail f473
 mood ea22
 mood_bad e7f3
+mood_heart fffb4
 moon_stars f34f
 mop e28d
 moped eb28
@@ -2389,6 +2458,7 @@ moved_location e594
 movie e404
 movie_creation e404
 movie_edit f840
+movie_edit_off fff7d
 movie_filter e43a
 movie_info e02d
 movie_off f499
@@ -2406,6 +2476,7 @@ museum ea36
 music_cast eb1a
 music_history f2c1
 music_note e405
+music_note_2 fffd8
 music_note_add f391
 music_off e440
 music_video e063
@@ -2551,6 +2622,8 @@ note_stack f562
 note_stack_add f563
 notes e26c
 notification_add e399
+notification_audio eec1
+notification_audio_off eec0
 notification_important e004
 notification_multiple e6c2
 notification_settings f367
@@ -2654,6 +2727,7 @@ partner_heart ef2e
 partner_reports efaf
 party_mode e7fa
 passkey f87f
+passport eec4
 password f042
 password_2 f4a9
 password_2_off f4a8
@@ -2718,6 +2792,7 @@ person_raised_hand f59a
 person_remove ef66
 person_search f106
 person_shield e384
+person_text eebd
 personal_bag eb0e
 personal_bag_off eb0f
 personal_bag_question eb10
@@ -2734,6 +2809,7 @@ phone_alt f0d4
 phone_android f2db
 phone_bluetooth_speaker e61b
 phone_callback e649
+phone_cancel fff9d
 phone_disabled e9cc
 phone_enabled e9cd
 phone_forwarded e61c
@@ -2946,6 +3022,7 @@ recenter f4c0
 recommend e9d2
 record_voice_over e91f
 rectangle eb54
+rectangle_add eec8
 recycling e760
 redeem e8f6
 redo e15a
@@ -3003,6 +3080,7 @@ reset_tv e9d9
 reset_white_balance f47c
 reset_wrench f56c
 resize f707
+resize_window fff99
 respiratory_rate e127
 responsive_layout e9da
 rest_area f22a
@@ -3143,6 +3221,7 @@ select_window_off e506
 self_care f86d
 self_improvement ea78
 sell f05b
+sell_cloud fff7b
 send e163
 send_and_archive ea0c
 send_money e8b7
@@ -3238,6 +3317,7 @@ shield_with_house e78d
 shift e5f2
 shift_lock f7ae
 shift_lock_off f483
+shoe_cleats fffb3
 shop e8c9
 shop_2 e8ca
 shop_two e8ca
@@ -3271,6 +3351,7 @@ signal_cellular_add f7a9
 signal_cellular_alt e202
 signal_cellular_alt_1_bar ebdf
 signal_cellular_alt_2_bar ebe3
+signal_cellular_alt_off fff8a
 signal_cellular_connected_no_internet_0_bar f0ac
 signal_cellular_connected_no_internet_4_bar e1cd
 signal_cellular_no_sim e1ce
@@ -3333,6 +3414,7 @@ sms_failed e87f
 snippet_folder f1c7
 snooze e046
 snowboarding e513
+snowflake ed5b
 snowing e80f
 snowing_heavy f61c
 snowmobile e503
@@ -3361,6 +3443,7 @@ south_west f1e5
 spa eb4c
 space_bar e256
 space_dashboard e66b
+space_dashboard_2 fff8c
 spatial_audio ebeb
 spatial_audio_off ebe8
 spatial_speaker f4cf
@@ -3399,6 +3482,7 @@ splitscreen f06d
 splitscreen_add f4fd
 splitscreen_bottom f676
 splitscreen_landscape f459
+splitscreen_landscape_add fffba
 splitscreen_left f675
 splitscreen_portrait f458
 splitscreen_right f674
@@ -3429,7 +3513,9 @@ sports_tennis ea32
 sports_volleyball ea31
 sprinkler e29a
 sprint f81f
+sql fff95
 square eb36
+square_circle eec7
 square_dot f3b3
 square_foot ea49
 ssid_chart eb66
@@ -3480,6 +3566,8 @@ steps f6da
 stethoscope f805
 stethoscope_arrow f807
 stethoscope_check f806
+sticker e707
+sticker_add eec2
 sticky_note e9e8
 sticky_note_2 f1fc
 stock_media f570
@@ -3548,8 +3636,10 @@ swipe e9ec
 swipe_down eb53
 swipe_down_alt eb30
 swipe_left eb59
+swipe_left_2 fff94
 swipe_left_alt eb33
 swipe_right eb52
+swipe_right_2 fff93
 swipe_right_alt eb56
 swipe_up eb2e
 swipe_up_alt eb35
@@ -3639,8 +3729,10 @@ temple_buddhist eab3
 temple_hindu eaaf
 tenancy f0e3
 terminal eb8e
+terminal_2 fff8e
 terrain e564
 text_ad e728
+text_ad_off fff92
 text_compare f3c5
 text_decrease eadd
 text_fields e262
@@ -3674,6 +3766,7 @@ theater_comedy ea66
 theaters e8da
 thermometer e846
 thermometer_add f582
+thermometer_alert ffffb
 thermometer_gain f6d8
 thermometer_loss f6d7
 thermometer_minus f581
@@ -3794,6 +3887,7 @@ travel_luggage_and_bags efc3
 trending_down e8e3
 trending_flat e8e4
 trending_up e8e5
+triangle_circle eec6
 trip e6fb
 trip_origin e57b
 trolley f86b
@@ -3836,6 +3930,7 @@ ulna_radius f89d
 ulna_radius_alt f89e
 umbrella f1ad
 unarchive e169
+undereye eeb1
 undo e166
 unfold_less e5d6
 unfold_less_double f8cf
@@ -3901,6 +3996,7 @@ video_library e04a
 video_search efc6
 video_settings ea75
 video_stable f081
+video_template fffd3
 videocam e04b
 videocam_alert f390
 videocam_off e04c
@@ -3942,6 +4038,7 @@ vital_signs e650
 vitals e13b
 vo2_max f4aa
 voice_chat e62e
+voice_chat_off eebe
 voice_over_off e94a
 voice_selection f58a
 voice_selection_off f42c
@@ -3978,10 +4075,13 @@ warning_off f7ad
 wash f1b1
 washoku f280
 watch e334
+watch_alert fffd1
 watch_arrow f2ca
+watch_arrow_down fffcf
 watch_button_press f6aa
 watch_check f468
 watch_later efd6
+watch_lock eee9
 watch_off eae3
 watch_screentime f6ae
 watch_vibration f467
@@ -3992,6 +4092,7 @@ water_bottle_large f69e
 water_damage f203
 water_do f870
 water_drop e798
+water_drops fffa5
 water_ec f875
 water_full f6d6
 water_heater e284
@@ -4027,9 +4128,11 @@ weekend e16b
 weight e13d
 west f1e6
 whatshot e80e
+wheat fffa4
 wheelchair_pickup f1ab
 where_to_vote e177
 widget_medium f3ba
+widget_menu eeb7
 widget_small f3b9
 widget_width f3b8
 widgets e1bd
@@ -4087,6 +4190,8 @@ wrap_text e25b
 wrist f69c
 wrong_location ef78
 wysiwyg f1c3
+x_circle e349
+y_circle eec5
 yakitori ef31
 yard f089
 yoshoku f27f
