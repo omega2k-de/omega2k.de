@@ -1,5 +1,4 @@
 import '@angular/compiler';
-import axios from 'axios';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -119,7 +118,7 @@ describe('WsServer HTTP api', () => {
     const infoSpy = vi.spyOn(console, 'info').mockImplementation(() => undefined);
     const context = await createServer('INFO');
 
-    await axios.get(`${context.baseUrl}/privacy`);
+    await fetch(`${context.baseUrl}/privacy`);
 
     expect(
       infoSpy.mock.calls.some(call =>
@@ -132,10 +131,11 @@ describe('WsServer HTTP api', () => {
   it('serves published content routes', async () => {
     const context = await createServer();
 
-    const response = await axios.get(`${context.baseUrl}/content/test-article`);
+    const response = await fetch(`${context.baseUrl}/content/test-article`);
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual({
+    const data = await response.json();
+    expect(data).toEqual({
       route: '/content/test-article',
       isPublished: true,
       title: 'Test article',
@@ -151,12 +151,11 @@ describe('WsServer HTTP api', () => {
       title: 'Draft article',
     });
 
-    const response = await axios.get(`${context.baseUrl}/content/draft-article`, {
-      validateStatus: () => true,
-    });
+    const response = await fetch(`${context.baseUrl}/content/draft-article`);
 
     expect(response.status).toBe(404);
-    expect(response.data).toEqual({ error: 'not_found' });
+    const data = await response.json();
+    expect(data).toEqual({ error: 'not_found' });
     expect(context.content.getPageByRoute).toHaveBeenCalledWith('/content/draft-article');
   });
 
@@ -164,48 +163,51 @@ describe('WsServer HTTP api', () => {
     const context = await createServer();
     context.likes.toggle.mockReturnValue({ articleId: 42, count: 1, liked: true });
 
-    const response = await axios.post(`${context.baseUrl}/likes/42/toggle`);
+    const response = await fetch(`${context.baseUrl}/likes/42/toggle`, {
+      method: 'POST',
+    });
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual({ articleId: 42, count: 1, liked: true });
+    const data = await response.json();
+    expect(data).toEqual({ articleId: 42, count: 1, liked: true });
     expect(context.likes.toggle).toHaveBeenCalledWith(42, expect.any(String));
 
-    const cookieHeader = response.headers['set-cookie'];
-    expect(Array.isArray(cookieHeader)).toBe(true);
-    const [cookie] = cookieHeader ?? [];
-    expect(cookie).toBeDefined();
-    expect(cookie).toContain('o2k_uid=');
-    expect(cookie).toContain('HttpOnly');
-    expect(cookie).toContain('SameSite=Lax');
-    expect(cookie).not.toContain('Secure');
+    const cookieHeader = response.headers.get('set-cookie');
+    expect(cookieHeader).toBeDefined();
+    expect(cookieHeader).toContain('o2k_uid=');
+    expect(cookieHeader).toContain('HttpOnly');
+    expect(cookieHeader).toContain('SameSite=Lax');
+    expect(cookieHeader).not.toContain('Secure');
   });
 
   it('reads the user id from cookies for like state endpoints', async () => {
     const context = await createServer();
     context.likes.getState.mockReturnValue({ articleId: 7, count: 4, liked: true });
 
-    const response = await axios.get(`${context.baseUrl}/likes/7`, {
+    const response = await fetch(`${context.baseUrl}/likes/7`, {
       headers: {
         Cookie: 'o2k_uid=test%20user',
       },
     });
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual({ articleId: 7, count: 4, liked: true });
+    const data = await response.json();
+    expect(data).toEqual({ articleId: 7, count: 4, liked: true });
     expect(context.likes.getState).toHaveBeenCalledWith(7, 'test user');
   });
 
   it('returns parsed cookies via the privacy endpoint', async () => {
     const context = await createServer();
 
-    const response = await axios.get(`${context.baseUrl}/privacy`, {
+    const response = await fetch(`${context.baseUrl}/privacy`, {
       headers: {
         Cookie: 'theme=light',
       },
     });
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual({
+    const data = await response.json();
+    expect(data).toEqual({
       cookies: [{ key: 'theme', value: 'light' }],
     });
   });
@@ -424,12 +426,11 @@ describe('WsServer HTTP api', () => {
   it('rejects empty random-card amounts', async () => {
     const context = await createServer();
 
-    const response = await axios.get(`${context.baseUrl}/random-cards/0`, {
-      validateStatus: () => true,
-    });
+    const response = await fetch(`${context.baseUrl}/random-cards/0`);
 
     expect(response.status).toBe(400);
-    expect(response.data).toEqual({ error: 'amount_required' });
+    const data = await response.json();
+    expect(data).toEqual({ error: 'amount_required' });
     expect(context.content.getRandomCards).not.toHaveBeenCalled();
   });
 });

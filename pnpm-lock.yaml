@@ -76,9 +76,6 @@ importers:
       '@nx/webpack':
         specifier: 22.6.3
         version: 22.6.3(@babel/traverse@7.29.0)(@rspack/core@1.6.8(@swc/helpers@0.5.20))(@swc-node/register@1.11.1(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@swc/core@1.15.21(@swc/helpers@0.5.20))(@swc/types@0.1.26)(typescript@6.0.2))(@swc/core@1.15.21(@swc/helpers@0.5.20))(esbuild@0.27.4)(lightningcss@1.32.0)(nx@22.6.3(@swc-node/register@1.11.1(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@swc/core@1.15.21(@swc/helpers@0.5.20))(@swc/types@0.1.26)(typescript@6.0.2))(@swc/core@1.15.21(@swc/helpers@0.5.20)))(typescript@6.0.2)(verdaccio@6.3.2(encoding@0.1.13)(typanion@3.14.0))(webpack-cli@7.0.2)
-      axios:
-        specifier: ^1.14.0
-        version: 1.14.0
       compression:
         specifier: ^1.8.1
         version: 1.8.1
