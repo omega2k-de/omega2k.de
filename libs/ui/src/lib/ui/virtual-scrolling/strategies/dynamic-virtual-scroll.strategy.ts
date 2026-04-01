@@ -213,7 +213,7 @@ export class DynamicVirtualScrollStrategy implements VirtualScrollStrategy {
    * @returns
    */
   private _getMsgHeight(m: DynamicItemInterface): number {
-    let height = 0;
+    let height;
     const cachedHeight = this._heightCache.get(m.uuid);
 
     if (!cachedHeight) {

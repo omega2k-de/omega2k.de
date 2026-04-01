@@ -1,0 +1,200 @@
+# Spec-Kit Metadata for www.omega2k.de
+# This file defines metadata and annotations for Spec-Kit integration.
+
+version: '1.0.0'
+
+# Project Metadata
+project:
+  name: 'www.omega2k.de'
+  description: 'A platform for exploring the proto-Superorganismus 2.0 concept with Angular and Node.js.'
+  version: '0.1.0'
+  license: 'MIT'
+  repository: 'https://gitlab.omega2k.de/developers/omega2k.de'
+  documentation: 'https://www.omega2k.de/docs'
+
+# Spec-Kit Configuration
+spec_kit:
+  enabled: true
+  output_dir: 'docs/spec-kit'
+  templates:
+    - 'docs/metadata/templates/*'
+
+# Documentation Sections
+sections:
+  - id: 'overview'
+    title: 'Overview'
+    description: 'High-level overview of the project.'
+    files:
+      - 'README.md'
+      - 'ROADMAP.md'
+
+  - id: 'development'
+    title: 'Development'
+    description: 'Guidelines and workflows for development.'
+    files:
+      - 'CONTRIBUTING.md'
+      - 'AGENTIC_CODING.md'
+      - 'CHANGELOG.md'
+
+  - id: 'architecture'
+    title: 'Architecture'
+    description: 'Architectural decisions and system design.'
+    files:
+      - 'docs/architecture/*'
+
+  - id: 'api'
+    title: 'API Reference'
+    description: 'WebSocket and REST API documentation.'
+    files:
+      - 'docs/api/*'
+
+# Annotations for Key Files
+annotations:
+  - file: 'ROADMAP.md'
+    title: 'Project Roadmap'
+    description: 'Future plans and milestones for the project.'
+    tags: ['roadmap', 'planning']
+
+  - file: 'CONTRIBUTING.md'
+    title: 'Contribution Guidelines'
+    description: 'How to contribute to the project.'
+    tags: ['contributing', 'workflow']
+
+  - file: 'AGENTIC_CODING.md'
+    title: 'Agentic Coding Standards'
+    description: 'Guidelines for AI and human collaboration.'
+    tags: ['agentic', 'ai', 'standards']
+
+  - file: 'CHANGELOG.md'
+    title: 'Changelog'
+    description: 'History of changes and releases.'
+    tags: ['changelog', 'releases']
+
+# Metadata for Applications
+applications:
+  - id: 'www'
+    name: 'Frontend (Angular)'
+    description: 'Angular-based frontend with SSR support.'
+    type: 'web'
+    framework: 'Angular'
+    language: 'TypeScript'
+    tags: ['frontend', 'ssr', 'angular']
+
+  - id: 'websocket'
+    name: 'WebSocket Server'
+    description: 'Node.js WebSocket server for real-time communication.'
+    type: 'api'
+    framework: 'Express'
+    language: 'TypeScript'
+    tags: ['backend', 'websocket', 'nodejs']
+
+# Metadata for Libraries
+libraries:
+  - id: 'core'
+    name: 'Core Library'
+    description: 'Core logic and data access layer.'
+    language: 'TypeScript'
+    tags: ['library', 'core', 'data']
+
+  - id: 'ui'
+    name: 'UI Library'
+    description: 'Reusable UI components.'
+    language: 'TypeScript'
+    tags: ['library', 'ui', 'components']
+
+  - id: 'page'
+    name: 'Page Library'
+    description: 'Page components and layouts.'
+    language: 'TypeScript'
+    tags: ['library', 'page', 'layout']
+
+# Metadata for Docker Services
+docker:
+  services:
+    - id: 'ssr'
+      name: 'SSR Service'
+      description: 'Docker container for Angular SSR.'
+      dockerfile: 'docker/Dockerfile.ssr'
+      ports: ['42000:80']
+      tags: ['docker', 'ssr', 'frontend']
+
+    - id: 'api'
+      name: 'API Service'
+      description: 'Docker container for WebSocket server.'
+      dockerfile: 'docker/Dockerfile.api'
+      ports: ['42001:80']
+      tags: ['docker', 'api', 'backend']
+
+# Metadata for CI/CD Pipeline
+ci_cd:
+  pipeline: '.gitlab-ci.yml'
+  stages:
+    - 'lint'
+    - 'test'
+    - 'build'
+    - 'deploy'
+  tags: ['ci', 'cd', 'gitlab']
+
+# Metadata for Testing
+testing:
+  frameworks:
+    - name: 'Vitest'
+      type: 'unit'
+      coverage: '>=80%'
+      tags: ['testing', 'unit', 'vitest']
+
+    - name: 'Playwright'
+      type: 'e2e'
+      tags: ['testing', 'e2e', 'playwright']
+
+# Metadata for Documentation
+documentation:
+  tools:
+    - name: 'Markdown'
+      description: 'Lightweight markup language for documentation.'
+      tags: ['documentation', 'markdown']
+
+    - name: 'PlantUML'
+      description: 'Generate UML diagrams from text.'
+      tags: ['documentation', 'diagrams', 'plantuml']
+
+    - name: 'Mermaid'
+      description: 'Generate diagrams and visualizations.'
+      tags: ['documentation', 'diagrams', 'mermaid']
+
+# Metadata for Agentic Coding
+agentic_coding:
+  roles:
+    - id: 'issue_triage'
+      name: 'Issue Triage Agent'
+      description: 'Labels and prioritizes issues.'
+      tags: ['agentic', 'issue', 'triage']
+
+    - id: 'pr_review'
+      name: 'Pull Request Review Agent'
+      description: 'Reviews pull requests for quality and standards.'
+      tags: ['agentic', 'pr', 'review']
+
+    - id: 'documentation'
+      name: 'Documentation Agent'
+      description: 'Updates and generates documentation.'
+      tags: ['agentic', 'documentation']
+
+    - id: 'test_generation'
+      name: 'Test Generation Agent'
+      description: 'Generates unit and integration tests.'
+      tags: ['agentic', 'test', 'generation']
+
+    - id: 'refactoring'
+      name: 'Refactoring Agent'
+      description: 'Refactors code for readability and maintainability.'
+      tags: ['agentic', 'refactoring']
+
+# Metadata for Spec-Kit Integration
+spec_kit_integration:
+  status: 'prepared'
+  next_steps:
+    - 'Add metadata to all documentation files.'
+    - 'Generate Spec-Kit output.'
+    - 'Integrate with CI/CD pipeline.'
+  tags: ['spec-kit', 'integration', 'metadata']

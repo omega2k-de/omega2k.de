@@ -94,3 +94,9 @@ And join the Nx community:
 - [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
 to be continued...
+
+## Spec-Kit
+
+The Spec-Kit output is generated automatically in the CI/CD pipeline and stored in the [`docs/spec-kit`](docs/spec-kit) directory. It includes structured documentation for the project's applications, libraries, and workflows.
+
+For more details, see the [Spec-Kit Output](docs/spec-kit/README.md).
