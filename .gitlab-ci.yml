@@ -379,30 +379,6 @@ publish to github:
   script:
     - sh ./scripts/git-push-github.sh
 
-generate spec-kit:
-  interruptible: false
-  extends:
-    - .standard-rules
-  stage: docs
-  image: node:24.14.1-alpine3.22
-  needs:
-    - job: semantic release live
-      artifacts: true
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
-      when: always
-      allow_failure: false
-  before_script:
-    - apk add --no-cache git
-    - npm install -g pnpm
-    - pnpm install --ignore-scripts
-  script:
-    - node ./scripts/generate-spec-kit.mjs
-  artifacts:
-    paths:
-      - docs/spec-kit/
-    expire_in: 4 week
-
 run html tests:
   extends:
     - .standard-rules
