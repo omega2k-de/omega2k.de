@@ -83,5 +83,8 @@ ngsw.json
 ngsw-worker.js
 likes.db
 
+.vibe/
 .claude/worktrees
 .claude/settings.local.json
+
+.specify/extensions/.cache
