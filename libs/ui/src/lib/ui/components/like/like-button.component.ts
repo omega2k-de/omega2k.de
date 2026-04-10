@@ -1,10 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   effect,
   inject,
   input,
-  OnInit,
   PLATFORM_ID,
   signal,
 } from '@angular/core';
@@ -21,17 +21,17 @@ import { IconDirective, VibrateDirective } from '../../directives';
   styleUrls: ['./like-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LikeButtonComponent implements OnInit {
+export class LikeButtonComponent implements AfterViewInit {
   private readonly likesService = inject(LikesService);
   private readonly platformId = inject(PLATFORM_ID);
 
-  readonly state = input<LikeState | null | undefined>(undefined);
+  readonly state = input<LikeState | undefined>(undefined);
   readonly articleId = input.required<number>();
 
   readonly liked = signal(false);
   readonly count = signal<number | null>(null);
   readonly loading = signal(true);
-  /** ensures we only force-refresh once on the client after hydration */
+
   private readonly refreshedOnce = signal(false);
 
   constructor() {
@@ -41,7 +41,7 @@ export class LikeButtonComponent implements OnInit {
       if (state) {
         this.applyState(state);
         this.loading.set(false);
-      } else if (state === undefined) {
+      } else if (articleId) {
         this.load(articleId);
       } else {
         this.loading.set(false);
@@ -49,9 +49,7 @@ export class LikeButtonComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // After SSR hydration the initial state may be stale because the user id
-    // cookie is only available in the browser. Force a fresh fetch once.
+  ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId) && !this.refreshedOnce()) {
       this.refreshedOnce.set(true);
       this.load(this.articleId());
@@ -66,9 +64,8 @@ export class LikeButtonComponent implements OnInit {
       .subscribe({
         next: state => {
           this.applyState(state);
-          this.loading.set(false);
         },
-        error: () => {
+        complete: () => {
           this.loading.set(false);
         },
       });
@@ -86,17 +83,17 @@ export class LikeButtonComponent implements OnInit {
       .subscribe({
         next: state => {
           this.applyState(state);
-          this.loading.set(false);
         },
-        error: () => {
-          this.liked.set(false);
+        complete: () => {
           this.loading.set(false);
         },
       });
   }
 
   private applyState(state: LikeState): void {
-    this.liked.set(state.liked === true);
+    if (typeof state.liked === 'boolean') {
+      this.liked.set(state.liked);
+    }
     this.count.set(state.count ?? 0);
   }
 }

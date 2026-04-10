@@ -17,7 +17,7 @@
         <div class="booklet nm-pressed">
           <header [title]="card.title" class="deck-title">
             <a [routerLink]="[card.route]">{{ card.title }}</a>
-            <ui-like-button [state]="likes().get(card.id) ?? null" [articleId]="card.id" />
+            <ui-like-button [state]="likes().get(card.id)" [articleId]="card.id" />
             <button
               uiVibrate
               type="button"

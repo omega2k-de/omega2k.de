@@ -47,7 +47,7 @@ describe('LikeButtonComponent', () => {
     fixture.componentRef.setInput('articleId', 7);
     fixture.componentRef.setInput('state', { articleId: 7, count: 0, liked: false });
 
-    component.ngOnInit();
+    component.ngAfterViewInit();
     tick();
 
     expect(likesService.getState).toHaveBeenCalledTimes(1);
