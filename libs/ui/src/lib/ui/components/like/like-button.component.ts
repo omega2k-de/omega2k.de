@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { LikesService, LikeState } from '@o2k/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconDirective, VibrateDirective } from '../../directives';
@@ -11,8 +21,9 @@ import { IconDirective, VibrateDirective } from '../../directives';
   styleUrls: ['./like-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LikeButtonComponent {
+export class LikeButtonComponent implements OnInit {
   private readonly likesService = inject(LikesService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly state = input<LikeState | null | undefined>(undefined);
   readonly articleId = input.required<number>();
@@ -20,6 +31,8 @@ export class LikeButtonComponent {
   readonly liked = signal(false);
   readonly count = signal<number | null>(null);
   readonly loading = signal(true);
+  /** ensures we only force-refresh once on the client after hydration */
+  private readonly refreshedOnce = signal(false);
 
   constructor() {
     effect(() => {
@@ -34,6 +47,15 @@ export class LikeButtonComponent {
         this.loading.set(false);
       }
     });
+  }
+
+  ngOnInit(): void {
+    // After SSR hydration the initial state may be stale because the user id
+    // cookie is only available in the browser. Force a fresh fetch once.
+    if (isPlatformBrowser(this.platformId) && !this.refreshedOnce()) {
+      this.refreshedOnce.set(true);
+      this.load(this.articleId());
+    }
   }
 
   load(id: number): void {
