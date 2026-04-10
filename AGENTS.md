@@ -24,3 +24,7 @@ Unit tests default to Vitest/Jest (`pnpm test` runs `nx run-many --target=test` 
 ## Commit & Pull Request Guidelines
 
 Commitlint enforces Conventional Commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `ci`, `chore`, `perf`, `revert`, and `vercel`. Use `type(scope?): summary` with imperative verbs (`fix: adjust hero gradient`). Squash WIP commits locally. Pull requests must describe the change, list affected Nx targets, link to issues, and attach UI screenshots or API traces when behavior changes. Include test evidence (`pnpm test`, relevant e2e commands) and call out config updates (`.env`, migrations) in the PR description.\*\*\*
+
+## Agent Quickstart
+
+Continue reading [Agent Quickstart](./AGENT_QUICKSTART.md) and

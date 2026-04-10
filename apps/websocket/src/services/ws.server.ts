@@ -98,6 +98,7 @@ export class WsServer {
 
     this.app = express();
     this.addDefaults(options.origin);
+    this.addUserIdMiddleware();
     this.addHealthCheck();
     this.addContentApi();
     this.createServer(options.host, options.port);
@@ -405,10 +406,26 @@ export class WsServer {
   }
 
   private verifyClient: VerifyClientCallbackAsync = (info, cb) => {
-    const { origin, secure } = info;
+    const { origin, secure, req } = info as typeof info & {
+      req?: IncomingMessage & { _o2kUserId?: string };
+    };
     this.logger.debug('WsServer', 'verifyClient', { origin, secure });
-    // @todo: implement validation
-    cb(true);
+
+    const cookieHeader = req?.headers?.cookie as string | undefined;
+    let userId = this.getUserIdFromCookieHeader(cookieHeader);
+    const responseHeaders: Record<string, string> = {};
+
+    if (!userId) {
+      userId = randomUUID();
+      const setCookie = this.buildUserIdSetCookieValue(userId);
+      responseHeaders['Set-Cookie'] = setCookie;
+    }
+
+    if (req && userId) {
+      req._o2kUserId = userId;
+    }
+
+    cb(true, 200, undefined, Object.keys(responseHeaders).length ? responseHeaders : undefined);
   };
 
   private handleMessage(socket: WebSocket, data: RawData): void {
@@ -466,7 +483,7 @@ export class WsServer {
     this.clientMap.forEach(client => this._clientSocketSend(message, client));
   }
 
-  private addClient(socket: WebSocket, _request: IncomingMessage) {
+  private addClient(socket: WebSocket, _request: IncomingMessage & { _o2kUserId?: string }) {
     const seq = this.seqNumber();
     const uuid = randomUUID();
     const user = { uuid };
@@ -476,6 +493,7 @@ export class WsServer {
     };
 
     const requestHeaders = this.extractRequestHeaders(_request);
+    const requestHost = this.extractHostname(requestHeaders['host']);
     this.clientMap.set(socket, {
       seq,
       created,
@@ -485,11 +503,37 @@ export class WsServer {
       user,
       requestHeaders,
     });
-    this.clientCookies.set(
-      uuid,
-      this.parseCookieHeader(requestHeaders['cookie'], this.extractHostname(requestHeaders['host']))
-    );
+    const cookies = this.parseCookieHeader(requestHeaders['cookie'], requestHost);
+
+    if (_request._o2kUserId && requestHost) {
+      this.upsertClientCookie(cookies, {
+        name: 'o2k_uid',
+        value: _request._o2kUserId,
+        domain: requestHost.toLowerCase(),
+        path: '/',
+        hostOnly: true,
+        secure: this._isSSL,
+        sameSite: 'lax',
+        expiresAt: Date.now() + 31536000 * 1000,
+      });
+    }
+
+    this.clientCookies.set(uuid, cookies);
     this.pushClientsCount();
+  }
+
+  private addUserIdMiddleware() {
+    this.app.use((req, res, next) => {
+      let userId = this.getUserIdFromRequest(req);
+      if (!userId) {
+        userId = randomUUID();
+        this.setUserIdCookie(res, userId);
+      }
+
+      // expose for downstream handlers without re-parsing cookies
+      (req as Request & { _o2kUserId?: string })._o2kUserId = userId;
+      next();
+    });
   }
 
   private extractRequestHeaders(request: IncomingMessage): Record<string, string> {
