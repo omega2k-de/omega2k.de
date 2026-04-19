@@ -29,7 +29,7 @@ Diese Rubrik versteht sich als **Szenarienlabor / Lessons-Learned-Logbuch**:
 
 - Wir wählen einen **Teilaspekt** des proto-Superorganismus (z.B. Pflegesektor in „Stadt X“).
 
-> _siehe [Grok mit Runde 1: Analyse des Burnout-Szenarios](https://x.com/grok/status/1996964318315987162?s=20)_
+> _siehe [Grok mit Runde 1: Analyse des Burnout-Szenarios](https://x.com/i/status/1996334952254935396)_
 
 - Wir formulieren eine **explizite Hypothese** (z.B. WT-Zonen mit Extrem-Zone C).
 - Wir **simulieren, rechnen, justieren** – und dokumentieren, wo das Modell scheitert oder tragfähig bleibt.
